@@ -112,6 +112,7 @@ auto Sorcery::Temple::start(Game *game) -> int {
 						_controller->clear_character("inspect");
 						_controller->unset_flag("want_inspect");
 						_controller->unset_flag("want_identify");
+						_controller->unset_flag("want_pool_gold");
 						_ui->modal_inspect->show = false;
 					} else if (_ui->modal_help->show) {
 						_controller->clear_character("help");

@@ -178,6 +178,34 @@
 					"bg_colour": "0x000000"
 				},
 				{
+					"name": "notice_divvy",
+					"x": "centre",
+					"y": "centre",
+					"w": "10",
+					"h": "7",
+					"font": "monospace",
+					"type": "dialog",
+					"string": "NOTICE_DIVVY_GOLD",
+					"drawmode": "manual",
+					"alpha": "1.0",
+					"colour": "0xffffff",
+					"bg_colour": "0x000000"
+				},
+				{
+					"name": "notice_pool_gold",
+					"x": "centre",
+					"y": "centre",
+					"w": "10",
+					"h": "7",
+					"font": "monospace",
+					"type": "dialog",
+					"string": "NOTICE_POOL_GOLD",
+					"drawmode": "manual",
+					"alpha": "1.0",
+					"colour": "0xffffff",
+					"bg_colour": "0x000000"
+				},
+				{
 					"name": "notice_cannot_donate",
 					"x": "centre",
 					"y": "centre",
@@ -1636,20 +1664,6 @@
 					"colour": "0xffffffff",
 					"bg_colour": "0x000000",
 					"alpha": "1.0"
-				},
-				{
-					"name": "notice_divvy",
-					"x": "centre",
-					"y": "centre",
-					"w": "10",
-					"h": "7",
-					"font": "monospace",
-					"type": "dialog",
-					"string": "NOTICE_DIVVY_GOLD",
-					"drawmode": "manual",
-					"alpha": "1.0",
-					"colour": "0xffffff",
-					"bg_colour": "0x000000"
 				}
 			]
 		},

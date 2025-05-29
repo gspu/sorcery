@@ -68,8 +68,11 @@ Sorcery::UI::UI(System *system, Display *display, Resources *resources,
 		_system, this, (*components)["main_menu:dialog_leave"],
 		Enums::Layout::DialogType::CONFIRM);
 	notice_divvy = std::make_unique<Dialog>(
-		_system, this, (*components)["tavern:notice_divvy"],
+		_system, this, (*components)["global:notice_divvy"],
 		Enums::Layout::DialogType::OK);
+	notice_pool_gold = std::make_unique<Dialog>(
+			_system, this, (*components)["global:notice_pool_gold"],
+			Enums::Layout::DialogType::OK);
 	notice_cannot_donate = std::make_unique<Dialog>(
 		_system, this, (*components)["global:notice_cannot_donate"],
 		Enums::Layout::DialogType::OK);
@@ -261,6 +264,8 @@ auto Sorcery::UI::_get_popups() const -> std::string {
 			get_popup_status((void *)notice_not_enough_gold.get(), "dialog"));
 	if (popup_ouch)
 		output.append(get_popup_status((void *)popup_ouch.get(), "popup"));
+	if (notice_pool_gold)
+		output.append(get_popup_status((void *)notice_pool_gold.get(), "dialog"));
 
 	return output;
 }
@@ -314,6 +319,7 @@ auto Sorcery::UI::start() -> void {
 	notice_donated_ok->show = false;
 	notice_cannot_donate->show = false;
 	notice_not_enough_gold->show = false;
+	notice_pool_gold->show = false;
 	input_donate->show = false;
 	popup_ouch->show = false;
 	modal_camp->show = false;
@@ -414,6 +420,8 @@ auto Sorcery::UI::display_engine(Game *game) -> void {
 		modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	if (modal_identify->show)
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
+	if (notice_pool_gold->show)
+		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	if (_controller->show_ui && _controller->show_party_panel)
 		_draw_party_panel(game);
 	if (_controller->show_ui) {
@@ -2843,6 +2851,8 @@ auto Sorcery::UI::_display_inspect(Game *game, const int mode) -> void {
 	_draw_current_character(game, mode);
 	if (modal_identify->show)
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
+	if (notice_pool_gold->show)
+		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
 	_draw_cursor();
 }
@@ -2871,6 +2881,7 @@ auto Sorcery::UI::_display_inn(Game *game) -> void {
 	modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	modal_stay->display(_controller->get_flag_ref("want_stay"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
+	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
 	_draw_cursor();
 }
@@ -2925,6 +2936,7 @@ auto Sorcery::UI::_display_level_up(Game *game, const int mode) -> void {
 auto Sorcery::UI::_display_tavern(Game *game) -> void {
 	_draw_components("tavern");
 	notice_divvy->display(_controller->get_flag_ref("want_divvy_gold"));
+	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
 	_draw_party_panel(game);
@@ -2954,6 +2966,7 @@ auto Sorcery::UI::_display_temple(Game *game) -> void {
 		_controller->get_flag_ref("want_cannot_donate"));
 	notice_not_enough_gold->display(
 		_controller->get_flag_ref("want_not_enough_gold"));
+	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
 	_draw_cursor();
 }

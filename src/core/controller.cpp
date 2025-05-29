@@ -28,6 +28,7 @@
 #include "engine/define.hpp"
 #include "gui/define.hpp"
 #include "gui/modal.hpp"
+#include "gui/dialog.hpp"
 #include "types/game.hpp"
 #include "types/item.hpp"
 #include "types/state.hpp"
@@ -80,6 +81,7 @@ auto Sorcery::Controller::initialise(std::string_view value) -> void {
 	unset_flag("want_leave_game");
 	unset_flag("want_not_enough_gold");
 	unset_flag("want_new_game");
+	unset_flag("want_pool_gold");
 	unset_flag("want_quit_expedition");
 	unset_flag("want_stay");
 	unset_flag("want_take_stairs_down");
@@ -535,7 +537,7 @@ auto Sorcery::Controller::handle_menu_with_flags(
 		// Flags = &_ui->modal_identify->show
 		if (selection == (static_cast<int>(items.size()) - 1)) {
 			_flags["want_identify"] = true;
-			in_flags.at(1).get() = false;
+			in_flags.at(0).get() = false;
 		} else {
 		}
 	}
@@ -691,10 +693,18 @@ auto Sorcery::Controller::handle_button_click(const std::string &component,
 
 	if (component == "button_identify") {
 
+		// Show Identify Modal
 		ui->modal_identify->regenerate(this, _game);
 		ui->modal_identify->show = true;
 		set_flag("want_identify");
+	} else if (component == "button_pool") {
+
+		// Show Pool Gold Notice
+		ui->notice_pool_gold->show = true;
+		set_flag("want_pool_gold");
+		_game->pool_party_gold(get_character("inspect"));
 	}
+
 }
 
 // Menu Handling

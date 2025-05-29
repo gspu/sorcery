@@ -84,6 +84,9 @@ auto Sorcery::Inspect::start(Game *game, const int mode, const int start_char)
 				if (_ui->modal_identify->show) {
 					_ui->modal_identify->show = false;
 					_controller->unset_flag("want_identify");
+				} if (_ui->notice_pool_gold->show) {
+					_ui->notice_pool_gold->show = false;
+					_controller->unset_flag("want_pool_gold");
 				} else
 					return BACK_FROM_INSPECT;
 			}
