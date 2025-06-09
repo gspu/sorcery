@@ -84,7 +84,12 @@ auto Sorcery::Inspect::start(Game *game, const int mode, const int start_char)
 				if (_ui->modal_identify->show) {
 					_ui->modal_identify->show = false;
 					_controller->unset_flag("want_identify");
-				} if (_ui->notice_pool_gold->show) {
+				} 
+				if (_ui->modal_drop->show) {
+					_ui->modal_drop->show = false;
+					_controller->unset_flag("want_drop");
+				}	
+				if (_ui->notice_pool_gold->show) {
 					_ui->notice_pool_gold->show = false;
 					_controller->unset_flag("want_pool_gold");
 				} else
@@ -92,10 +97,10 @@ auto Sorcery::Inspect::start(Game *game, const int mode, const int start_char)
 			}
 		}
 
-		_ui->display("inspect", game, mode);
-
 		if (!_controller->has_flag("show_inspect"))
 			return BACK_FROM_INSPECT;
+
+		_ui->display("inspect", game, mode);
 
 		if (_controller->has_flag("select_previous_character")) {
 

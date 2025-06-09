@@ -93,9 +93,14 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 			_items.emplace_back(
 				fmt::format("{:^{}}", (*_system->strings)[source], _width));
 
-	} else if (_component->name == "identify_menu" ||
-			   _component->name == "modal_identify") {
+	} else if (_component->name == "modal_identify") {
 		sources.insert(sources.end(), {"IDENTIFY_RETURN"});
+		for (const auto &source : sources)
+			_items.emplace_back(
+				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+
+	} else if (_component->name == "modal_drop") {
+		sources.insert(sources.end(), {"DROP_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
 				fmt::format("{:^{}}", (*_system->strings)[source], _width));

@@ -362,6 +362,8 @@ auto Sorcery::Application::_add_quickstart_party() -> bool {
 		case Class::BISHOP:
 			pc.inventory.add_type((*_resources->items)[TypeID::ROBES], true);
 			pc.inventory.add_type((*_resources->items)[TypeID::STAFF], true);
+			pc.inventory.add_type((*_resources->items)[TypeID::ANOINTED_FLAIL], false);
+			pc.inventory.add_type((*_resources->items)[TypeID::PLATE_MAIL_PLUS_2], false);
 			break;
 		case Class::THIEF:
 		case Class::NINJA:

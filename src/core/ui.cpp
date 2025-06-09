@@ -86,6 +86,8 @@ Sorcery::UI::UI(System *system, Display *display, Resources *resources,
 		_system, this, (*components)["engine_base_ui:popup_ouch"]);
 	modal_camp = std::make_unique<Modal>(
 		_system, this, _controller, (*components)["engine_base_ui:modal_camp"]);
+	modal_drop = std::make_unique<Modal>(
+		_system, this, _controller, (*components)["global:modal_drop"]);
 	modal_inspect = std::make_unique<Modal>(
 		_system, this, _controller, (*components)["global:modal_inspect"]);
 	modal_identify = std::make_unique<Modal>(
@@ -159,6 +161,12 @@ auto Sorcery::UI::create_dynamic_modal(Game *game, const std::string name)
 		modal_identify = std::make_unique<Modal>(
 			_system, this, _controller, (*components)["global:modal_identify"]);
 		modal_identify->regenerate(_controller, game);
+	} else if (name == "modal_drop") {
+		if (modal_drop.get())
+			modal_drop.reset();
+		modal_drop = std::make_unique<Modal>(
+			_system, this, _controller, (*components)["global:modal_drop"]);
+		modal_drop->regenerate(_controller, game);
 	}
 }
 
@@ -241,6 +249,8 @@ auto Sorcery::UI::_get_popups() const -> std::string {
 		output.append(get_popup_status((void *)message_tile.get(), "message"));
 	if (modal_camp)
 		output.append(get_popup_status((void *)modal_camp.get(), "modal"));
+	if (modal_drop)
+		output.append(get_popup_status((void *)modal_drop.get(), "modal"));
 	if (modal_help)
 		output.append(get_popup_status((void *)modal_help.get(), "modal"));
 	if (modal_identify)
@@ -324,6 +334,7 @@ auto Sorcery::UI::start() -> void {
 	popup_ouch->show = false;
 	modal_camp->show = false;
 	modal_identify->show = false;
+	modal_drop->show = false;
 	dialog_stairs_up->show = false;
 	dialog_stairs_down->show = false;
 	message_tile->show = false;
@@ -420,6 +431,8 @@ auto Sorcery::UI::display_engine(Game *game) -> void {
 		modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	if (modal_identify->show)
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
+	if (modal_drop->show)
+		modal_drop->display(_controller->get_flag_ref("want_drop"));
 	if (notice_pool_gold->show)
 		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	if (_controller->show_ui && _controller->show_party_panel)
@@ -2851,6 +2864,8 @@ auto Sorcery::UI::_display_inspect(Game *game, const int mode) -> void {
 	_draw_current_character(game, mode);
 	if (modal_identify->show)
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
+	if (modal_drop->show)
+		modal_drop->display(_controller->get_flag_ref("want_drop"));
 	if (notice_pool_gold->show)
 		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
@@ -2881,6 +2896,7 @@ auto Sorcery::UI::_display_inn(Game *game) -> void {
 	modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	modal_stay->display(_controller->get_flag_ref("want_stay"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
+	modal_drop->display(_controller->get_flag_ref("want_drop"));
 	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
 	_draw_cursor();
@@ -2926,6 +2942,7 @@ auto Sorcery::UI::_display_no_level_up(Game *game, const int mode) -> void {
 }
 
 auto Sorcery::UI::_display_level_up(Game *game, const int mode) -> void {
+
 	_draw_components("levelup");
 	_draw_level_up(game, mode);
 	_draw_party_panel(game);
@@ -2934,11 +2951,13 @@ auto Sorcery::UI::_display_level_up(Game *game, const int mode) -> void {
 }
 
 auto Sorcery::UI::_display_tavern(Game *game) -> void {
+
 	_draw_components("tavern");
 	notice_divvy->display(_controller->get_flag_ref("want_divvy_gold"));
 	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
+	modal_drop->display(_controller->get_flag_ref("want_drop"));
 	_draw_party_panel(game);
 	_draw_debug();
 	_draw_cursor();
@@ -2960,6 +2979,7 @@ auto Sorcery::UI::_display_temple(Game *game) -> void {
 	modal_help->display(_controller->get_flag_ref("want_help"));
 	modal_tithe->display(_controller->get_flag_ref("want_tithe"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
+	modal_drop->display(_controller->get_flag_ref("want_drop"));
 	input_donate->display(_controller->get_flag_ref("want_donate"));
 	notice_donated_ok->display(_controller->get_flag_ref("want_donated_ok"));
 	notice_cannot_donate->display(
@@ -3250,6 +3270,8 @@ auto Sorcery::UI::load_dynamic_menu_items(
 							items.emplace_back(item_display);
 						}
 					} else {
+
+						// Drop Menu handled here
 						auto item_display{fmt::format("{}){}{:<16}", slot, flag,
 													  item.get_display_name())};
 						items.emplace_back(item_display);
@@ -3296,6 +3318,8 @@ auto Sorcery::UI::load_dynamic_menu_items(
 		load_party_characters(controller, game, items, data, NO_FLAGS, reorder);
 	else if (component == "modal_identify" && game != nullptr)
 		load_character_items(controller, game, items, data, MENU_IDENTIFY_ITEM);
+	else if (component == "modal_drop" && game != nullptr)
+		load_character_items(controller, game, items, data, MENU_DROP_ITEM);
 }
 
 auto Sorcery::UI::load_fixed_items(std::string_view component,
@@ -3381,8 +3405,14 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 			items.emplace_back(
 				fmt::format("{:^{}}", (*_system->strings)[source], width));
 
-	} else if (component == "identify_menu" || component == "modal_identify") {
+	} else if (component == "modal_identify") {
 		sources.insert(sources.end(), {"IDENTIFY_RETURN"});
+		for (const auto &source : sources)
+			items.emplace_back(
+				fmt::format("{:^{}}", (*_system->strings)[source], width));
+
+	} else if (component == "modal_drop") {
+		sources.insert(sources.end(), {"DROP_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
 				fmt::format("{:^{}}", (*_system->strings)[source], width));
@@ -3675,6 +3705,11 @@ auto Sorcery::UI::draw_menu(const std::string name, const ImColor sel_color,
 					} else if (name == "identify_menu") {
 						std::vector<std::reference_wrapper<bool>> out_flags{
 							{std::ref(modal_identify->show)}};
+						_controller->handle_menu_with_flags(
+							name, items, data_item, i, out_flags);
+					} else if (name == "drop_menu") {
+						std::vector<std::reference_wrapper<bool>> out_flags{
+							{std::ref(modal_drop->show)}};
 						_controller->handle_menu_with_flags(
 							name, items, data_item, i, out_flags);
 					}

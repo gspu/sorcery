@@ -164,6 +164,26 @@
 					]
 				},
 				{
+					"name": "modal_drop",
+					"x": "centre",
+					"y": "8",
+					"w": "24",
+					"h": "15",
+					"font": "monospace",
+					"type": "choice",
+					"string": "MODAL_DROP",
+					"drawmode": "manual",
+					"alpha": "1.0",
+					"colour": "0xffffff",
+					"bg_colour": "0x000000",
+					"data": [
+						{
+							"menu_name": "drop_menu",
+							"highlight": "0x6060c8"
+						}
+					]
+				},
+				{
 					"name": "notice_not_enough_gold",
 					"x": "centre",
 					"y": "centre",

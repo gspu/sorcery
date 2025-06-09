@@ -73,6 +73,7 @@ auto Sorcery::Controller::initialise(std::string_view value) -> void {
 	unset_flag("want_divvy_gold");
 	unset_flag("want_donate");
 	unset_flag("want_donated_ok");
+	unset_flag("want_drop");
 	unset_flag("want_enter_maze");
 	unset_flag("want_exit_game");
 	unset_flag("want_help");
@@ -312,6 +313,21 @@ auto Sorcery::Controller::is_menu_item_disabled(const std::string &component,
 #pragma GCC diagnostic pop
 		} else
 			return false;
+	} else if (component == "drop_menu" || component == "modal_drop") {
+
+		if (has_character("inspect")) {
+
+			const auto &who{_game->characters.at(_characters["inspect"])};
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
+			if (selection < who.inventory.items().size()) {
+				const auto item{who.inventory.items().at(selection)};
+				return item.get_equipped();
+			} else
+				return false;
+#pragma GCC diagnostic pop
+		} else
+			return false;
 	}
 }
 
@@ -540,6 +556,14 @@ auto Sorcery::Controller::handle_menu_with_flags(
 			in_flags.at(0).get() = false;
 		} else {
 		}
+	} else if (component == "drop_menu" || component == "modal_drop") {
+
+		// Flags = &_ui->modal_drop->show
+		if (selection == (static_cast<int>(items.size()) - 1)) {
+			_flags["want_drop"] = true;
+			in_flags.at(0).get() = false;
+		} else {
+		}
 	}
 }
 
@@ -703,8 +727,19 @@ auto Sorcery::Controller::handle_button_click(const std::string &component,
 		ui->notice_pool_gold->show = true;
 		set_flag("want_pool_gold");
 		_game->pool_party_gold(get_character("inspect"));
-	}
+	} else if (component == "button_leave") {
 
+		// Leave Inspect
+		unset_flag("want_inspect");
+		unset_flag("show_inspect");
+		ui->modal_inspect->show = false;
+	} else if (component == "button_drop") {
+
+		// Show Drop Modal
+		ui->modal_drop->regenerate(this, _game);
+		ui->modal_drop->show = true;
+		set_flag("want_drop");
+	}
 }
 
 // Menu Handling

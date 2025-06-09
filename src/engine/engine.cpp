@@ -93,7 +93,8 @@ auto Sorcery::Engine::start(Game *game, const int mode) -> int {
 			auto in_popup{
 				_ui->dialog_leave->show || _ui->modal_camp->show ||
 				_ui->message_tile->show || _ui->modal_identify->show ||
-				_ui->dialog_stairs_down->show || _ui->dialog_stairs_up->show};
+				_ui->modal_drop->show ||  _ui->dialog_stairs_down->show || 
+				_ui->dialog_stairs_up->show};
 			if (!in_popup) {
 
 				// Check for UI toggles
@@ -266,6 +267,7 @@ auto Sorcery::Engine::_start_expedition(const int mode) -> bool {
 		// Start off in Camp
 		_ui->modal_camp->show = true;
 		_ui->modal_identify->show = false;
+		_ui->modal_drop->show = false;
 	}
 }
 

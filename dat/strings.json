@@ -303,6 +303,8 @@
 	"MODAL_HELP": "Who shall we help?",
 	"MODAL_TITHE": "Who shall tithe?",
 	"MODAL_IDENTIFY": "Identify which item?",
+	"MODAL_DROP": "Drop which item?",
+	"DROP_RETURN": "<Return>",
 	"INSPECT_RETURN": "<Return>",
 	"IDENTIFY_RETURN": "<Return>",
 	"LADDER_UP": "Stairs going up. Take them?",
