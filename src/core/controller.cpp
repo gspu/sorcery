@@ -88,6 +88,7 @@ auto Sorcery::Controller::initialise(std::string_view value) -> void {
 	unset_flag("want_take_stairs_down");
 	unset_flag("want_take_stairs_up");
 	unset_flag("want_tithe");
+	unset_flag("want_trade");
 
 	unset_text("heal_results");
 }
@@ -314,6 +315,21 @@ auto Sorcery::Controller::is_menu_item_disabled(const std::string &component,
 		} else
 			return false;
 	} else if (component == "drop_menu" || component == "modal_drop") {
+
+		if (has_character("inspect")) {
+
+			const auto &who{_game->characters.at(_characters["inspect"])};
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
+			if (selection < who.inventory.items().size()) {
+				const auto item{who.inventory.items().at(selection)};
+				return item.get_equipped();
+			} else
+				return false;
+#pragma GCC diagnostic pop
+		} else
+			return false;
+	} else if (component == "trade_menu" || component == "modal_trade") {
 
 		if (has_character("inspect")) {
 
@@ -564,6 +580,14 @@ auto Sorcery::Controller::handle_menu_with_flags(
 			in_flags.at(0).get() = false;
 		} else {
 		}
+	} else if (component == "trade_menu" || component == "modal_trade") {
+
+		// Flags = &_ui->modal_trade->show
+		if (selection == (static_cast<int>(items.size()) - 1)) {
+			_flags["want_trade"] = true;
+			in_flags.at(0).get() = false;
+		} else {
+		}
 	}
 }
 
@@ -739,6 +763,12 @@ auto Sorcery::Controller::handle_button_click(const std::string &component,
 		ui->modal_drop->regenerate(this, _game);
 		ui->modal_drop->show = true;
 		set_flag("want_drop");
+	} else if (component == "button_trade") {
+
+		// Show Trade Modal
+		ui->modal_trade->regenerate(this, _game);
+		ui->modal_trade->show = true;
+		set_flag("want_trade");
 	}
 }
 

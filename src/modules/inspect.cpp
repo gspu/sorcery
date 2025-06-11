@@ -89,6 +89,10 @@ auto Sorcery::Inspect::start(Game *game, const int mode, const int start_char)
 					_ui->modal_drop->show = false;
 					_controller->unset_flag("want_drop");
 				}	
+				if (_ui->modal_trade->show) {
+					_ui->modal_trade->show = false;
+					_controller->unset_flag("want_trade");
+				}
 				if (_ui->notice_pool_gold->show) {
 					_ui->notice_pool_gold->show = false;
 					_controller->unset_flag("want_pool_gold");

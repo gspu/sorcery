@@ -68,8 +68,10 @@ auto Sorcery::Tavern::start(Game *game) -> int {
 	_ui->create_dynamic_modal(game, "modal_inspect");
 	_ui->create_dynamic_modal(game, "modal_identify");
 	_ui->create_dynamic_modal(game, "modal_drop");
+	_ui->create_dynamic_modal(game, "modal_trade");
 	_ui->modal_inspect->show = false;
 	_ui->modal_drop->show = false;
+	_ui->modal_trade->show = false;
 	_controller->clear_character("inspect");
 
 	// Main loop

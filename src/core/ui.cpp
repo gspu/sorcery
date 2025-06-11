@@ -92,6 +92,8 @@ Sorcery::UI::UI(System *system, Display *display, Resources *resources,
 		_system, this, _controller, (*components)["global:modal_inspect"]);
 	modal_identify = std::make_unique<Modal>(
 		_system, this, _controller, (*components)["global:modal_identify"]);
+	modal_trade = std::make_unique<Modal>(
+		_system, this, _controller, (*components)["global:modal_trade"]);
 	input_donate = std::make_unique<Input>(
 		_system, this, _controller, (*components)["global:input_donate"]);
 
@@ -167,6 +169,12 @@ auto Sorcery::UI::create_dynamic_modal(Game *game, const std::string name)
 		modal_drop = std::make_unique<Modal>(
 			_system, this, _controller, (*components)["global:modal_drop"]);
 		modal_drop->regenerate(_controller, game);
+	} else if (name == "modal_trade") {
+		if (modal_trade.get())
+			modal_trade.reset();
+		modal_trade = std::make_unique<Modal>(
+			_system, this, _controller, (*components)["global:modal_trade"]);
+		modal_trade->regenerate(_controller, game);
 	}
 }
 
@@ -261,6 +269,8 @@ auto Sorcery::UI::_get_popups() const -> std::string {
 		output.append(get_popup_status((void *)modal_stay.get(), "modal"));
 	if (modal_tithe)
 		output.append(get_popup_status((void *)modal_tithe.get(), "modal"));
+	if (modal_trade)
+		output.append(get_popup_status((void *)modal_trade.get(), "modal"));
 	if (notice_cannot_donate)
 		output.append(
 			get_popup_status((void *)notice_cannot_donate.get(), "dialog"));
@@ -335,6 +345,7 @@ auto Sorcery::UI::start() -> void {
 	modal_camp->show = false;
 	modal_identify->show = false;
 	modal_drop->show = false;
+	modal_trade->show = false;
 	dialog_stairs_up->show = false;
 	dialog_stairs_down->show = false;
 	message_tile->show = false;
@@ -433,6 +444,8 @@ auto Sorcery::UI::display_engine(Game *game) -> void {
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
 	if (modal_drop->show)
 		modal_drop->display(_controller->get_flag_ref("want_drop"));
+	if (modal_trade->show)
+		modal_trade->display(_controller->get_flag_ref("want_trade"));
 	if (notice_pool_gold->show)
 		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	if (_controller->show_ui && _controller->show_party_panel)
@@ -2866,6 +2879,8 @@ auto Sorcery::UI::_display_inspect(Game *game, const int mode) -> void {
 		modal_identify->display(_controller->get_flag_ref("want_identify"));
 	if (modal_drop->show)
 		modal_drop->display(_controller->get_flag_ref("want_drop"));
+	if (modal_trade->show)
+		modal_trade->display(_controller->get_flag_ref("want_trade"));
 	if (notice_pool_gold->show)
 		notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
@@ -2897,6 +2912,7 @@ auto Sorcery::UI::_display_inn(Game *game) -> void {
 	modal_stay->display(_controller->get_flag_ref("want_stay"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
 	modal_drop->display(_controller->get_flag_ref("want_drop"));
+	modal_trade->display(_controller->get_flag_ref("want_trade"));
 	notice_pool_gold->display(_controller->get_flag_ref("want_pool_gold"));
 	_draw_debug();
 	_draw_cursor();
@@ -2958,6 +2974,7 @@ auto Sorcery::UI::_display_tavern(Game *game) -> void {
 	modal_inspect->display(_controller->get_flag_ref("want_inspect"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
 	modal_drop->display(_controller->get_flag_ref("want_drop"));
+	modal_trade->display(_controller->get_flag_ref("want_trade"));
 	_draw_party_panel(game);
 	_draw_debug();
 	_draw_cursor();
@@ -2980,6 +2997,7 @@ auto Sorcery::UI::_display_temple(Game *game) -> void {
 	modal_tithe->display(_controller->get_flag_ref("want_tithe"));
 	modal_identify->display(_controller->get_flag_ref("want_identify"));
 	modal_drop->display(_controller->get_flag_ref("want_drop"));
+	modal_trade->display(_controller->get_flag_ref("want_trade"));
 	input_donate->display(_controller->get_flag_ref("want_donate"));
 	notice_donated_ok->display(_controller->get_flag_ref("want_donated_ok"));
 	notice_cannot_donate->display(
@@ -3320,6 +3338,8 @@ auto Sorcery::UI::load_dynamic_menu_items(
 		load_character_items(controller, game, items, data, MENU_IDENTIFY_ITEM);
 	else if (component == "modal_drop" && game != nullptr)
 		load_character_items(controller, game, items, data, MENU_DROP_ITEM);
+	else if (component == "modal_trade" && game != nullptr)
+		load_character_items(controller, game, items, data, MENU_TRADE_ITEM);
 }
 
 auto Sorcery::UI::load_fixed_items(std::string_view component,
@@ -3413,6 +3433,12 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 
 	} else if (component == "modal_drop") {
 		sources.insert(sources.end(), {"DROP_RETURN"});
+		for (const auto &source : sources)
+			items.emplace_back(
+				fmt::format("{:^{}}", (*_system->strings)[source], width));
+
+	} else if (component == "modal_trade") {
+		sources.insert(sources.end(), {"TRADE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
 				fmt::format("{:^{}}", (*_system->strings)[source], width));
