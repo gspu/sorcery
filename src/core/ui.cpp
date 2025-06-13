@@ -3789,9 +3789,12 @@ auto Sorcery::UI::draw_menu(const std::string name, const ImColor sel_color,
 							{std::ref(modal_drop->show)}};
 						_controller->handle_menu_with_flags(
 							name, items, data_item, i, out_flags);
-					}
-
-					else
+					} else if (name == "use_menu") {
+						std::vector<std::reference_wrapper<bool>> out_flags{
+							{std::ref(modal_use->show)}};
+						_controller->handle_menu_with_flags(
+							name, items, data_item, i, out_flags);
+					} else
 
 						// Any other menus
 						_controller->handle_menu(name, items, data_item, i);
