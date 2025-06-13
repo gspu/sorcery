@@ -23,19 +23,22 @@
 #include "core/controller.hpp"
 #include "core/define.hpp"
 #include "core/display.hpp"
+#include "core/resources.hpp"
 #include "core/system.hpp"
 #include "core/ui.hpp"
 #include "engine/define.hpp"
 #include "gui/define.hpp"
-#include "gui/modal.hpp"
 #include "gui/dialog.hpp"
+#include "gui/modal.hpp"
 #include "types/game.hpp"
 #include "types/item.hpp"
 #include "types/state.hpp"
 
-Sorcery::Controller::Controller(System *system, Display *display)
+Sorcery::Controller::Controller(System *system, Display *display,
+								Resources *resources)
 	: _system{system},
-	  _display{display} {
+	  _display{display},
+	  _resources{resources} {
 
 	initialise("");
 	_game = nullptr;
@@ -89,6 +92,7 @@ auto Sorcery::Controller::initialise(std::string_view value) -> void {
 	unset_flag("want_take_stairs_up");
 	unset_flag("want_tithe");
 	unset_flag("want_trade");
+	unset_flag("want_use");
 
 	unset_text("heal_results");
 }
@@ -344,6 +348,23 @@ auto Sorcery::Controller::is_menu_item_disabled(const std::string &component,
 #pragma GCC diagnostic pop
 		} else
 			return false;
+	} else if (component == "use_menu" || component == "modal_use") {
+
+		if (has_character("inspect")) {
+
+			const auto &who{_game->characters.at(_characters["inspect"])};
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
+			if (selection < who.inventory.items().size()) {
+				const auto item{who.inventory.items().at(selection)};
+				const auto item_type{
+					_resources->items->get_item_type(item.get_type_id())};
+				return !(item_type.has_usable() && item.get_known());
+			} else
+				return false;
+#pragma GCC diagnostic pop
+		} else
+			return false;
 	}
 }
 
@@ -588,6 +609,14 @@ auto Sorcery::Controller::handle_menu_with_flags(
 			in_flags.at(0).get() = false;
 		} else {
 		}
+	} else if (component == "use_menu" || component == "modal_use") {
+
+		// Flags = &_ui->modal_use->show
+		if (selection == (static_cast<int>(items.size()) - 1)) {
+			_flags["want_use"] = true;
+			in_flags.at(0).get() = false;
+		} else {
+		}
 	}
 }
 
@@ -769,6 +798,12 @@ auto Sorcery::Controller::handle_button_click(const std::string &component,
 		ui->modal_trade->regenerate(this, _game);
 		ui->modal_trade->show = true;
 		set_flag("want_trade");
+	} else if (component == "button_use") {
+
+		// Show Use Modal
+		ui->modal_use->regenerate(this, _game);
+		ui->modal_use->show = true;
+		set_flag("want_use");
 	}
 }
 

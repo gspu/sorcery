@@ -76,7 +76,8 @@ Sorcery::Application::Application(int argc, char **argv) {
 	_system = std::make_unique<System>(argc, argv);
 	_display = std::make_unique<Display>(_system.get());
 	_resources = std::make_unique<Resources>(_system.get());
-	_controller = std::make_unique<Controller>(_system.get(), _display.get());
+	_controller = std::make_unique<Controller>(_system.get(), _display.get(),
+											   _resources.get());
 	_ui = std::make_unique<UI>(_system.get(), _display.get(), _resources.get(),
 							   _controller.get());
 	_game = std::make_unique<Game>(_system.get(), _resources.get());
@@ -362,8 +363,10 @@ auto Sorcery::Application::_add_quickstart_party() -> bool {
 		case Class::BISHOP:
 			pc.inventory.add_type((*_resources->items)[TypeID::ROBES], true);
 			pc.inventory.add_type((*_resources->items)[TypeID::STAFF], true);
-			pc.inventory.add_type((*_resources->items)[TypeID::ANOINTED_FLAIL], false);
-			pc.inventory.add_type((*_resources->items)[TypeID::PLATE_MAIL_PLUS_2], false);
+			pc.inventory.add_type((*_resources->items)[TypeID::POTION_OF_DIOS],
+								  true);
+			pc.inventory.add_type(
+				(*_resources->items)[TypeID::PLATE_MAIL_PLUS_2], false);
 			break;
 		case Class::THIEF:
 		case Class::NINJA:

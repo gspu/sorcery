@@ -43,6 +43,8 @@ class ItemStore {
 			-> std::vector<ItemType>;
 		auto operator[](std::string name) const -> ItemType;
 
+		auto get_item_type(const Enums::Items::TypeID item_type_id) const
+			-> ItemType;
 		auto get_an_item(const Enums::Items::TypeID item_type_id) const -> Item;
 		auto get_random_item(const Enums::Items::TypeID min_item_type_id,
 							 const Enums::Items::TypeID max_item_type_id) const

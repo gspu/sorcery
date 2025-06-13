@@ -30,6 +30,7 @@ namespace Sorcery {
 class System;
 class Display;
 class Game;
+class Resources;
 class UI;
 
 // UI Interaction Logic Controller
@@ -37,7 +38,7 @@ class Controller {
 
 	public:
 		// Standard Constructor
-		Controller(System *system, Display *display);
+		Controller(System *system, Display *display, Resources *resources);
 
 		// Public Methods
 		auto check_for_abort(const SDL_Event event) -> bool;
@@ -108,6 +109,7 @@ class Controller {
 		// Private Members
 		System *_system;
 		Display *_display;
+		Resources *_resources;
 		Game *_game;
 		bool _has_save;
 		std::map<std::string, int> _characters;	   // Character Selections

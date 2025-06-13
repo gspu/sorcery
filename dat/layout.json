@@ -198,7 +198,27 @@
 					"bg_colour": "0x000000",
 					"data": [
 						{
-							"menu_name": "drop_trade",
+							"menu_name": "trade_menu",
+							"highlight": "0x6060c8"
+						}
+					]
+				},
+				{
+					"name": "modal_use",
+					"x": "centre",
+					"y": "8",
+					"w": "34",
+					"h": "15",
+					"font": "monospace",
+					"type": "choice",
+					"string": "MODAL_USE",
+					"drawmode": "manual",
+					"alpha": "1.0",
+					"colour": "0xffffff",
+					"bg_colour": "0x000000",
+					"data": [
+						{
+							"menu_name": "use_menu",
 							"highlight": "0x6060c8"
 						}
 					]

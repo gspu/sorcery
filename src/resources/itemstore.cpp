@@ -316,6 +316,12 @@ auto Sorcery::ItemStore::operator[](unsigned int item_type_id) const
 		magic_enum::enum_cast<Enums::Items::TypeID>(item_type_id).value());
 }
 
+auto  Sorcery::ItemStore::get_item_type(const Enums::Items::TypeID item_type_id) const -> ItemType {
+
+	return _items.at(item_type_id);
+}
+
+
 auto Sorcery::ItemStore::operator[](std::string name) const -> ItemType {
 
 	auto it{std::ranges::find_if(
