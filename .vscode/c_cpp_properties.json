@@ -1,0 +1,18 @@
+{
+	"configurations": [
+		{
+			"name": "Linux",
+			"includePath": [
+				"${workspaceFolder}/**",
+				"/opt/gcc-15/include/c++/15.1.0/**"
+			],
+			"defines": [],
+			"cStandard": "c17",
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"compilerPath": "/usr/bin/g++",
+			"intelliSenseMode": "linux-gcc-x64",
+			"cppStandard": "c++26"
+		}
+	],
+	"version": 4
+}

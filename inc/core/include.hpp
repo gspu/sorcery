@@ -30,7 +30,10 @@
 #include "cereal/types/bitset.hpp"
 #include "cereal/types/chrono.hpp"
 #include "cereal/types/map.hpp"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "cereal/types/memory.hpp"
+#pragma GCC diagnostic pop
 #include "cereal/types/optional.hpp"
 #include "cereal/types/string.hpp"
 #include "cereal/types/unordered_map.hpp"

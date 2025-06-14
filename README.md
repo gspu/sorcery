@@ -60,9 +60,9 @@ Initially I am planning to remake Wizardry 1, then adding 2 and 3, and then subs
 
 ## Compilation
 
-I'm currently developing solely on Linux (Ubuntu 22) so compilation instructions are currently Linux-specific. Windows instructions and releases will of course be supported at a later date.
+I'm currently developing solely on Linux (Ubuntu 24) so compilation instructions are currently Linux-specific. Windows instructions and releases will of course be supported at a later date.
 
-Full compliation instructions for Linux are in the doc/COMPILE text file, but in brief both CMake (via VSCode CMake Tools) and Code::Blocks are supported once the various support libraries are installed. C++20 compiler support is required (I'm currently using GCC 11.3).
+Full compliation instructions for Linux are in the doc/COMPILE text file, but in brief both CMake (via VSCode CMake Tools) and Code::Blocks are supported once the various support libraries are installed. C++23 compiler support is required (I'm currently using GCC 15.1).
 
 All code is released under the GPL - see the doc/LICENSE text file for full details.
 

@@ -64,9 +64,9 @@ auto Sorcery::ComponentStore::get(std::string_view combined_key)
 			if (_components.contains(std::string{combined_key}))
 				return _components.at(std::string{combined_key});
 			else
-				return _components[0];
+				return _components.begin()->second;
 		else
-			return _components[0];
+			return _components.begin()->second;
 
 	} catch (std::exception &e) {
 		Error error{Enums::System::Error::UNKNOWN_COMPONENT, e,
