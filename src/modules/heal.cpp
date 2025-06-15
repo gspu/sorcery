@@ -111,8 +111,8 @@ auto Sorcery::Heal::start(Game *game) -> int {
 auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 	-> bool {
 
-	using Enums::Character::CStatus;
 	using Enums::Character::Location;
+	using Enums::Character::Status;
 	using Enums::System::Random;
 
 	auto &pay_char{game->characters[pay_char_id]};
@@ -124,7 +124,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 	const auto cost{heal_char.get_cure_cost()};
 	pay_char.grant_gold(0 - cost);
 
-	if (heal_char.get_status() == CStatus::DEAD) {
+	if (heal_char.get_status() == Status::DEAD) {
 
 		const auto chance{heal_char.get_ress_chance(false)};
 		const auto roll((*_system->random)[Random::D100]);
@@ -135,7 +135,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 								  (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 								  heal_char.get_name(),
 								  (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
-			heal_char.set_status(CStatus::OK);
+			heal_char.set_status(Status::OK);
 			heal_char.set_current_hp(1);
 			heal_char.set_location(Location::TAVERN);
 			_controller->set_text("heal_results", results);
@@ -147,13 +147,13 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 				"{} {} {}", (*_system->strings)["TEMPLE_OOPS_DEAD_PREFIX"],
 				heal_char.get_name(),
 				(*_system->strings)["TEMPLE_OOPS_DEAD_SUFFIX"]);
-			heal_char.set_status(CStatus::ASHES);
+			heal_char.set_status(Status::ASHES);
 			_controller->set_text("heal_results", results);
 
 			return false;
 		}
 
-	} else if (heal_char.get_status() == CStatus::ASHES) {
+	} else if (heal_char.get_status() == Status::ASHES) {
 
 		const auto chance{heal_char.get_ress_chance(false)};
 		const auto roll((*_system->random)[Random::D100]);
@@ -164,7 +164,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 								  (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 								  heal_char.get_name(),
 								  (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
-			heal_char.set_status(CStatus::OK);
+			heal_char.set_status(Status::OK);
 			heal_char.set_current_hp(1);
 			heal_char.set_location(Location::TAVERN);
 			_controller->set_text("heal_results", results);
@@ -177,7 +177,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 				"{} {} {}", (*_system->strings)["TEMPLE_OOPS_ASHES_PREFIX"],
 				heal_char.get_name(),
 				(*_system->strings)["TEMPLE_OOPS_ASHES_SUFFIX"]);
-			heal_char.set_status(CStatus::LOST);
+			heal_char.set_status(Status::LOST);
 			heal_char.set_location(Location::TRAINING);
 			heal_char.set_current_hp(0);
 			_controller->set_text("heal_results", results);
@@ -190,7 +190,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 		results = std::format(
 			"{} {} {}", (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 			heal_char.get_name(), (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
-		heal_char.set_status(CStatus::OK);
+		heal_char.set_status(Status::OK);
 		_controller->set_text("heal_results", results);
 
 		return true;

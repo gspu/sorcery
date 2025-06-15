@@ -2613,10 +2613,10 @@ auto Sorcery::UI::_draw_party_panel(Game *game) -> void {
 }
 
 auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
-	using Enums::Character::CStatus;
+	using Enums::Character::Status;
 
 	switch (character->get_status()) {
-	case CStatus::OK:
+	case Status::OK:
 		if (character->get_poisoned_rate() > 0)
 			return ImVec4{0.0f, 1.0f, 0.0f, _system->animation->fade};
 		else if (character->get_max_hp() / character->get_current_hp() > 10)
@@ -2626,11 +2626,11 @@ auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
 		else
 			return ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade};
 		break;
-	case CStatus::AFRAID:
+	case Status::AFRAID:
 		[[fallthrough]];
-	case CStatus::SILENCED:
+	case Status::SILENCED:
 		[[fallthrough]];
-	case CStatus::ASLEEP:
+	case Status::ASLEEP:
 		if (character->get_max_hp() / character->get_current_hp() > 10)
 			return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		else if (character->get_max_hp() / character->get_current_hp() > 5)
@@ -2638,19 +2638,19 @@ auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
 		else
 			return ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade};
 		break;
-	case CStatus::ASHES:
+	case Status::ASHES:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case CStatus::DEAD:
+	case Status::DEAD:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case CStatus::HELD:
+	case Status::HELD:
 		return ImVec4{0.5f, 0.0f, 0.5f, _system->animation->fade};
 		break;
-	case CStatus::LOST:
+	case Status::LOST:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case CStatus::STONED:
+	case Status::STONED:
 		return ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade};
 		break;
 	default:
@@ -3244,7 +3244,7 @@ auto Sorcery::UI::load_dynamic_menu_items(
 			for (auto &[id, character] : game->characters) {
 				if (character.get_location() ==
 						Enums::Character::Location::MAZE &&
-					character.get_status() == Enums::Character::CStatus::OK) {
+					character.get_status() == Enums::Character::Status::OK) {
 					items.emplace_back(
 						std::format("{:^21}", character.get_name()));
 					data.emplace_back(id);
@@ -3275,12 +3275,12 @@ auto Sorcery::UI::load_dynamic_menu_items(
 		   [[maybe_unused]] const bool reorder) -> void {
 		if (!game->characters.empty()) {
 
-			using Enums::Character::CStatus;
+			using Enums::Character::Status;
 			for (auto &[id, character] : game->characters) {
-				if (character.get_status() == CStatus::ASHES ||
-					character.get_status() == CStatus::DEAD ||
-					character.get_status() == CStatus::HELD ||
-					character.get_status() == CStatus::STONED) {
+				if (character.get_status() == Status::ASHES ||
+					character.get_status() == Status::DEAD ||
+					character.get_status() == Status::HELD ||
+					character.get_status() == Status::STONED) {
 					items.emplace_back(
 						std::format("{:<16} {:>8}", character.get_name(),
 									character.get_status_string()));

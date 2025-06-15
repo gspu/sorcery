@@ -128,11 +128,11 @@ class Character {
 		auto reset_spells() -> void;
 		auto replenish_spells() -> void;
 		auto set_spells() -> void;
-		auto get_status() const -> Enums::Character::CStatus;
+		auto get_status() const -> Enums::Character::Status;
 		auto get_status_string() const -> std::string;
 		auto get_loc_str() const -> std::string;
 		auto get_summary_and_out() -> std::string;
-		auto set_status(Enums::Character::CStatus value) -> void;
+		auto set_status(Enums::Character::Status value) -> void;
 		auto is_poisoned() const -> bool;
 		auto get_poisoned_rate() const -> int;
 		auto set_poisoned_rate(int value) -> void;
@@ -242,7 +242,7 @@ class Character {
 		std::map<Enums::Character::Class, std::string> _class_list;
 		unsigned int _num_pos_classes;
 		unsigned int _portrait_index;
-		Enums::Character::CStatus _status;
+		Enums::Character::Status _status;
 		bool _hidden;
 		Enums::Manage::Method _method;
 		bool _legated;

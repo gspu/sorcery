@@ -395,7 +395,7 @@ namespace Enums::Character {
 		EVIL = 3
 	};
 
-	enum class CStatus {
+	enum class Status {
 		OK = 0,
 		AFRAID = 1,
 		SILENCED = 2,

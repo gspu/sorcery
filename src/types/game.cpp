@@ -586,7 +586,7 @@ auto Sorcery::Game::_debug_harm_party_to_min() -> void {
 
 auto Sorcery::Game::_debug_give_party_random_status() -> void {
 
-	using Enums::Character::CStatus;
+	using Enums::Character::Status;
 	using Enums::System::Random;
 
 	PRINT("debug_give_party_random_status");
@@ -595,12 +595,12 @@ auto Sorcery::Game::_debug_give_party_random_status() -> void {
 	for (auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 
-		cur_char.set_status(magic_enum::enum_cast<CStatus>(
-								(*_system->random)[Random::ZERO_TO_8])
-								.value());
-		if ((cur_char.get_status() == CStatus::DEAD) ||
-			(cur_char.get_status() == CStatus::ASHES) ||
-			(cur_char.get_status() == CStatus::LOST)) {
+		cur_char.set_status(
+			magic_enum::enum_cast<Status>((*_system->random)[Random::ZERO_TO_8])
+				.value());
+		if ((cur_char.get_status() == Status::DEAD) ||
+			(cur_char.get_status() == Status::ASHES) ||
+			(cur_char.get_status() == Status::LOST)) {
 			cur_char.set_current_hp(0);
 		} else
 			cur_char.set_current_hp(cur_char.get_max_hp());
@@ -621,7 +621,7 @@ auto Sorcery::Game::_debug_heal_party_to_full() -> void {
 	const auto party{state->get_party_characters()};
 	for (auto idx : party) {
 		auto &cur_char{characters.at(idx)};
-		cur_char.set_status(Enums::Character::CStatus::OK);
+		cur_char.set_status(Enums::Character::Status::OK);
 		cur_char.set_current_hp(cur_char.get_max_hp());
 		cur_char.reset_adjustment_per_turn();
 		cur_char.set_poisoned_rate(0);

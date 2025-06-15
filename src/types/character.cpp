@@ -35,7 +35,7 @@ Sorcery::Character::Character(System *system, Resources *resources)
 	set_stage(Enums::Character::Stage::CHOOSE_METHOD);
 
 	_hidden = false;
-	set_status(Enums::Character::CStatus::OK);
+	set_status(Enums::Character::Status::OK);
 
 	_version = 1;
 
@@ -525,9 +525,9 @@ auto Sorcery::Character::_legate_start_info() -> void {
 	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 	using Enums::Character::Class;
-	using Enums::Character::CStatus;
 	using Enums::Character::Location;
 	using Enums::Character::Race;
+	using Enums::Character::Status;
 	using Enums::System::Random;
 
 	// From here:
@@ -584,7 +584,7 @@ auto Sorcery::Character::_legate_start_info() -> void {
 		break;
 	}
 
-	set_status(CStatus::OK);
+	set_status(Status::OK);
 	_location = Location::TAVERN;
 	_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP];
 
@@ -621,9 +621,9 @@ auto Sorcery::Character::_regenerate_start_info() -> void {
 	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 	using Enums::Character::Class;
-	using Enums::Character::CStatus;
 	using Enums::Character::Location;
 	using Enums::Character::Race;
+	using Enums::Character::Status;
 	using Enums::System::Random;
 
 	_abilities[Ability::MAX_LEVEL] = _abilities[Ability::CURRENT_LEVEL];
@@ -682,7 +682,7 @@ auto Sorcery::Character::legate(const Enums::Character::Align &value) -> void {
 	_set_start_spells();
 	_set_starting_sp();
 	inventory.clear();
-	set_status(Enums::Character::CStatus::OK);
+	set_status(Enums::Character::Status::OK);
 	_legated = true;
 
 	set_location(Enums::Character::Location::TAVERN);
@@ -1533,7 +1533,7 @@ auto Sorcery::Character::level_up() -> void {
 
 	if (_cur_attr.at(Attribute::VITALITY) < 3) {
 		level_up_results.emplace_back((*_system->strings)["LEVEL_DIE"]);
-		_status = Enums::Character::CStatus::LOST;
+		_status = Enums::Character::Status::LOST;
 		_location = Enums::Character::Location::TRAINING;
 	}
 }
@@ -1544,7 +1544,7 @@ auto Sorcery::Character::level_down() -> void {
 	using Enums::Character::Ability;
 
 	if (_abilities.at(Ability::CURRENT_LEVEL) == 1) {
-		_status = Enums::Character::CStatus::LOST;
+		_status = Enums::Character::Status::LOST;
 		_location = Enums::Character::Location::TRAINING;
 		return;
 	}
@@ -2128,7 +2128,7 @@ auto Sorcery::Character::create_random() -> void {
 	_portrait_index = (*_system->random)[Enums::System::Random::ZERO_TO_29];
 }
 
-auto Sorcery::Character::get_status() const -> Enums::Character::CStatus {
+auto Sorcery::Character::get_status() const -> Enums::Character::Status {
 
 	return _status;
 }
@@ -2140,7 +2140,7 @@ auto Sorcery::Character::get_condition() const -> std::string {
 
 auto Sorcery::Character::get_short_cond() const -> std::string {
 
-	if (_status != Enums::Character::CStatus::OK)
+	if (_status != Enums::Character::Status::OK)
 		return std::format("{:>6}", _get_condition());
 	else
 		return std::format("{:>4}",
@@ -2149,36 +2149,36 @@ auto Sorcery::Character::get_short_cond() const -> std::string {
 
 auto Sorcery::Character::_get_condition() const -> std::string {
 
-	using Enums::Character::CStatus;
+	using Enums::Character::Status;
 
-	if (is_poisoned() && (_status == CStatus::OK)) {
+	if (is_poisoned() && (_status == Status::OK)) {
 		return (*_system->strings)["STATUS_POISONED"];
-	} else if (_status == CStatus::OK)
+	} else if (_status == Status::OK)
 		return (*_system->strings)["STATUS_OK"];
 	else {
 		switch (_status) {
-		case CStatus::AFRAID:
+		case Status::AFRAID:
 			return (*_system->strings)["STATUS_AFRAID"];
 			break;
-		case CStatus::ASHES:
+		case Status::ASHES:
 			return (*_system->strings)["STATUS_ASHES"];
 			break;
-		case CStatus::ASLEEP:
+		case Status::ASLEEP:
 			return (*_system->strings)["STATUS_ASLEEP"];
 			break;
-		case CStatus::DEAD:
+		case Status::DEAD:
 			return (*_system->strings)["STATUS_DEAD"];
 			break;
-		case CStatus::LOST:
+		case Status::LOST:
 			return (*_system->strings)["STATUS_LOST"];
 			break;
-		case CStatus::HELD:
+		case Status::HELD:
 			return (*_system->strings)["STATUS_PARALYSED"];
 			break;
-		case CStatus::SILENCED:
+		case Status::SILENCED:
 			return (*_system->strings)["STATUS_SILENCED"];
 			break;
-		case CStatus::STONED:
+		case Status::STONED:
 			return (*_system->strings)["STATUS_STONED"];
 			break;
 		default:
@@ -2223,9 +2223,9 @@ auto Sorcery::Character::get_status_string() const -> std::string {
 		return (*_system->strings)["STATUS_HIDDEN"];
 }
 
-auto Sorcery::Character::set_status(Enums::Character::CStatus value) -> void {
+auto Sorcery::Character::set_status(Enums::Character::Status value) -> void {
 
-	if (value == Enums::Character::CStatus::OK)
+	if (value == Enums::Character::Status::OK)
 		_status = value;
 	else {
 		auto candidate{unenum(value)};
@@ -2406,7 +2406,7 @@ auto Sorcery::Character::get_summary_and_out() -> std::string {
 	auto location{std::invoke([&] {
 		if (_location == Enums::Character::Location::MAZE)
 			return "  OUT";
-		else if (_status == Enums::Character::CStatus::LOST)
+		else if (_status == Enums::Character::Status::LOST)
 			return " LOST";
 		else
 			return "    ";
@@ -2427,20 +2427,20 @@ auto Sorcery::Character::can_level() const -> bool {
 
 auto Sorcery::Character::get_cure_cost() const -> unsigned int {
 
-	using Enums::Character::CStatus;
+	using Enums::Character::Status;
 
 	auto cost_per_level{0u};
 	switch (_status) {
-	case CStatus::ASHES:
+	case Status::ASHES:
 		cost_per_level = 500;
 		break;
-	case CStatus::DEAD:
+	case Status::DEAD:
 		cost_per_level = 250;
 		break;
-	case CStatus::HELD:
+	case Status::HELD:
 		cost_per_level = 100;
 		break;
-	case CStatus::STONED:
+	case Status::STONED:
 		cost_per_level = 200;
 		break;
 	default:
@@ -2549,7 +2549,7 @@ auto Sorcery::Character::_damage(const unsigned int adjustment) -> bool {
 		_abilities[Ability::CURRENT_HP] - adjustment;
 	if (_abilities[Ability::CURRENT_HP] < 0) {
 		_abilities[Ability::CURRENT_HP] = 0;
-		_status = Enums::Character::CStatus::DEAD;
+		_status = Enums::Character::Status::DEAD;
 		return false;
 	} else
 		return true;
