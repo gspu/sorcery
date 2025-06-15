@@ -75,6 +75,7 @@ auto Sorcery::Temple::start(Game *game) -> int {
 	_ui->create_dynamic_modal(game, "modal_tithe");
 	_ui->create_dynamic_modal(game, "modal_trade");
 	_ui->create_dynamic_modal(game, "modal_use");
+	_ui->create_dynamic_modal(game, "modal_invoke");
 	_ui->modal_inspect->show = false;
 	_ui->modal_help->show = false;
 	_ui->modal_tithe->show = false;
@@ -82,6 +83,7 @@ auto Sorcery::Temple::start(Game *game) -> int {
 	_ui->modal_drop->show = false;
 	_ui->modal_trade->show = false;
 	_ui->modal_use->show = false;
+	_ui->modal_invoke->show = false;
 
 	_ui->input_donate->show = false;
 	_ui->input_donate->initialise(game);

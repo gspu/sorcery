@@ -116,6 +116,12 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 			_items.emplace_back(
 				std::format("{:^{}}", (*_system->strings)[source], _width));
 
+	} else if (_component->name == "modal_invoke") {
+		sources.insert(sources.end(), {"INVOKE_RETURN"});
+		for (const auto &source : sources)
+			_items.emplace_back(
+				std::format("{:^{}}", (*_system->strings)[source], _width));
+
 	} else if (_component->name == "inspect_menu") {
 		sources.insert(sources.end(), {"INSPECT_RETURN"});
 		for (const auto &source : sources)

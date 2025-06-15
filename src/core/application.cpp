@@ -31,13 +31,8 @@
 #include "frontend/mainmenu.hpp"
 #include "frontend/splash.hpp"
 #include "gui/define.hpp"
-// #include "modules/add.hpp"
 #include "modules/castle.hpp"
-// #include "modules/choose.hpp"
 #include "modules/edgeoftown.hpp"
-// #include "modules/remove.hpp"
-// #include "modules/roster.hpp"
-// #include "modules/stay.hpp"
 #include "types/game.hpp"
 #include "types/state.hpp"
 
@@ -363,10 +358,8 @@ auto Sorcery::Application::_add_quickstart_party() -> void {
 		case Class::BISHOP:
 			pc.inventory.add_type((*_resources->items)[TypeID::ROBES], true);
 			pc.inventory.add_type((*_resources->items)[TypeID::STAFF], true);
-			pc.inventory.add_type((*_resources->items)[TypeID::POTION_OF_DIOS],
-								  true);
 			pc.inventory.add_type(
-				(*_resources->items)[TypeID::PLATE_MAIL_PLUS_2], false);
+				(*_resources->items)[TypeID::AMULET_OF_WERDNA], true);
 			break;
 		case Class::THIEF:
 		case Class::NINJA:

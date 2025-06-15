@@ -66,12 +66,14 @@ auto Sorcery::Inn::start(Game *game) -> int {
 	_ui->create_dynamic_modal(game, "modal_drop");
 	_ui->create_dynamic_modal(game, "modal_trade");
 	_ui->create_dynamic_modal(game, "modal_use");
+	_ui->create_dynamic_modal(game, "modal_invoke");
 	_ui->modal_inspect->show = false;
 	_ui->modal_stay->show = false;
 	_ui->modal_identify->show = false;
 	_ui->modal_drop->show = false;
 	_ui->modal_trade->show = false;
 	_ui->modal_use->show = false;
+	_ui->modal_invoke->show = false;
 
 	_controller->clear_character("inspect");
 	_controller->clear_character("stay");

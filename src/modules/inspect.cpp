@@ -93,6 +93,10 @@ auto Sorcery::Inspect::start(Game *game, const int mode, const int start_char)
 					_ui->modal_use->show = false;
 					_controller->unset_flag("want_use");
 				}
+				if (_ui->modal_invoke->show) {
+					_ui->modal_invoke->show = false;
+					_controller->unset_flag("want_invoke");
+				}
 				if (_ui->modal_trade->show) {
 					_ui->modal_trade->show = false;
 					_controller->unset_flag("want_trade");

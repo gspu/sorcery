@@ -90,12 +90,12 @@ auto Sorcery::Engine::start(Game *game, const int mode) -> int {
 			_controller->check_for_debug(event);
 
 			// Don't do anything else whilst a Dialog or Popup etc is up
-			auto in_popup{_ui->dialog_leave->show || _ui->modal_camp->show ||
-						  _ui->message_tile->show ||
-						  _ui->modal_identify->show || _ui->modal_drop->show ||
-						  _ui->dialog_stairs_down->show ||
-						  _ui->modal_use->show || _ui->dialog_stairs_up->show ||
-						  _ui->modal_trade->show};
+			auto in_popup{
+				_ui->dialog_leave->show || _ui->modal_camp->show ||
+				_ui->message_tile->show || _ui->modal_identify->show ||
+				_ui->modal_drop->show || _ui->dialog_stairs_down->show ||
+				_ui->modal_use->show || _ui->modal_invoke->show ||
+				_ui->dialog_stairs_up->show || _ui->modal_trade->show};
 			if (!in_popup) {
 
 				// Check for UI toggles
@@ -270,6 +270,7 @@ auto Sorcery::Engine::_start_expedition(const int mode) -> bool {
 		_ui->modal_identify->show = false;
 		_ui->modal_drop->show = false;
 		_ui->modal_use->show = false;
+		_ui->modal_invoke->show = false;
 		_ui->modal_trade->show = false;
 	}
 }
