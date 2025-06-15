@@ -174,12 +174,12 @@ auto Sorcery::Character::get_name() const -> std::string {
 
 auto Sorcery::Character::get_name_and_status() const -> std::string {
 
-	return fmt::format("{:<16} {:>12}", _name, get_status_string());
+	return std::format("{:<16} {:>12}", _name, get_status_string());
 }
 
 auto Sorcery::Character::get_name_and_loc() const -> std::string {
 
-	return fmt::format("{:<16} B{}F {:>2}N/{:>2}E", _name,
+	return std::format("{:<16} B{}F {:>2}N/{:>2}E", _name,
 					   std::abs(depth.value()), coordinate.value().y,
 					   coordinate.value().x);
 }
@@ -1446,7 +1446,7 @@ auto Sorcery::Character::_update_stat_for_level(
 
 			if (proceed) {
 				_cur_attr.at(attribute) = _cur_attr.at(attribute) - 1;
-				message = fmt::format("{} {}",
+				message = std::format("{} {}",
 									  (*_system->strings)["LEVEL_LOSS"], stat);
 				if (_cur_attr.at(attribute) < 1)
 					_cur_attr.at(attribute) = 1;
@@ -1456,7 +1456,7 @@ auto Sorcery::Character::_update_stat_for_level(
 				_cur_attr.at(attribute) = _cur_attr.at(attribute) + 1;
 				if (_cur_attr.at(attribute) > _max_attr.at(attribute))
 					_max_attr.at(attribute) = _cur_attr.at(attribute);
-				message = fmt::format("{} {}",
+				message = std::format("{} {}",
 									  (*_system->strings)["LEVEL_GAIN"], stat);
 			}
 		}
@@ -1527,7 +1527,7 @@ auto Sorcery::Character::level_up() -> void {
 	// handle hp
 	const auto hp_gained{_update_hp_for_level()};
 	const auto hp_message{
-		fmt::format("{} {} {}", (*_system->strings)["LEVEL_HP_PREFIX"],
+		std::format("{} {} {}", (*_system->strings)["LEVEL_HP_PREFIX"],
 					hp_gained, (*_system->strings)["LEVEL_HP_SUFFIX"])};
 	level_up_results.emplace_back(hp_message);
 
@@ -2141,9 +2141,9 @@ auto Sorcery::Character::get_condition() const -> std::string {
 auto Sorcery::Character::get_short_cond() const -> std::string {
 
 	if (_status != Enums::Character::CStatus::OK)
-		return fmt::format("{:>6}", _get_condition());
+		return std::format("{:>6}", _get_condition());
 	else
-		return fmt::format("{:>4}",
+		return std::format("{:>4}",
 						   _abilities.at(Enums::Character::Ability::MAX_HP));
 }
 
@@ -2304,7 +2304,7 @@ auto Sorcery::Character::set_poisoned_rate(int value) -> void {
 auto Sorcery::Character::get_poisoned_string() const -> std::string {
 
 	return _abilities.at(Enums::Character::Ability::POISON_STRENGTH) > 0
-			   ? fmt::format(
+			   ? std::format(
 					 "{:->2}",
 					 _abilities.at(Enums::Character::Ability::POISON_STRENGTH))
 			   : "";
@@ -2317,7 +2317,7 @@ auto Sorcery::Character::get_short_hp_summary() const -> std::string {
 
 auto Sorcery::Character::get_hp_summary() const -> std::string {
 
-	return fmt::format(
+	return std::format(
 		"{}/{}{}",
 		std::to_string(_abilities.at(Enums::Character::Ability::CURRENT_HP)),
 		std::to_string(_abilities.at(Enums::Character::Ability::MAX_HP)),
@@ -2348,10 +2348,10 @@ auto Sorcery::Character::_get_sp_per_level(const Enums::Magic::SpellType type,
 										   int level) -> std::string {
 
 	if (type == Enums::Magic::SpellType::MAGE)
-		return fmt::format("{}/{}", std::to_string(_mage_cur_sp[level]),
+		return std::format("{}/{}", std::to_string(_mage_cur_sp[level]),
 						   std::to_string(_mage_max_sp[level]));
 	else
-		return fmt::format("{}/{}", std::to_string(_priest_cur_sp[level]),
+		return std::format("{}/{}", std::to_string(_priest_cur_sp[level]),
 						   std::to_string(_priest_max_sp[level]));
 }
 
@@ -2360,9 +2360,9 @@ auto Sorcery::Character::_get_mage_status(bool current) -> std::string {
 	auto value{""s};
 	for (auto level = 1; level <= 7; level++)
 		if (current)
-			value.append(fmt::format(" {} ", _mage_cur_sp[level]));
+			value.append(std::format(" {} ", _mage_cur_sp[level]));
 		else
-			value.append(fmt::format("({})", _mage_max_sp[level]));
+			value.append(std::format("({})", _mage_max_sp[level]));
 
 	RTRIM(value);
 	return value;
@@ -2373,9 +2373,9 @@ auto Sorcery::Character::_get_priest_status(bool current) -> std::string {
 	auto value{""s};
 	for (auto level = 1; level <= 7; level++)
 		if (current)
-			value.append(fmt::format(" {} ", _priest_cur_sp[level]));
+			value.append(std::format(" {} ", _priest_cur_sp[level]));
 		else
-			value.append(fmt::format("({})", _priest_max_sp[level]));
+			value.append(std::format("({})", _priest_max_sp[level]));
 
 	RTRIM(value);
 	return value;
@@ -2390,7 +2390,7 @@ auto Sorcery::Character::get_summary() -> std::string {
 	// if (_display->get_upper())
 	//	std::ranges::transform(name.begin(), name.end(), name.begin(),
 	//						   ::toupper);
-	return fmt::format("{:<15} L {:>2} {}-{} {}", name,
+	return std::format("{:<15} L {:>2} {}-{} {}", name,
 					   _abilities.at(Enums::Character::Ability::CURRENT_LEVEL),
 					   alignment_to_str(_alignment).substr(0, 1),
 					   class_to_str(_class).substr(0, 3),
@@ -2412,7 +2412,7 @@ auto Sorcery::Character::get_summary_and_out() -> std::string {
 			return "    ";
 	})};
 
-	return fmt::format("{:<15} L {:>2} {}-{} {}{:>5}", name,
+	return std::format("{:<15} L {:>2} {}-{} {}{:>5}", name,
 					   _abilities.at(Enums::Character::Ability::CURRENT_LEVEL),
 					   alignment_to_str(_alignment).substr(0, 1),
 					   class_to_str(_class).substr(0, 3),
@@ -2460,7 +2460,7 @@ auto Sorcery::Character::get_party_panel_text(const int position)
 				_abilities.at(Enums::Character::Ability::NEXT_LEVEL_XP)
 			? "*"
 			: " "};
-	return fmt::format(
+	return std::format(
 		"{}{}{:<15} {}-{} {:>2} {:>4}{}{:<6}", position, can_level, name,
 		alignment_to_str(_alignment).substr(0, 1),
 		class_to_str(_class).substr(0, 3), get_cur_ac(), get_short_hp_summary(),
@@ -2492,27 +2492,27 @@ auto Sorcery::Character::summary_text() -> std::string {
 	case Stage::CHOOSE_METHOD:
 		[[fallthrough]];
 	case Stage::ENTER_NAME:
-		return fmt::format("{:<15} L ?? ?-??? ???", "???");
+		return std::format("{:<15} L ?? ?-??? ???", "???");
 		break;
 	case Stage::CHOOSE_RACE:
-		return fmt::format("{:<15} L {:>2} ?-??? ???", name, level);
+		return std::format("{:<15} L {:>2} ?-??? ???", name, level);
 		break;
 	case Stage::CHOOSE_ALIGNMENT:
-		return fmt::format("{:<15} L {:>2} ?-??? {}", name, level,
+		return std::format("{:<15} L {:>2} ?-??? {}", name, level,
 						   race_to_str(_race));
 		break;
 	case Stage::ALLOCATE_STATS:
-		return fmt::format("{:<15} L {:>2} {}-??? {}", name, level,
+		return std::format("{:<15} L {:>2} {}-??? {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   race_to_str(_race));
 		break;
 	case Stage::CHOOSE_CLASS:
-		return fmt::format("{:<15} L {:>2} {}-??? {}", name, level,
+		return std::format("{:<15} L {:>2} {}-??? {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   race_to_str(_race));
 		break;
 	case Stage::CHOOSE_PORTRAIT:
-		return fmt::format("{:<15} L {:>2} {}-{} {}", name, level,
+		return std::format("{:<15} L {:>2} {}-{} {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   class_to_str(_class).substr(0, 3),
 						   race_to_str(_race));
@@ -2520,7 +2520,7 @@ auto Sorcery::Character::summary_text() -> std::string {
 	case Stage::REVIEW_AND_CONFIRM:
 		[[fallthrough]];
 	case Stage::COMPLETED:
-		return fmt::format("{} L {:>2} {}-{} {}{}", name, level,
+		return std::format("{} L {:>2} {}-{} {}{}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   class_to_str(_class).substr(0, 3),
 						   race_to_str(_race), legacy);
@@ -2634,7 +2634,7 @@ auto operator<<(std::ostream &out_stream, const Sorcery::Character &character)
 	auto alignment{character.get_alignment()};
 	auto hp{character.get_hp_summary()};
 
-	auto body{fmt::format(
+	auto body{std::format(
 		"{:<15} {:>2} {}-{} {:>3} {:>6} {:^10}", name, character.get_level(),
 		character.alignment_to_str(alignment).substr(0, 1),
 		character.class_to_str(cclass).substr(0, 3), character.get_cur_ac(),

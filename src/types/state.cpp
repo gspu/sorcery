@@ -51,15 +51,15 @@ auto Sorcery::State::print() -> void {
 
 	auto text{"State:\n\n"s};
 
-	text.append(fmt::format("{}\n", _version));
-	text.append(fmt::format("{}\n", _player_depth));
-	text.append(fmt::format("{}\\{}\n", _player_pos.x, _player_pos.y));
-	text.append(fmt::format("{}\n", (int)_playing_facing));
-	text.append(fmt::format("{}\n", _lit));
-	text.append(fmt::format("{}\n\n[", _turns));
+	text.append(std::format("{}\n", _version));
+	text.append(std::format("{}\n", _player_depth));
+	text.append(std::format("{}\\{}\n", _player_pos.x, _player_pos.y));
+	text.append(std::format("{}\n", (int)_playing_facing));
+	text.append(std::format("{}\n", _lit));
+	text.append(std::format("{}\n\n[", _turns));
 
 	for (const auto id : _party) {
-		auto line{fmt::format("{},", id)};
+		auto line{std::format("{},", id)};
 		text.append(line);
 	}
 	text.append("]\n");
@@ -336,7 +336,7 @@ auto Sorcery::State::add_log_dice_roll(const std::string &message,
 
 	if (dice != -1 || roll != -1 || needed != -1) {
 		const auto success{roll < needed ? "SUCCESS" : "FAILURE"};
-		const auto string{fmt::format("{} ({})", message, success)};
+		const auto string{std::format("{} ({})", message, success)};
 		add_log_message(_system->dice_roll_to_str(string, dice, roll, needed),
 						Enums::Internal::MessageType::ROLL);
 	} else
@@ -405,10 +405,10 @@ auto Sorcery::State::get_shop_display(ItemStore *itemstore,
 		if (_shop[unenum(item_type)].current_stock == -1)
 			return std::string{"(*)"};
 		else
-			return fmt::format("({})", _shop[unenum(item_type)].current_stock);
+			return std::format("({})", _shop[unenum(item_type)].current_stock);
 	})};
 
-	const std::string line{fmt::format("{:>16} {:<5} {:>7} GP",
+	const std::string line{std::format("{:>16} {:<5} {:>7} GP",
 									   item.get_display_name(), flag,
 									   item.get_value())};
 

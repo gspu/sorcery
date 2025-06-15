@@ -226,23 +226,23 @@ auto Sorcery::UI::_get_popups() const -> std::string {
 			if (type == "modal") {
 				auto casted{(Modal *)component};
 				auto name{casted->name()};
-				return fmt::format("{:>26}: {}\n", name, casted->show);
+				return std::format("{:>26}: {}\n", name, casted->show);
 			} else if (type == "dialog") {
 				auto casted{(Dialog *)component};
 				auto name{casted->name()};
-				return fmt::format("{:>26}: {}\n", name, casted->show);
+				return std::format("{:>26}: {}\n", name, casted->show);
 			} else if (type == "message") {
 				auto casted{(Message *)component};
 				auto name{casted->name()};
-				return fmt::format("{:>26}: {}\n", name, casted->show);
+				return std::format("{:>26}: {}\n", name, casted->show);
 			} else if (type == "popup") {
 				auto casted{(Popup *)component};
 				auto name{casted->name()};
-				return fmt::format("{:>26}: {}\n", name, casted->show);
+				return std::format("{:>26}: {}\n", name, casted->show);
 			} else if (type == "input") {
 				auto casted{(Input *)component};
 				auto name{casted->name()};
-				return fmt::format("{:>26}: {}\n", name, casted->show);
+				return std::format("{:>26}: {}\n", name, casted->show);
 			}
 		}
 	};
@@ -1043,7 +1043,7 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos = ImVec2{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Strength",
+		std::format("{:>14} {:>2}", "Strength",
 					character->get_cur_attr(Attribute::STRENGTH))
 			.c_str());
 
@@ -1052,31 +1052,31 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Atk Mod",
+		std::format("{:>14} {:+>2}", "Atk Mod",
 					character->abilities().at(Ability::ATTACK_MODIFIER))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Hit Prob",
+		std::format("{:>14} {:+>2}", "Hit Prob",
 					character->abilities().at(Ability::HIT_PROBABILITY))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Bonus Damg",
+		std::format("{:>14} {:+>2}", "Bonus Damg",
 					character->abilities().at(Ability::BONUS_DAMAGE))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Num Attacks",
+		std::format("{:>14} {:>2}", "Num Attacks",
 					character->abilities().at(Ability::BASE_NUMBER_OF_ATTACKS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Unarmed Damg",
+		std::format("{:>14} {:>2}", "Unarmed Damg",
 					character->abilities().at(Ability::UNARMED_DAMAGE))
 			.c_str());
 
@@ -1085,7 +1085,7 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += (adj_grid_h * 2);
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Vitality",
+		std::format("{:>14} {:>2}", "Vitality",
 					character->get_cur_attr(Attribute::VITALITY))
 			.c_str());
 
@@ -1094,31 +1094,31 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Vit Bonus",
+		std::format("{:>14} {:+>2}", "Vit Bonus",
 					character->abilities().at(Ability::VITALITY_BONUS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Bonus HP",
+		std::format("{:>14} {:+>2}", "Bonus HP",
 					character->abilities().at(Ability::BONUS_HIT_POINTS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Ress / Dead",
+		std::format("{:>14} {:>2}%", "Ress / Dead",
 					character->abilities().at(Ability::DEAD_RESURRECT))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Ress / Ashes",
+		std::format("{:>14} {:>2}%", "Ress / Ashes",
 					character->abilities().at(Ability::ASHES_RESURRECT))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Ress / Spell",
+		std::format("{:>14} {:>2}%", "Ress / Spell",
 					character->abilities().at(Ability::DI_KADORTO_RESURRECT))
 			.c_str());
 
@@ -1126,7 +1126,7 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	ImGui::SetCursorPos(pos);
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
-	ImGui::TextUnformatted(fmt::format("{:>14} {:>2}", "I.Q.",
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "I.Q.",
 									   character->get_cur_attr(Attribute::IQ))
 							   .c_str());
 
@@ -1135,25 +1135,25 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Spell Learn",
+		std::format("{:>14} {:>2}%", "Spell Learn",
 					character->abilities().at(Ability::MAGE_SPELL_LEARN))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "ID Items",
+		std::format("{:>14} {:>2}%", "ID Items",
 					character->abilities().at(Ability::IDENTIFY_ITEMS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "ID Curse",
+		std::format("{:>14} {:>2}%", "ID Curse",
 					character->abilities().at(Ability::IDENTIFY_CURSE))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "ID Foes",
+		std::format("{:>14} {:>2}%", "ID Foes",
 					character->abilities().at(Ability::IDENTIFY_FOES))
 			.c_str());
 
@@ -1162,7 +1162,7 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += (adj_grid_h * 2);
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Agility",
+		std::format("{:>14} {:>2}", "Agility",
 					character->get_cur_attr(Attribute::AGILITY))
 			.c_str());
 
@@ -1171,37 +1171,37 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:+>2}", "Int Mod",
+		std::format("{:>14} {:+>2}", "Int Mod",
 					character->abilities().at(Ability::INITIATIVE_MODIFIER))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Crit Hit",
+		std::format("{:>14} {:>2}%", "Crit Hit",
 					character->abilities().at(Ability::BASE_CRITICAL_HIT))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "ID Trap",
+		std::format("{:>14} {:>2}%", "ID Trap",
 					character->abilities().at(Ability::IDENTIFY_TRAP))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Disarm Trap",
+		std::format("{:>14} {:>2}%", "Disarm Trap",
 					character->abilities().at(Ability::BASE_DISARM_TRAP))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Avoid Trap",
+		std::format("{:>14} {:>2}%", "Avoid Trap",
 					100 - character->abilities().at(Ability::ACTIVATE_TRAP))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Avoid Pit",
+		std::format("{:>14} {:>2}%", "Avoid Pit",
 					character->abilities().at(Ability::BASE_AVOID_PIT))
 			.c_str());
 }
@@ -1229,7 +1229,7 @@ auto Sorcery::UI::_draw_character_mage_spells(Component *component,
 		auto comp_id{""s};
 		auto spell_idx{0};
 		for (const auto index : spell_order) {
-			comp_id = fmt::format("##spell_{}", spell_idx);
+			comp_id = std::format("##spell_{}", spell_idx);
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
@@ -1285,7 +1285,7 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 		auto comp_id{""s};
 		auto spell_idx{0};
 		for (const auto index : spell_order) {
-			comp_id = fmt::format("##spell_{}", spell_idx);
+			comp_id = std::format("##spell_{}", spell_idx);
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
@@ -1331,7 +1331,7 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	ImVec2 pos{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}", "Piety",
+		std::format("{:>14} {:>2}", "Piety",
 					character->get_cur_attr(Attribute::PIETY))
 			.c_str());
 
@@ -1340,19 +1340,19 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Spell Learn",
+		std::format("{:>14} {:>2}%", "Spell Learn",
 					character->abilities().at(Ability::PRIEST_SPELL_LEARN))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Rec Chance",
+		std::format("{:>14} {:>2}%", "Rec Chance",
 					character->abilities().at(Ability::LOKTOFELT_SUCCESS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Base Dispell",
+		std::format("{:>14} {:>2}%", "Base Dispell",
 					character->abilities().at(Ability::BASE_DISPELL))
 			.c_str());
 
@@ -1360,7 +1360,7 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	pos.y += (adj_grid_h * 2);
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(fmt::format("{:>14} {:>2}", "Luck",
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "Luck",
 									   character->get_cur_attr(Attribute::LUCK))
 							   .c_str());
 	set_StyleColor(ImGuiCol_Text,
@@ -1368,12 +1368,12 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Res Bonus",
+		std::format("{:>14} {:>2}%", "Res Bonus",
 					character->abilities().at(Ability::BASE_RESIST_BONUS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(fmt::format("{:>14} {:>2}%", "Wipe Rec",
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}%", "Wipe Rec",
 									   character->abilities().at(
 										   Ability::EQUIPMENT_INTACT_ON_WIPE))
 							   .c_str());
@@ -1382,21 +1382,21 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	ImGui::SetCursorPos(pos);
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
-	ImGui::TextUnformatted(fmt::format("{:>14}", "Resistances").c_str());
+	ImGui::TextUnformatted(std::format("{:>14}", "Resistances").c_str());
 
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(
+		std::format(
 			"{:>14} {:>2}%", "vs Crit Hit",
 			character->abilities().at(Ability::RESISTANCE_VS_CRITICAL_HIT) * 5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(
+		std::format(
 			"{:>14} {:>2}%", "vs Pois / Para",
 			character->abilities().at(Ability::RESISTANCE_VS_POISON_PARALYSIS) *
 				5)
@@ -1404,14 +1404,14 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "vs Stoning",
+		std::format("{:>14} {:>2}%", "vs Stoning",
 					character->abilities().at(Ability::RESISTANCE_VS_STONING) *
 						5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(
+		std::format(
 			"{:>14} {:>2}%", "vs Breath",
 			character->abilities().at(Ability::RESISTANCE_VS_BREATH_ATTACKS) *
 				5)
@@ -1419,7 +1419,7 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(
+		std::format(
 			"{:>14} {:>2}%", "vs Gas Trap",
 			character->abilities().at(Ability::RESISTANCE_VS_POISON_GAS_TRAP) *
 				5)
@@ -1427,7 +1427,7 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(
+		std::format(
 			"{:>14} {:>2}%", "vs Spell Trap",
 			character->abilities().at(Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP) *
 				5)
@@ -1435,39 +1435,39 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "vs Silence",
+		std::format("{:>14} {:>2}%", "vs Silence",
 					character->abilities().at(Ability::RESISTANCE_VS_SILENCE) *
 						5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "vs Sleep",
+		std::format("{:>14} {:>2}%", "vs Sleep",
 					character->abilities().at(Ability::RESISTANCE_VS_KATINO))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "vs Death",
+		std::format("{:>14} {:>2}%", "vs Death",
 					character->abilities().at(Ability::RESISTANCE_VS_BADI))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "vs Statue",
+		std::format("{:>14} {:>2}%", "vs Statue",
 					character->abilities().at(Ability::RESISTANCE_VS_MANIFO))
 			.c_str());
 
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Rec / Sleep",
+		std::format("{:>14} {:>2}%", "Rec / Sleep",
 					character->abilities().at(Ability::RECOVER_FROM_SLEEP) * 5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>14} {:>2}%", "Rec / Fear",
+		std::format("{:>14} {:>2}%", "Rec / Fear",
 					character->abilities().at(Ability::RECOVER_FROM_FEAR) * 5)
 			.c_str());
 }
@@ -1487,79 +1487,79 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 	pos = ImVec2{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>8} {:>2}", "Strength",
+		std::format("{:>8} {:>2}", "Strength",
 					character->get_cur_attr(Attribute::STRENGTH))
 			.c_str());
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 1) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(fmt::format("{:>8} {:>2}", "I.Q.",
+	ImGui::TextUnformatted(std::format("{:>8} {:>2}", "I.Q.",
 									   character->get_cur_attr(Attribute::IQ))
 							   .c_str());
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 2) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>8} {:>2}", "Piety",
+		std::format("{:>8} {:>2}", "Piety",
 					character->get_cur_attr(Attribute::PIETY))
 			.c_str());
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 3) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>8} {:>2}", "Vitality",
+		std::format("{:>8} {:>2}", "Vitality",
 					character->get_cur_attr(Attribute::VITALITY))
 			.c_str());
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 4) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:>8} {:>2}", "Agility",
+		std::format("{:>8} {:>2}", "Agility",
 					character->get_cur_attr(Attribute::AGILITY))
 			.c_str());
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 5) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(fmt::format("{:>8} {:>2}", "Luck",
+	ImGui::TextUnformatted(std::format("{:>8} {:>2}", "Luck",
 									   character->get_cur_attr(Attribute::LUCK))
 							   .c_str());
 
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 7) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	auto mage{fmt::format(
+	auto mage{std::format(
 		"{}/{}/{}/{}/{}/{}/{}", character->mage_cur_sp().at(1),
 		character->mage_cur_sp().at(2), character->mage_cur_sp().at(3),
 		character->mage_cur_sp().at(4), character->mage_cur_sp().at(5),
 		character->mage_cur_sp().at(6), character->mage_cur_sp().at(7))};
-	ImGui::TextUnformatted(fmt::format("Mage {}", mage).c_str());
+	ImGui::TextUnformatted(std::format("Mage {}", mage).c_str());
 
 	pos = ImVec2{middle_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<6} {:>10}", "Gold", character->get_gold()).c_str());
+		std::format("{:<6} {:>10}", "Gold", character->get_gold()).c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 1) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<6} {:>10}", "E.P.", character->get_cur_xp()).c_str());
+		std::format("{:<6} {:>10}", "E.P.", character->get_cur_xp()).c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 2) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<6} {:>10}", "Next", character->get_next_xp()).c_str());
+		std::format("{:<6} {:>10}", "Next", character->get_next_xp()).c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 3) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<6} {:>10}", "Marks",
+		std::format("{:<6} {:>10}", "Marks",
 					character->abilities().at(Ability::MARKS))
 			.c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 4) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<4} {}/{}", "H.P.",
+		std::format("{:<4} {}/{}", "H.P.",
 					character->abilities().at(Ability::CURRENT_HP),
 					character->abilities().at(Ability::MAX_HP))
 			.c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 5) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("{:<6} {:>18}", "Status", character->get_status_string())
+		std::format("{:<6} {:>18}", "Status", character->get_status_string())
 			.c_str());
 
-	auto priest{fmt::format(
+	auto priest{std::format(
 		"{}/{}/{}/{}/{}/{}/{}", character->priest_cur_sp().at(1),
 		character->priest_cur_sp().at(2), character->priest_cur_sp().at(3),
 		character->priest_cur_sp().at(4), character->priest_cur_sp().at(5),
@@ -1567,22 +1567,22 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 	pos = ImVec2{(component->x + 20) * adj_grid_w,
 				 (component->y + 7) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(fmt::format("Prst {}", priest).c_str());
+	ImGui::TextUnformatted(std::format("Prst {}", priest).c_str());
 
 	pos = ImVec2{right_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format("Swim{:>3}", character->abilities().at(Ability::SWIM))
+		std::format("Swim{:>3}", character->abilities().at(Ability::SWIM))
 			.c_str());
 	pos = ImVec2{right_col * adj_grid_w, (component->y + 1) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(" Age{:>3}", character->abilities().at(Ability::AGE) / 52)
+		std::format(" Age{:>3}", character->abilities().at(Ability::AGE) / 52)
 			.c_str());
 	pos = ImVec2{right_col * adj_grid_w, (component->y + 2) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		fmt::format(" RIP{:>3}", character->abilities().at(Ability::DEATHS))
+		std::format(" RIP{:>3}", character->abilities().at(Ability::DEATHS))
 			.c_str());
 
 	auto slot{1u};
@@ -1608,7 +1608,7 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 			pos = ImVec2{(component->y + 17) * adj_grid_w,
 						 (component->y + 9 + (slot - 1) / 2) * adj_grid_h};
 		ImGui::SetCursorPos(pos);
-		auto line{fmt::format("{}){}{}", slot, flag, item.get_display_name())};
+		auto line{std::format("{}){}{}", slot, flag, item.get_display_name())};
 		ImGui::TextUnformatted(line.c_str());
 		++slot;
 	}
@@ -1661,7 +1661,7 @@ auto Sorcery::UI::_draw_pay_info(Game *game) -> void {
 		game->characters.at(_controller->get_character("help"))};
 	const auto cost(character.get_cure_cost());
 	const auto cost_text{
-		fmt::format("{} {} {}", (*_system->strings)["PAY_COST_PREFIX"], cost,
+		std::format("{} {} {}", (*_system->strings)["PAY_COST_PREFIX"], cost,
 					(*_system->strings)["PAY_COST_SUFFIX"])};
 	auto cmp{(*components)["pay:pay_cost"]};
 	_draw_text(&cmp, cost_text);
@@ -1674,7 +1674,7 @@ auto Sorcery::UI::_draw_no_level_up(Game *game, const int mode) -> void {
 	const auto birth_text{(*_system->strings)["REST_BIRTHDAY_YOU"]};
 	const auto needed{character.get_next_xp() - character.get_cur_xp()};
 	const auto need_text{
-		fmt::format("{}{}{}", (*_system->strings)["REST_NEED_1_P"], needed,
+		std::format("{}{}{}", (*_system->strings)["REST_NEED_1_P"], needed,
 					(*_system->strings)["REST_NEED_1_S"])};
 	const auto make_text{(*_system->strings)["REST_NEED_2"]};
 
@@ -1750,24 +1750,24 @@ auto Sorcery::UI::_draw_recovery(Game *game, const int mode) -> void {
 	if (mode & RECOVERY_MODE_FREE) {
 
 		auto cmp{(*components)["recovery:recovery_napping"]};
-		auto text{fmt::format("{}{}", character.get_name(),
+		auto text{std::format("{}{}", character.get_name(),
 							  (*_system->strings)["RECOVERY_NAPPING"])};
 		_draw_text(&cmp, text);
 
 	} else {
 
 		auto cmp{(*components)["recovery:recovery_recuperating"]};
-		auto text{fmt::format("{} {}", character.get_name(),
+		auto text{std::format("{} {}", character.get_name(),
 							  (*_system->strings)["REST_RECUPERATING"])};
 		_draw_text(&cmp, text);
 
 		cmp = (*components)["recovery:recovery_recuperating_hp"];
-		text = fmt::format("{} ({:>5}/{:>5})", (*_system->strings)["REST_HP"],
+		text = std::format("{} ({:>5}/{:>5})", (*_system->strings)["REST_HP"],
 						   character.get_current_hp(), character.get_max_hp());
 		_draw_text(&cmp, text);
 
 		cmp = (*components)["recovery:recovery_recuperating_gold"];
-		text = fmt::format("{} {:>7}", (*_system->strings)["REST_GOLD"],
+		text = std::format("{} {:>7}", (*_system->strings)["REST_GOLD"],
 						   character.get_gold());
 		_draw_text(&cmp, text);
 
@@ -1785,13 +1785,13 @@ auto Sorcery::UI::_draw_stay(Game *game) -> void {
 		game->characters.at(_controller->get_character("stay"))};
 
 	auto cmp_welcome{(*components)["stay:stay_welcome"]};
-	auto welcome_text{fmt::format(
+	auto welcome_text{std::format(
 		"{}{}{}", (*_system->strings)["STAY_WELCOME_P"], character.get_name(),
 		(*_system->strings)["STAY_WELCOME_S"])};
 	_draw_text(&cmp_welcome, welcome_text);
 
 	auto cmp_gold{(*components)["stay:stay_gold"]};
-	auto gold_text{fmt::format("{}{}{}", (*_system->strings)["STAY_GOLD_P"],
+	auto gold_text{std::format("{}{}{}", (*_system->strings)["STAY_GOLD_P"],
 							   character.get_gold(),
 							   (*_system->strings)["STAY_GOLD_S"])};
 	_draw_text(&cmp_gold, gold_text);
@@ -1983,7 +1983,7 @@ auto Sorcery::UI::_draw_item_info() -> void {
 
 	with_Window(WINDOW_LAYER_MENUS, nullptr, ImGuiWindowFlags_NoDecoration) {
 
-		const auto name{fmt::format("  {:>03}:{}/{}", idx + 1,
+		const auto name{std::format("  {:>03}:{}/{}", idx + 1,
 									item.get_known_name(),
 									item.get_unknown_name())};
 
@@ -2013,11 +2013,11 @@ auto Sorcery::UI::_draw_item_info() -> void {
 					auto it_cat{CAPITALISE(item_category)};
 					const std::string it_cursed{
 						item.get_cursed() == true ? "Yes" : "No"};
-					const auto cat{fmt::format(" Type:{}", it_cat)};
-					const auto cost{fmt::format(" Cost:{}", item.get_value())};
-					const auto curse{fmt::format("Curse:{}", it_cursed)};
+					const auto cat{std::format(" Type:{}", it_cat)};
+					const auto cost{std::format(" Cost:{}", item.get_value())};
+					const auto curse{std::format("Curse:{}", it_cursed)};
 					const auto allow{
-						fmt::format("Allow:{}", item.get_equippable_display())};
+						std::format("Allow:{}", item.get_equippable_display())};
 					ImGui::TextUnformatted(cat.c_str());
 					ImGui::TextUnformatted(allow.c_str());
 					ImGui::TextUnformatted(cost.c_str());
@@ -2034,14 +2034,14 @@ auto Sorcery::UI::_draw_item_info() -> void {
 					set_StyleColor(
 						ImGuiCol_Text,
 						ImVec4{0.8f, 0.8f, 0.8f, _system->animation->fade});
-					const auto ac{fmt::format(
+					const auto ac{std::format(
 						"   AC:{}", std::to_string(item.get_ac_mod()))};
-					auto value{fmt::format(fmt::runtime("{:+d}"),
+					auto value{std::format("{:+d}",
 										   item.get_to_hit_mod())};
-					auto hit{fmt::format("  Hit:{:}", value)};
+					auto hit{std::format("  Hit:{:}", value)};
 					const auto damage{
-						fmt::format("  Dam:{}", item.get_damage())};
-					const auto atks{fmt::format(
+						std::format("  Dam:{}", item.get_damage())};
+					const auto atks{std::format(
 						" Atks:{}", std::to_string(item.get_swings()))};
 
 					ImGui::TextUnformatted(atks.c_str());
@@ -2344,7 +2344,7 @@ auto Sorcery::UI::_draw_options() -> void {
 					for (const auto &opt : summary_opts) {
 						if (opt.length() > 0) {
 							const auto text{
-								fmt::format(" {}", (*_system->strings)[opt])};
+								std::format(" {}", (*_system->strings)[opt])};
 							if (ImGui::Toggle(
 									text.c_str(),
 									&(*_system->config)[summary_idx])) {
@@ -2363,7 +2363,7 @@ auto Sorcery::UI::_draw_options() -> void {
 					for (const auto &opt : gameplay_opts) {
 						if (opt.length() > 0) {
 							const auto text{
-								fmt::format(" {}", (*_system->strings)[opt])};
+								std::format(" {}", (*_system->strings)[opt])};
 							if (ImGui::Toggle(
 									text.c_str(),
 									&(*_system->config)[gameplay_idx])) {
@@ -2383,7 +2383,7 @@ auto Sorcery::UI::_draw_options() -> void {
 					for (const auto &opt : graphics_opts) {
 						if (opt.length() > 0) {
 							const auto text{
-								fmt::format(" {}", (*_system->strings)[opt])};
+								std::format(" {}", (*_system->strings)[opt])};
 							if (ImGui::Toggle(
 									text.c_str(),
 									&(*_system->config)[graphics_idx])) {
@@ -2664,7 +2664,7 @@ auto Sorcery::UI::_draw_spell_info() -> void {
 								   .value()]};
 
 			const auto spell_name{
-				fmt::format("{} \"{}\"", spell.name, spell.translated_name)};
+				std::format("{} \"{}\"", spell.name, spell.translated_name)};
 			const auto spell_type{spell.type == Enums::Magic::SpellType::MAGE
 									  ? "Mage"
 									  : "Priest"};
@@ -2674,7 +2674,7 @@ auto Sorcery::UI::_draw_spell_info() -> void {
 					spell.category)};
 			std::transform(spell_category.begin(), spell_category.end(),
 						   spell_category.begin(), ::tolower);
-			auto summary{fmt::format("Level {} {} {} spell", spell.level,
+			auto summary{std::format("Level {} {} {} spell", spell.level,
 									 spell_type, spell_category)};
 
 			{
@@ -2717,7 +2717,7 @@ auto Sorcery::UI::_draw_monster_info() -> void {
 	ImVec2 pos{cmp.x * adj_grid_w, cmp.y * adj_grid_h};
 
 	with_Window(WINDOW_LAYER_MENUS, nullptr, ImGuiWindowFlags_NoDecoration) {
-		const auto name{fmt::format("  {:>03}:{}/{}", idx, mon.get_known_name(),
+		const auto name{std::format("  {:>03}:{}/{}", idx, mon.get_known_name(),
 									mon.get_unknown_name())};
 		ImGui::SetCursorPos(pos);
 		with_Child("bestiary_tab_bar_child",
@@ -2748,13 +2748,13 @@ auto Sorcery::UI::_draw_monster_info() -> void {
 					auto mon_c{CAPITALISE(mon_class)};
 					std::string type;
 					if (mon_c.length() > 0)
-						type = fmt::format(" Type:{} ({})", mon_t, mon_c);
+						type = std::format(" Type:{} ({})", mon_t, mon_c);
 					else
-						type = fmt::format(" Type:{}", mon_t);
-					const auto level{fmt::format("Level:{}", mon.get_level())};
-					const auto xp{fmt::format("   XP:{}", mon.get_xp())};
+						type = std::format(" Type:{}", mon_t);
+					const auto level{std::format("Level:{}", mon.get_level())};
+					const auto xp{std::format("   XP:{}", mon.get_xp())};
 					const auto group{
-						fmt::format("Group:{}", mon.get_group_size().str())};
+						std::format("Group:{}", mon.get_group_size().str())};
 					ImGui::TextUnformatted(type.c_str());
 					ImGui::TextUnformatted(level.c_str());
 					ImGui::TextUnformatted(xp.c_str());
@@ -2774,13 +2774,13 @@ auto Sorcery::UI::_draw_monster_info() -> void {
 						ImVec4{0.8f, 0.8f, 0.8f, _system->animation->fade});
 
 					const auto atks{
-						fmt::format(" Atks:{}", mon.get_attacks_str())};
+						std::format(" Atks:{}", mon.get_attacks_str())};
 					const auto ac{
-						fmt::format("   Ac:{}", mon.get_armour_class())};
+						std::format("   Ac:{}", mon.get_armour_class())};
 					const auto sr{
-						fmt::format("   SR:{}%", mon.get_spell_resistance())};
+						std::format("   SR:{}%", mon.get_spell_resistance())};
 					const auto hd{
-						fmt::format("   HD:{}", mon.get_hit_dice().str())};
+						std::format("   HD:{}", mon.get_hit_dice().str())};
 
 					ImGui::TextUnformatted(atks.c_str());
 					ImGui::TextUnformatted(ac.c_str());
@@ -3200,16 +3200,16 @@ auto Sorcery::UI::load_dynamic_menu_items(
 				if (character.get_location() ==
 					Enums::Character::Location::PARTY) {
 					if (flags & MENU_SHOW_POSITION)
-						items.emplace_back(fmt::format("{}:{:^19}", pos,
+						items.emplace_back(std::format("{}:{:^19}", pos,
 													   character.get_name()));
 
 					else if (flags & MENU_SHOW_GOLD)
-						items.emplace_back(fmt::format("{:<16} {:>8} G.P.",
+						items.emplace_back(std::format("{:<16} {:>8} G.P.",
 													   character.get_name(),
 													   character.get_gold()));
 					else
 						items.emplace_back(
-							fmt::format("{:^21}", character.get_name()));
+							std::format("{:^21}", character.get_name()));
 					data.emplace_back(id);
 					if (reorder)
 						controller->candidate_party.emplace_back(id);
@@ -3229,7 +3229,7 @@ auto Sorcery::UI::load_dynamic_menu_items(
 						Enums::Character::Location::MAZE &&
 					character.get_status() == Enums::Character::CStatus::OK) {
 					items.emplace_back(
-						fmt::format("{:^21}", character.get_name()));
+						std::format("{:^21}", character.get_name()));
 					data.emplace_back(id);
 				}
 			};
@@ -3245,7 +3245,7 @@ auto Sorcery::UI::load_dynamic_menu_items(
 				if (character.get_location() ==
 					Enums::Character::Location::TAVERN) {
 					items.emplace_back(
-						fmt::format("{:^21}", character.get_name()));
+						std::format("{:^21}", character.get_name()));
 					data.emplace_back(id);
 				}
 			}
@@ -3265,7 +3265,7 @@ auto Sorcery::UI::load_dynamic_menu_items(
 					character.get_status() == CStatus::HELD ||
 					character.get_status() == CStatus::STONED) {
 					items.emplace_back(
-						fmt::format("{:<16} {:>8}", character.get_name(),
+						std::format("{:<16} {:>8}", character.get_name(),
 									character.get_status_string()));
 					data.emplace_back(id);
 				}
@@ -3299,12 +3299,12 @@ auto Sorcery::UI::load_dynamic_menu_items(
 					if (flags & MENU_IDENTIFY_ITEM) {
 						if (item.get_known()) {
 							auto item_display{
-								fmt::format("{}){}{:<16}", slot, flag,
+								std::format("{}){}{:<16}", slot, flag,
 											item.get_display_name())};
 							items.emplace_back(item_display);
 						} else {
 							auto item_display{
-								fmt::format("{}){}{:<16} {:>5}%", slot, flag,
+								std::format("{}){}{:<16} {:>5}%", slot, flag,
 											item.get_display_name(), chance)};
 							items.emplace_back(item_display);
 						}
@@ -3316,12 +3316,12 @@ auto Sorcery::UI::load_dynamic_menu_items(
 							if (usage.length() > 0)
 								usage = usage.substr(5);
 							auto item_display{
-								fmt::format("{}){}{:<16} {:<16}", slot, flag,
+								std::format("{}){}{:<16} {:<16}", slot, flag,
 											item.get_display_name(), usage)};
 							items.emplace_back(item_display);
 						} else {
 							auto item_display{
-								fmt::format("{}){}{:<16}", slot, flag,
+								std::format("{}){}{:<16}", slot, flag,
 											item.get_display_name())};
 							items.emplace_back(item_display);
 						}
@@ -3329,7 +3329,7 @@ auto Sorcery::UI::load_dynamic_menu_items(
 					} else {
 
 						// Drop Menu handled here
-						auto item_display{fmt::format("{}){}{:<16}", slot, flag,
+						auto item_display{std::format("{}){}{:<16}", slot, flag,
 													  item.get_display_name())};
 						items.emplace_back(item_display);
 					}
@@ -3400,7 +3400,7 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"COMPENDIUM_SPELLBOOK", "COMPENDIUM_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "camp_menu") {
 		sources.insert(sources.end(),
@@ -3408,97 +3408,97 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"CAMP_QUIT", "CAMP_LEAVE"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "roster_menu") {
 		sources.insert(sources.end(), {"ROSTER_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "inspect_menu" || component == "modal_inspect") {
 		sources.insert(sources.end(), {"INSPECT_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "stay_menu" || component == "modal_stay") {
 		sources.insert(sources.end(), {"STAY_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "help_menu" || component == "modal_help") {
 		sources.insert(sources.end(), {"HELP_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "tithe_menu" || component == "modal_tithe") {
 		sources.insert(sources.end(), {"TITHE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "pay_menu") {
 		sources.insert(sources.end(), {"PAY_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "choose_menu") {
 		sources.insert(sources.end(), {"CHOOSE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "remove_menu") {
 		sources.insert(sources.end(), {"REMOVE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "add_menu") {
 		sources.insert(sources.end(), {"ADD_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "restart_menu") {
 		sources.insert(sources.end(), {"RESTART_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "modal_identify") {
 		sources.insert(sources.end(), {"IDENTIFY_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "modal_drop") {
 		sources.insert(sources.end(), {"DROP_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "modal_trade") {
 		sources.insert(sources.end(), {"TRADE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "modal_use") {
 		sources.insert(sources.end(), {"USE_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "reorder_menu") {
 		sources.insert(sources.end(), {"REORDER_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "castle_menu") {
 		sources.insert(sources.end(),
@@ -3506,14 +3506,14 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"CASTLE_TEMPLE", "CASTLE_EDGE_OF_TOWN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "rest_menu") {
 		sources.insert(sources.end(), {"STAY_1", "STAY_2", "STAY_3", "STAY_4",
 									   "STAY_5", "STAY_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 	} else if (component == "tavern_menu") {
 		sources.insert(sources.end(),
 					   {"TAVERN_ADD_TO_PARTY", "TAVERN_REMOVE_FROM_PARTY",
@@ -3521,28 +3521,28 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"TAVERN_DIVVY_GOLD", "TAVERN_CASTLE"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "inn_menu") {
 		sources.insert(sources.end(),
 					   {"INN_STAY", "INN_INSPECT", "INN_CASTLE"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "temple_menu") {
 		sources.insert(sources.end(), {"TEMPLE_HELP", "TEMPLE_INSPECT",
 									   "TEMPLE_TITHE", "TEMPLE_CASTLE"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "shop_menu") {
 		sources.insert(sources.end(),
 					   {"SHOP_ENTER", "SHOP_INSPECT", "SHOP_CASTLE"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "edge_menu") {
 		sources.insert(sources.end(),
@@ -3551,7 +3551,7 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"EDGE_OF_TOWN_LEAVE_GAME"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "atlas_menu") {
 		sources.insert(sources.end(),
@@ -3561,7 +3561,7 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"ATLAS_MENU_B10F", "ATLAS_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "training_menu") {
 		sources.insert(sources.end(),
@@ -3570,7 +3570,7 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"TRAINING_GROUNDS_RETURN"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "main_menu") {
 		sources.insert(sources.end(),
@@ -3580,7 +3580,7 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 						"MAIN_MENU_OPTION_LICENSE", "MAIN_MENU_OPTION_EXIT"});
 		for (const auto &source : sources)
 			items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], width));
+				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "bestiary_menu") {
 		const auto monster_types{_resources->monsters->get_all_types()};
@@ -3589,21 +3589,21 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 				continue;
 			auto mname{monster.get_known_name()};
 			auto mid{unenum(monster.get_type_id())};
-			auto padded{fmt::format("{:^{}}", mname, width)};
-			auto menu_item{fmt::format("{}##{}", padded, mid)};
-			items.emplace_back(fmt::format("{}", menu_item));
+			auto padded{std::format("{:^{}}", mname, width)};
+			auto menu_item{std::format("{}##{}", padded, mid)};
+			items.emplace_back(std::format("{}", menu_item));
 		}
-		items.emplace_back(fmt::format(
+		items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["BESTIARY_RETURN"], width));
 
 	} else if (component == "spellbook_menu") {
 		const auto spells{_resources->spells->get_all()};
 		for (auto &spell : spells) {
 			auto sname{spell.name};
-			auto padded{fmt::format("{:^{}}", sname, width)};
-			items.emplace_back(fmt::format("{}", padded));
+			auto padded{std::format("{:^{}}", sname, width)};
+			items.emplace_back(std::format("{}", padded));
 		}
-		items.emplace_back(fmt::format(
+		items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["SPELLBOOK_RETURN"], width));
 	} else if (component == "museum_menu") {
 		const auto item_types{_resources->items->get_all_types()};
@@ -3611,13 +3611,13 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 			if (item_type.get_type_id() != Enums::Items::TypeID::BROKEN_ITEM) {
 				auto iname{item_type.get_known_name()};
 				auto iid{unenum(item_type.get_type_id())};
-				auto padded{fmt::format("{:^{}}", iname, width)};
-				auto menu_item{fmt::format("{}##{}", padded, iid)};
-				items.emplace_back(fmt::format("{}", menu_item));
+				auto padded{std::format("{:^{}}", iname, width)};
+				auto menu_item{std::format("{}##{}", padded, iid)};
+				items.emplace_back(std::format("{}", menu_item));
 			}
 		}
 		items.emplace_back(
-			fmt::format("{:^{}}", (*_system->strings)["MUSEUM_RETURN"], width));
+			std::format("{:^{}}", (*_system->strings)["MUSEUM_RETURN"], width));
 	}
 }
 

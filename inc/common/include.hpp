@@ -93,7 +93,6 @@ extern "C" {
 #include <ctime>
 #include <exception>
 #include <filesystem>
-#include <fmt/core.h> // #include <format> when supported
 #include <format>
 #include <fstream>
 #include <iomanip>

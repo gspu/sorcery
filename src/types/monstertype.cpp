@@ -367,7 +367,7 @@ auto operator<<(std::ostream &out_stream,
 	const auto type{unenum(monstertype.get_type_id())};
 	const auto name{monstertype.get_known_name()};
 
-	const auto text{fmt::format("{}: {}", type, name)};
+	const auto text{std::format("{}: {}", type, name)};
 
 	return out_stream << text << std::flush;
 }

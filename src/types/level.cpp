@@ -634,8 +634,8 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 
 auto Sorcery::Level::name() const -> std::string {
 
-	return _depth < 0 ? fmt::format("{} B{}F", _dungeon, std::abs(_depth))
-					  : fmt::format("{} {}F", _dungeon, std::abs(_depth));
+	return _depth < 0 ? std::format("{} B{}F", _dungeon, std::abs(_depth))
+					  : std::format("{} {}F", _dungeon, std::abs(_depth));
 }
 
 auto Sorcery::Level::_add_tile(const Coordinate location) -> void {

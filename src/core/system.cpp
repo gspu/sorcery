@@ -47,7 +47,7 @@ auto Sorcery::System::dice_roll_to_str(const std::string &message,
 									   const int dice, const int roll,
 									   const int needed) const -> std::string {
 
-	return fmt::format("d{:<3}: {:>3}/{:>3}: {}", dice, roll, needed, message);
+	return std::format("d{:<3}: {:>3}/{:>3}: {}", dice, roll, needed, message);
 }
 
 // Timepoint to String

@@ -67,7 +67,7 @@ auto Sorcery::Database::wipe_data() -> void {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -89,7 +89,7 @@ auto Sorcery::Database::has_game() -> bool {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -142,7 +142,7 @@ auto Sorcery::Database::load_game_state() -> std::optional<GameEntry> {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -170,7 +170,7 @@ auto Sorcery::Database::save_game_state(int game_id, std::string key,
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -206,7 +206,7 @@ auto Sorcery::Database::create_game_state(std::string data) -> unsigned int {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -233,7 +233,7 @@ auto Sorcery::Database::update_character(int game_id, int char_id,
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -264,7 +264,7 @@ auto Sorcery::Database::add_character(int game_id, std::string name,
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -291,7 +291,7 @@ auto Sorcery::Database::get_character_ids(int game_id)
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -311,7 +311,7 @@ auto Sorcery::Database::delete_character(int game_id, int char_id) -> void {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);
@@ -334,7 +334,7 @@ auto Sorcery::Database::get_character(int game_id, int char_id) -> std::string {
 
 	} catch (sqlite::sqlite_exception &e) {
 		Error error{Enums::System::Error::SQLITE_DB_ERROR, e,
-					fmt::format("{} {} {} {}", e.get_code(), e.what(),
+					std::format("{} {} {} {}", e.get_code(), e.what(),
 								e.get_sql(), _fp.string())};
 		std::cout << error;
 		exit(EXIT_FAILURE);

@@ -11,7 +11,6 @@ find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(jsoncpp REQUIRED)
-find_package(fmt REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(PkgConfig REQUIRED)
 

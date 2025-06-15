@@ -173,7 +173,7 @@ auto operator<<(std::ostream &out_stream, const Sorcery::Item &item)
 	const auto type{unenum(item.get_type_id())};
 	const auto name{item.get_name()};
 
-	const auto text{fmt::format("{}: {}", type, name)};
+	const auto text{std::format("{}: {}", type, name)};
 
 	return out_stream << text << std::flush;
 }

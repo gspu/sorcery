@@ -131,7 +131,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 
 		if (roll < chance) {
 
-			results = fmt::format("{} {} {}",
+			results = std::format("{} {} {}",
 								  (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 								  heal_char.get_name(),
 								  (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
@@ -143,7 +143,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 			return true;
 		} else {
 
-			results = fmt::format(
+			results = std::format(
 				"{} {} {}", (*_system->strings)["TEMPLE_OOPS_DEAD_PREFIX"],
 				heal_char.get_name(),
 				(*_system->strings)["TEMPLE_OOPS_DEAD_SUFFIX"]);
@@ -160,7 +160,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 
 		if (roll < chance) {
 
-			results = fmt::format("{} {} {}",
+			results = std::format("{} {} {}",
 								  (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 								  heal_char.get_name(),
 								  (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
@@ -173,7 +173,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 
 		} else {
 
-			results = fmt::format(
+			results = std::format(
 				"{} {} {}", (*_system->strings)["TEMPLE_OOPS_ASHES_PREFIX"],
 				heal_char.get_name(),
 				(*_system->strings)["TEMPLE_OOPS_ASHES_SUFFIX"]);
@@ -187,7 +187,7 @@ auto Sorcery::Heal::_try_heal(Game *game, int heal_char_id, int pay_char_id)
 
 	} else {
 
-		results = fmt::format(
+		results = std::format(
 			"{} {} {}", (*_system->strings)["TEMPLE_HEALED_PREFIX"],
 			heal_char.get_name(), (*_system->strings)["TEMPLE_HEALED_SUFFIX"]);
 		heal_char.set_status(CStatus::OK);

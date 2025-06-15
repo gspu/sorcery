@@ -555,7 +555,7 @@ auto Sorcery::Game::print() -> void {
 	auto text{"Game:\n\n"s};
 
 	for (const auto &[char_id, character] : characters) {
-		auto line{fmt::format("{}){:>16} {}", char_id, character.get_name(),
+		auto line{std::format("{}){:>16} {}", char_id, character.get_name(),
 							  magic_enum::enum_name(character.get_location()))};
 		text.append(line);
 		text.append("\n");
@@ -563,7 +563,7 @@ auto Sorcery::Game::print() -> void {
 
 	text.append("\n[");
 	for (const auto char_id : state->get_party_characters()) {
-		auto line{fmt::format("{},", char_id)};
+		auto line{std::format("{},", char_id)};
 		text.append(line);
 	}
 	text.append("]\n");
@@ -651,8 +651,8 @@ auto Sorcery::Game::_debug_give_party_random_items() -> void {
 		auto slots_free = cur_char.inventory.get_empty_slots();
 		for (auto i = 0u; i < slots_free; i++) {
 			if (cur_char.inventory.get_empty_slots() > 0) {
-				auto item{_resources->items->get_random_item(TypeID::LONG_SWORD,
-					TypeID::RING_OF_DEATH)};
+				auto item{_resources->items->get_random_item(
+					TypeID::LONG_SWORD, TypeID::RING_OF_DEATH)};
 				cur_char.inventory.add(item);
 			}
 		}
@@ -779,7 +779,7 @@ auto operator<<(std::ostream &out_stream, const Sorcery::Game &game)
 	auto text{"Game:\n\n"s};
 
 	for (const auto &[char_id, character] : game.characters) {
-		auto line{fmt::format("{}){:>16}{}", char_id, character.get_name(),
+		auto line{std::format("{}){:>16}{}", char_id, character.get_name(),
 							  (int)character.get_location())};
 		text.append(line);
 		text.append("\n");

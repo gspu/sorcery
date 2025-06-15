@@ -52,7 +52,7 @@ Sorcery::Error::Error(Enums::System::Error error_code,
 			backward::ResolvedTrace trace{tr.resolve(st[i])};
 
 			_details.emplace_back(
-				fmt::format("#{} {} {} [{}]\n", i, trace.object_filename,
+				std::format("#{} {} {} [{}]\n", i, trace.object_filename,
 							trace.object_function, trace.addr));
 		}
 
@@ -113,14 +113,14 @@ namespace Sorcery {
 auto operator<<(std::ostream &out_stream, const Sorcery::Error &error)
 	-> std::ostream & {
 
-	out_stream << fmt::format("{:>5}: {} - {}", "Error", error._details[0],
+	out_stream << std::format("{:>5}: {} - {}", "Error", error._details[0],
 							  error._details[1])
 			   << std::endl;
-	out_stream << fmt::format("{:>5}: {}", "What", error._details[2])
+	out_stream << std::format("{:>5}: {}", "What", error._details[2])
 			   << std::endl;
-	out_stream << fmt::format("{:>5}: {}", "When", error._details[3])
+	out_stream << std::format("{:>5}: {}", "When", error._details[3])
 			   << std::endl;
-	out_stream << fmt::format("{:>5}: {}", "Info", error._details[4])
+	out_stream << std::format("{:>5}: {}", "Info", error._details[4])
 			   << std::endl;
 
 	return out_stream;

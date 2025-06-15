@@ -77,7 +77,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"COMPENDIUM_SPELLBOOK", "COMPENDIUM_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "camp_menu") {
 		sources.insert(sources.end(),
@@ -85,96 +85,96 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"CAMP_QUIT", "CAMP_LEAVE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "roster_menu") {
 		sources.insert(sources.end(), {"ROSTER_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "modal_identify") {
 		sources.insert(sources.end(), {"IDENTIFY_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "modal_drop") {
 		sources.insert(sources.end(), {"DROP_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "modal_trade") {
 		sources.insert(sources.end(), {"TRADE_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 	} else if (_component->name == "modal_use") {
 		sources.insert(sources.end(), {"USE_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "inspect_menu") {
 		sources.insert(sources.end(), {"INSPECT_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "choose_menu") {
 		sources.insert(sources.end(), {"CHOOSE_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "stay_menu") {
 		sources.insert(sources.end(), {"STAY_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "pay_menu") {
 		sources.insert(sources.end(), {"PAY_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "help_menu") {
 		sources.insert(sources.end(), {"HELP_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "tithe_menu") {
 		sources.insert(sources.end(), {"TITHE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "remove_menu") {
 		sources.insert(sources.end(), {"REMOVE_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "add_menu") {
 		sources.insert(sources.end(), {"ADD_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "restart_menu") {
 		sources.insert(sources.end(), {"RESTART_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "reorder_menu") {
 		sources.insert(sources.end(), {"REORDER_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "castle_menu") {
 		sources.insert(sources.end(),
@@ -182,7 +182,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"CASTLE_TEMPLE", "CASTLE_EDGE_OF_TOWN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "rest_menu") {
 
@@ -190,7 +190,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 									   "STAY_5", "STAY_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "tavern_menu") {
 		sources.insert(sources.end(),
@@ -199,28 +199,28 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"TAVERN_DIVVY_GOLD", "TAVERN_CASTLE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "inn_menu") {
 		sources.insert(sources.end(),
 					   {"INN_STAY", "INN_INSPECT", "INN_CASTLE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "temple_menu") {
 		sources.insert(sources.end(), {"TEMPLE_HELP", "TEMPLE_INSPECT",
 									   "TEMPLE_TITHE", "TEMPLE_CASTLE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "shop_menu") {
 		sources.insert(sources.end(),
 					   {"SHOP_ENTER", "SHOP_INSPECT", "SHOP_CASTLE"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "edge_menu") {
 		sources.insert(sources.end(),
@@ -229,7 +229,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"EDGE_OF_TOWN_LEAVE_GAME"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "atlas_menu") {
 		sources.insert(sources.end(),
@@ -239,7 +239,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"ATLAS_MENU_B10F", "ATLAS_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "training_menu") {
 		sources.insert(sources.end(),
@@ -248,7 +248,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"TRAINING_GROUNDS_RETURN"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "main_menu") {
 		sources.insert(sources.end(),
@@ -258,7 +258,7 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 						"MAIN_MENU_OPTION_LICENSE", "MAIN_MENU_OPTION_EXIT"});
 		for (const auto &source : sources)
 			_items.emplace_back(
-				fmt::format("{:^{}}", (*_system->strings)[source], _width));
+				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "bestiary_menu") {
 		const auto monster_types{_resources->monsters->get_all_types()};
@@ -267,21 +267,21 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 				continue;
 			auto mname{monster.get_known_name()};
 			auto mid{unenum(monster.get_type_id())};
-			auto padded{fmt::format("{:^{}}", mname, _width)};
-			auto menu_item{fmt::format("{}##{}", padded, mid)};
-			_items.emplace_back(fmt::format("{}", menu_item));
+			auto padded{std::format("{:^{}}", mname, _width)};
+			auto menu_item{std::format("{}##{}", padded, mid)};
+			_items.emplace_back(std::format("{}", menu_item));
 		}
-		_items.emplace_back(fmt::format(
+		_items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["BESTIARY_RETURN"], _width));
 
 	} else if (_component->name == "spellbook_menu") {
 		const auto spells{_resources->spells->get_all()};
 		for (auto &spell : spells) {
 			auto sname{spell.name};
-			auto padded{fmt::format("{:^{}}", sname, _width)};
-			_items.emplace_back(fmt::format("{}", padded));
+			auto padded{std::format("{:^{}}", sname, _width)};
+			_items.emplace_back(std::format("{}", padded));
 		}
-		_items.emplace_back(fmt::format(
+		_items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["SPELLBOOK_RETURN"], _width));
 
 	} else if (_component->name == "museum_menu") {
@@ -290,12 +290,12 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 			if (item_type.get_type_id() != Enums::Items::TypeID::BROKEN_ITEM) {
 				auto iname{item_type.get_known_name()};
 				auto iid{unenum(item_type.get_type_id())};
-				auto padded{fmt::format("{:^{}}", iname, _width)};
-				auto menu_item{fmt::format("{}##{}", padded, iid)};
-				_items.emplace_back(fmt::format("{}", menu_item));
+				auto padded{std::format("{:^{}}", iname, _width)};
+				auto menu_item{std::format("{}##{}", padded, iid)};
+				_items.emplace_back(std::format("{}", menu_item));
 			}
 		}
-		_items.emplace_back(fmt::format(
+		_items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["MUSEUM_RETURN"], _width));
 	}
 }
@@ -365,7 +365,7 @@ auto Sorcery::Menu::_load_sick_characters() -> void {
 			if (character.get_status() == CStatus::ASHES ||
 				character.get_status() == CStatus::DEAD ||
 				character.get_status() == CStatus::HELD) {
-				_items.emplace_back(fmt::format("{:^16} ({:^<8})",
+				_items.emplace_back(std::format("{:^16} ({:^<8})",
 												character.get_name(),
 												character.get_status_string()));
 				_data.emplace_back(id);
@@ -385,14 +385,14 @@ auto Sorcery::Menu::_load_party_characters(const int flags) -> void {
 			if (character.get_location() == Enums::Character::Location::PARTY) {
 				if (flags & MENU_SHOW_POSITION)
 					_items.emplace_back(
-						fmt::format("{}:{:^19}", pos, character.get_name()));
+						std::format("{}:{:^19}", pos, character.get_name()));
 				else if (flags & MENU_SHOW_GOLD)
-					_items.emplace_back(fmt::format("{:<16} {:>8} G.P.",
+					_items.emplace_back(std::format("{:<16} {:>8} G.P.",
 													character.get_name(),
 													character.get_gold()));
 				else
 					_items.emplace_back(
-						fmt::format("{:^21}", character.get_name()));
+						std::format("{:^21}", character.get_name()));
 				_data.emplace_back(id);
 				if (_reorder)
 					_controller->candidate_party.emplace_back(id);
@@ -410,7 +410,7 @@ auto Sorcery::Menu::_load_maze_characters() -> void {
 			if (character.get_location() == Enums::Character::Location::MAZE &&
 				character.get_status() == Enums::Character::CStatus::OK) {
 				_items.emplace_back(
-					fmt::format("{:^21}", character.get_name()));
+					std::format("{:^21}", character.get_name()));
 				_data.emplace_back(id);
 			}
 		};
@@ -424,7 +424,7 @@ auto Sorcery::Menu::_load_tavern_characters() -> void {
 			if (character.get_location() ==
 				Enums::Character::Location::TAVERN) {
 				_items.emplace_back(
-					fmt::format("{:^21}", character.get_name()));
+					std::format("{:^21}", character.get_name()));
 				_data.emplace_back(id);
 			}
 		}

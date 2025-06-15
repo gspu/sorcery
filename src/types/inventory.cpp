@@ -303,7 +303,7 @@ auto operator<<(std::ostream &out_stream, const Sorcery::Inventory &inventory)
 				return " ";
 		})};
 
-		auto line{fmt::format("{}){}{}", slot, flag, item.get_display_name())};
+		auto line{std::format("{}){}{}", slot, flag, item.get_display_name())};
 		body.append(line);
 		body.append("\n");
 		++slot;

@@ -101,7 +101,7 @@ auto Sorcery::Controller::get_flags() const -> std::string {
 
 	std::string output{};
 	for (const auto &flag : _flags)
-		output.append(fmt::format("{:>26}: {}\n", flag.first, flag.second));
+		output.append(std::format("{:>26}: {}\n", flag.first, flag.second));
 
 	return output;
 }
@@ -111,7 +111,7 @@ auto Sorcery::Controller::get_characters() const -> std::string {
 	std::string output{};
 	for (const auto &character : _characters)
 		output.append(
-			fmt::format("{:>26}: {}\n", character.first, character.second));
+			std::format("{:>26}: {}\n", character.first, character.second));
 
 	return output;
 }
@@ -136,7 +136,7 @@ auto Sorcery::Controller::check_for_debug(const SDL_Event event) -> void {
 
 		std::cout << std::endl;
 		for (auto const &[key, val] : _flags)
-			std::cout << fmt::format("{:>32}: {}", key, val) << std::endl;
+			std::cout << std::format("{:>32}: {}", key, val) << std::endl;
 	}
 }
 
@@ -366,6 +366,8 @@ auto Sorcery::Controller::is_menu_item_disabled(const std::string &component,
 		} else
 			return false;
 	}
+
+	return false;
 }
 
 // Toggle Handling

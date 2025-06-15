@@ -92,11 +92,11 @@ auto Sorcery::Dice::str() const -> std::string {
 
 	std::string result;
 	if (mod == 0)
-		result = fmt::format("{}d{}", num, dice);
+		result = std::format("{}d{}", num, dice);
 	else if (mod < 0)
-		result = fmt::format("{}d{}{}", num, dice, mod);
+		result = std::format("{}d{}{}", num, dice, mod);
 	else
-		result = fmt::format("{}d{}+{}", num, dice, mod);
+		result = std::format("{}d{}+{}", num, dice, mod);
 
 	return result;
 }

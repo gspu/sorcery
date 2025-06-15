@@ -151,7 +151,7 @@ auto operator<<(std::ostream &out_stream, const Sorcery::Monster &monster)
 	const auto type{unenum(monster.get_type_id())};
 	const auto name{monster.get_name()};
 
-	const auto text{fmt::format("{}: {}", type, name)};
+	const auto text{std::format("{}: {}", type, name)};
 
 	return out_stream << text << std::flush;
 }

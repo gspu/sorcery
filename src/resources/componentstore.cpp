@@ -70,7 +70,7 @@ auto Sorcery::ComponentStore::get(std::string_view combined_key)
 
 	} catch (std::exception &e) {
 		Error error{Enums::System::Error::UNKNOWN_COMPONENT, e,
-					fmt::format("Unable to find Component '{}' in layout.json!",
+					std::format("Unable to find Component '{}' in layout.json!",
 								combined_key)};
 		std::cerr << error;
 		exit(EXIT_FAILURE);
@@ -390,7 +390,7 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 					}()};
 
 					// Add the Component
-					const auto key{fmt::format("{}:{}", form_name, name)};
+					const auto key{std::format("{}:{}", form_name, name)};
 					Component component{form_name,
 										name,
 										x,
