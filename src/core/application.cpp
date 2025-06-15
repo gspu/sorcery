@@ -294,7 +294,7 @@ auto Sorcery::Application::_start_new_game(const bool quickstart) -> void {
 		_add_quickstart_party();
 }
 
-auto Sorcery::Application::_add_quickstart_party() -> bool {
+auto Sorcery::Application::_add_quickstart_party() -> void {
 
 	using Enums::Character::Align;
 	using Enums::Character::Class;

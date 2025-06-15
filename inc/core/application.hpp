@@ -60,7 +60,7 @@ class Application {
 
 	private:
 		// Private Methods
-		auto _add_quickstart_party() -> bool;
+		auto _add_quickstart_party() -> void;
 		auto _check_param(std::string_view param) const -> bool;
 		auto _get_exe_path() const -> std::string_view;
 		auto _load_existing_game() -> void;

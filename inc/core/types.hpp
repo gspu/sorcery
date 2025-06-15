@@ -52,7 +52,7 @@ struct Coordinate3 {
 
 		friend std::ostream &operator<<(std::ostream &os,
 										Coordinate3 const &a) {
-			return os << fmt::format("[{}/{}/{}]", a.x, a.y, a.z) << std::endl;
+			return os << std::format("[{}/{}/{}]", a.x, a.y, a.z) << std::endl;
 		}
 
 		template <class Archive> auto serialize(Archive &archive) -> void {

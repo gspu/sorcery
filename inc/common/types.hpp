@@ -94,7 +94,7 @@ struct Coordinate {
 		// Remember that in Wizardy Games we are used to coordinates that are N
 		// and E, i.e. y and x, not x and y!
 		friend std::ostream &operator<<(std::ostream &os, Coordinate const &a) {
-			return os << fmt::format("({}/{})", a.y, a.x) << std::endl;
+			return os << std::format("({}/{})", a.y, a.x) << std::endl;
 		}
 
 		template <class Archive> auto serialize(Archive &archive) -> void {
@@ -145,7 +145,7 @@ struct Size {
 		};
 
 		friend std::ostream &operator<<(std::ostream &os, Size const &a) {
-			return os << fmt::format("[{}/{}]", a.w, a.h) << std::endl;
+			return os << std::format("[{}/{}]", a.w, a.h) << std::endl;
 		}
 
 		template <class Archive> auto serialize(Archive &archive) -> void {
@@ -328,7 +328,7 @@ struct ConsoleMessage {
 
 		friend std::ostream &operator<<(std::ostream &os, ConsoleMessage &a) {
 
-			return os << fmt::format("[{}: {}]", TP2STR(a.datetime), a.text);
+			return os << std::format("[{}: {}]", TP2STR(a.datetime), a.text);
 		}
 
 		// Serialisation
