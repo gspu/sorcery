@@ -79,7 +79,8 @@
 		"cfenv": "cpp",
 		"span": "cpp",
 		"forward_list": "cpp",
-		"any": "cpp"
+		"any": "cpp",
+		"print": "cpp"
 	},
 	"cmake.debugConfig": {
 		"args": [

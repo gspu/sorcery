@@ -411,8 +411,8 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 					// Now look for any extra data
 					if (components[j].isMember("data")) {
 						auto &extra_data{components[j]["data"][0]};
-						auto data_keys{extra_data.getMemberNames()};
-						for (auto &data_key : data_keys) {
+						for (auto data_keys{extra_data.getMemberNames()};
+							 auto &data_key : data_keys) {
 							auto data_value{extra_data[data_key].asString()};
 							component.set(data_key, data_value);
 						}

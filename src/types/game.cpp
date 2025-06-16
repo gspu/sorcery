@@ -495,10 +495,9 @@ auto Sorcery::Game::get_party_alignment() const -> Enums::Character::Align {
 
 	using Enums::Character::Align;
 
-	const auto party{state->get_party_characters()};
 	auto good{0u}, evil{0u};
 
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto cur_char{&characters.at(idx)};
 		if (cur_char->get_alignment() == Align::GOOD)
 			++good;
@@ -567,7 +566,7 @@ auto Sorcery::Game::print() -> void {
 		text.append(line);
 	}
 	text.append("]\n");
-	std::cout << text << std::endl;
+	std::println("{}", text);
 }
 
 auto Sorcery::Game::_debug_harm_party_to_min() -> void {
@@ -576,8 +575,7 @@ auto Sorcery::Game::_debug_harm_party_to_min() -> void {
 
 	PRINT("debug_harm_party_to_min");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		const auto hp{(*_system->random)[Random::D4]};
 		cur_char.set_current_hp(hp);
@@ -591,8 +589,7 @@ auto Sorcery::Game::_debug_give_party_random_status() -> void {
 
 	PRINT("debug_give_party_random_status");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 
 		cur_char.set_status(
@@ -618,8 +615,7 @@ auto Sorcery::Game::_debug_heal_party_to_full() -> void {
 
 	PRINT("debug_heal_party_to_full");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		cur_char.set_status(Enums::Character::Status::OK);
 		cur_char.set_current_hp(cur_char.get_max_hp());
@@ -632,8 +628,7 @@ auto Sorcery::Game::_debug_give_party_xp() -> void {
 
 	PRINT("debug_give_party_xp");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		cur_char.grant_xp(cur_char.get_level() * 1000);
 	}
@@ -645,8 +640,7 @@ auto Sorcery::Game::_debug_give_party_random_items() -> void {
 
 	using Enums::Items::TypeID;
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		auto slots_free = cur_char.inventory.get_empty_slots();
 		for (auto i = 0u; i < slots_free; i++) {
@@ -663,8 +657,7 @@ auto Sorcery::Game::_debug_give_party_gold() -> void {
 
 	PRINT("debug_give_party_gold");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		cur_char.set_gold(1000);
 	}
@@ -755,8 +748,7 @@ auto Sorcery::Game::_debug_fill_party_unid_items() -> void {
 
 	PRINT("debug_fill_party_unid_items");
 
-	const auto party{state->get_party_characters()};
-	for (auto idx : party) {
+	for (const auto party{state->get_party_characters()}; auto idx : party) {
 		auto &cur_char{characters.at(idx)};
 		auto slots_free = cur_char.inventory.get_empty_slots();
 		for (auto i = 0u; i < slots_free; i++) {

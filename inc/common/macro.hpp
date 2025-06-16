@@ -141,7 +141,7 @@ inline auto WORDWRAP(std::string text, unsigned per_line) -> std::string {
 // Print
 inline auto PRINT(const std::string &string) -> void {
 
-	std::cout << string << std::endl;
+	std::println("{}", string);
 }
 
 #define PRINTFUNC std::cout << __PRETTY_FUNCTION__ << std::endl;

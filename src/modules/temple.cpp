@@ -169,8 +169,6 @@ auto Sorcery::Temple::start(Game *game) -> int {
 				_pay->stop(false);
 			else {
 				_pay->stop(true);
-
-				std::cout << "heal results!";
 			}
 
 			_controller->clear_character("help");

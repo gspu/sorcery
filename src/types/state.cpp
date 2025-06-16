@@ -63,7 +63,7 @@ auto Sorcery::State::print() -> void {
 		text.append(line);
 	}
 	text.append("]\n");
-	std::cout << text << std::endl;
+	std::println("{}", text);
 }
 
 auto Sorcery::State::_clear() -> void {

@@ -33,7 +33,7 @@ auto Sorcery::Display::initialise_SDL() -> int {
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) !=
 		0) {
-		std::cout << "Error: " << SDL_GetError() << std::endl;
+		std::println("Error: {}", SDL_GetError());
 		return -1;
 	}
 

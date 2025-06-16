@@ -63,7 +63,7 @@ struct Rect {
 		}
 
 		auto debug() const -> void {
-			std::cout << x << "/" << y << " " << w << ":" << h << std::endl;
+			std::println("{}/{} {}:{}", x, y, w, h);
 		}
 
 		unsigned int x;

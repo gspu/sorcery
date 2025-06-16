@@ -393,7 +393,7 @@ auto Sorcery::Tile::y() const -> int {
 
 	} catch (std::exception &e) {
 		// error{SYE::OPTIONAL_RETURNED, e, "tile.location.y has no
-		// value!"}; std::cout << error;
+		// value!"}; std::print("{}", error);
 		exit(EXIT_FAILURE);
 	}
 }

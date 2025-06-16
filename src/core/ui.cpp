@@ -1236,12 +1236,12 @@ auto Sorcery::UI::_draw_character_mage_spells(Component *component,
 					   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
 
 		// Row order since we need to do via rows not columns
-		auto spell_order = {0,	4,	6,	1,	5,	7,	2,	-1, -1, 3,	-1,
-							-1, -1, -1, -1, 8,	11, 14, 9,	12, 15, 10,
-							13, 16, -1, -1, 17, -1, -1, -1, 18, 19, 20};
 		auto comp_id{""s};
 		auto spell_idx{0};
-		for (const auto index : spell_order) {
+		for (auto spell_order = {0,	 4,	 6,	 1,	 5,	 7,	 2,	 -1, -1, 3,	 -1,
+								 -1, -1, -1, -1, 8,	 11, 14, 9,	 12, 15, 10,
+								 13, 16, -1, -1, 17, -1, -1, -1, 18, 19, 20};
+			 const auto index : spell_order) {
 			comp_id = std::format("##spell_{}", spell_idx);
 			if (index != -1) {
 				ImGui::TableNextColumn();
@@ -1291,13 +1291,13 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 					   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
 
 		// Row order since we need to do via rows not columns
-		auto spell_order = {21, 26, 30, 22, 27, 31, 23, 28, 32, 24, 29,
-							33, 25, -1, -1, -1, -1, -1, 34, 38, 44, 35,
-							39, 45, 36, 40, 46, 37, 41, 47, -1, 42, -1,
-							-1, 43, -1, -1, -1, -1, 48, 49, -1};
 		auto comp_id{""s};
 		auto spell_idx{0};
-		for (const auto index : spell_order) {
+		for (auto spell_order = {21, 26, 30, 22, 27, 31, 23, 28, 32, 24, 29,
+								 33, 25, -1, -1, -1, -1, -1, 34, 38, 44, 35,
+								 39, 45, 36, 40, 46, 37, 41, 47, -1, 42, -1,
+								 -1, 43, -1, -1, -1, -1, 48, 49, -1};
+			 const auto index : spell_order) {
 			comp_id = std::format("##spell_{}", spell_idx);
 			if (index != -1) {
 				ImGui::TableNextColumn();
@@ -1941,29 +1941,22 @@ auto Sorcery::UI::_draw_components(std::string_view screen, Game *game,
 	_menus.clear();
 
 	// Draw every component specified in order
-	auto cmps{(*components)(screen)};
-
-	for (auto c : cmps.value())
+	for (auto cmps{(*components)(screen)}; auto c : cmps.value()) {
 		if (c.type == ComponentType::IMAGE_BG)
 			_draw_bg_image(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::FRAME)
+		else if (c.type == ComponentType::FRAME)
 			_draw_frame(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::IMAGE_FG)
+		else if (c.type == ComponentType::IMAGE_FG)
 			_draw_fg_image(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::TEXT)
+		else if (c.type == ComponentType::TEXT)
 			_draw_text(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::BUTTON)
+		else if (c.type == ComponentType::BUTTON)
 			_draw_button(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::PARAGRAPH)
+		else if (c.type == ComponentType::PARAGRAPH)
 			_draw_paragraph(&c);
-	for (auto c : cmps.value())
-		if (c.type == ComponentType::MENU)
+		else if (c.type == ComponentType::MENU)
 			_draw_menu(&c, game);
+	}
 }
 
 auto Sorcery::UI::_display_splash() -> void {
@@ -2596,8 +2589,8 @@ auto Sorcery::UI::_draw_party_panel(Game *game) -> void {
 				(*_system->strings)["PARTY_PANEL_LEGEND"].c_str());
 			if (game->state->get_party_size() > 0) {
 				auto position{1u};
-				const auto party{game->state->get_party_characters()};
-				for (auto char_id : party) {
+				for (const auto party{game->state->get_party_characters()};
+					 auto char_id : party) {
 					auto p_y{0 + (position * grid_sz)};
 					auto character{game->characters.at(char_id)};
 					auto colour{_get_status_color(&character)};
@@ -3628,8 +3621,8 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 				std::format("{:^{}}", (*_system->strings)[source], width));
 
 	} else if (component == "bestiary_menu") {
-		const auto monster_types{_resources->monsters->get_all_types()};
-		for (auto &monster : monster_types) {
+		for (const auto monster_types{_resources->monsters->get_all_types()};
+			 auto &monster : monster_types) {
 			if (monster.get_type_id() > Enums::Monsters::TypeID::WERDNA)
 				continue;
 			auto mname{monster.get_known_name()};
@@ -3642,8 +3635,8 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 			"{:^{}}", (*_system->strings)["BESTIARY_RETURN"], width));
 
 	} else if (component == "spellbook_menu") {
-		const auto spells{_resources->spells->get_all()};
-		for (auto &spell : spells) {
+		for (const auto spells{_resources->spells->get_all()};
+			 auto &spell : spells) {
 			auto sname{spell.name};
 			auto padded{std::format("{:^{}}", sname, width)};
 			items.emplace_back(std::format("{}", padded));
@@ -3651,8 +3644,8 @@ auto Sorcery::UI::load_fixed_items(std::string_view component,
 		items.emplace_back(std::format(
 			"{:^{}}", (*_system->strings)["SPELLBOOK_RETURN"], width));
 	} else if (component == "museum_menu") {
-		const auto item_types{_resources->items->get_all_types()};
-		for (auto &item_type : item_types) {
+		for (const auto item_types{_resources->items->get_all_types()};
+			 auto &item_type : item_types) {
 			if (item_type.get_type_id() != Enums::Items::TypeID::BROKEN_ITEM) {
 				auto iname{item_type.get_known_name()};
 				auto iid{unenum(item_type.get_type_id())};

@@ -267,8 +267,9 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 				std::format("{:^{}}", (*_system->strings)[source], _width));
 
 	} else if (_component->name == "bestiary_menu") {
-		const auto monster_types{_resources->monsters->get_all_types()};
-		for (auto &monster : monster_types) {
+
+		for (const auto monster_types{_resources->monsters->get_all_types()};
+			 auto &monster : monster_types) {
 			if (monster.get_type_id() > Enums::Monsters::TypeID::WERDNA)
 				continue;
 			auto mname{monster.get_known_name()};
@@ -281,8 +282,9 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 			"{:^{}}", (*_system->strings)["BESTIARY_RETURN"], _width));
 
 	} else if (_component->name == "spellbook_menu") {
-		const auto spells{_resources->spells->get_all()};
-		for (auto &spell : spells) {
+
+		for (const auto spells{_resources->spells->get_all()};
+			 auto &spell : spells) {
 			auto sname{spell.name};
 			auto padded{std::format("{:^{}}", sname, _width)};
 			_items.emplace_back(std::format("{}", padded));
@@ -291,8 +293,8 @@ auto Sorcery::Menu::_load_fixed_items() -> void {
 			"{:^{}}", (*_system->strings)["SPELLBOOK_RETURN"], _width));
 
 	} else if (_component->name == "museum_menu") {
-		const auto item_types{_resources->items->get_all_types()};
-		for (auto &item_type : item_types) {
+		for (const auto item_types{_resources->items->get_all_types()};
+			 auto &item_type : item_types) {
 			if (item_type.get_type_id() != Enums::Items::TypeID::BROKEN_ITEM) {
 				auto iname{item_type.get_known_name()};
 				auto iid{unenum(item_type.get_type_id())};

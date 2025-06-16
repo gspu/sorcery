@@ -1601,12 +1601,12 @@ auto Sorcery::Character::_try_learn_spell(Enums::Magic::SpellType spell_type,
 			return false;
 
 	// Get all unknown spells of this spell level and type
-	auto spells{_spells | std::views::filter([&](Spell spell) {
-					return (spell.type == spell_type) &&
-						   (spell.level == spell_level) &&
-						   (spell.known == false);
-				})};
-	for (auto &spell : spells) {
+	for (auto spells{_spells | std::views::filter([&](Spell spell) {
+						 return (spell.type == spell_type) &&
+								(spell.level == spell_level) &&
+								(spell.known == false);
+					 })};
+		 auto &spell : spells) {
 
 		const auto dice{(*_system->random)[Random::ZERO_TO_29]};
 
@@ -1920,6 +1920,7 @@ auto Sorcery::Character::create_spells() -> void {
 }
 
 auto Sorcery::Character::reset_spells() -> void {
+
 	for (auto &spell : _spells)
 		_spells_known[spell.id] = spell.known;
 }

@@ -138,7 +138,6 @@ auto Sorcery::Input::display([[maybe_unused]] bool &is_yes) -> void {
 			if (_input.length() == 0) {
 
 				// Abort
-				std::cout << "abort" << std::endl;
 			} else {
 
 				// Also todo: move this into controller (need to pass in
