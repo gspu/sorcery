@@ -314,8 +314,8 @@ auto Sorcery::Level::_load_metadata(const Json::Value note_data) -> bool {
 		const auto found_pos{text.find("METADATA")};
 		if (found_pos != std::string::npos) {
 
-			const auto metadata{text.substr(found_pos)};
-			if (metadata.starts_with("METADATA")) {
+			if (const auto metadata{text.substr(found_pos)};
+				metadata.starts_with("METADATA")) {
 
 				auto data{SPLIT(metadata)};
 				if (data.at(1) == "TELEPORT" && data.at(2) == "TO") {

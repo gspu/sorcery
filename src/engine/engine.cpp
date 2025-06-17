@@ -235,7 +235,7 @@ auto Sorcery::Engine::_go_to_location(const int depth, const Coordinate loc,
 	_set_tile_explored(_game->state->get_player_pos());
 }
 
-auto Sorcery::Engine::_start_expedition(const int mode) -> bool {
+auto Sorcery::Engine::_start_expedition(const int mode) -> void {
 
 	_controller->last_dir = Enums::Map::Direction::NO_DIRECTION;
 	_controller->last_event = Enums::Map::Event::NO_EVENT;
@@ -278,7 +278,6 @@ auto Sorcery::Engine::_start_expedition(const int mode) -> bool {
 // Remember Y is reversed
 auto Sorcery::Engine::_move_forward() -> bool {
 
-	using Enums::Map::Direction;
 	using Enums::Tile::Features;
 	using Enums::Tile::Properties;
 
@@ -287,16 +286,17 @@ auto Sorcery::Engine::_move_forward() -> bool {
 	auto y_d{at_loc.y};
 
 	switch (_game->state->get_player_facing()) {
-	case Direction::NORTH:
+		using enum Enums::Map::Direction;
+	case NORTH:
 		++y_d;
 		break;
-	case Direction::SOUTH:
+	case SOUTH:
 		--y_d;
 		break;
-	case Direction::EAST:
+	case EAST:
 		++x_d;
 		break;
-	case Direction::WEST:
+	case WEST:
 		--x_d;
 		break;
 	default:
@@ -366,7 +366,7 @@ auto Sorcery::Engine::_move_forward() -> bool {
 
 		// Remember this is COMPASS direction (i.e. on screen), not Map
 		// direction!
-		_controller->last_dir = Direction::NORTH;
+		_controller->last_dir = Enums::Map::Direction::NORTH;
 
 		return true;
 	} else {

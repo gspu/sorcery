@@ -69,7 +69,7 @@ class Engine {
 		auto _move_backward() -> bool;
 		auto _move_forward() -> bool;
 		auto _set_tile_explored(const Coordinate loc) -> void;
-		auto _start_expedition(const int mode) -> bool;
+		auto _start_expedition(const int mode) -> void;
 		auto _start_popup_ouch() -> void;
 		auto _tile_explored(const Coordinate loc) const -> bool;
 		auto _turn_around() -> void;

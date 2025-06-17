@@ -393,17 +393,17 @@ auto Sorcery::Controller::handle_toggle(const std::string &component,
 										const std::string &tab,
 										const int selection) -> void {
 
-	using Enums::Config::Options;
-
 	if (component == "options_info") {
+
+		using enum Enums::Config::Options;
 		if (tab == "Options") {
 
 			// This happens after the corresponding data is changed
-			if (selection == static_cast<int>(Options::RECOMMENDED_MODE) &&
-				(*_system->config)[Options::RECOMMENDED_MODE])
+			if (selection == static_cast<int>(RECOMMENDED_MODE) &&
+				(*_system->config)[RECOMMENDED_MODE])
 				_system->config->set_rec_mode();
-			else if (selection == static_cast<int>(Options::STRICT_MODE) &&
-					 (*_system->config)[Options::STRICT_MODE])
+			else if (selection == static_cast<int>(STRICT_MODE) &&
+					 (*_system->config)[STRICT_MODE])
 				_system->config->set_strict_mode();
 			else {
 				if (_system->config->is_strict_mode())
@@ -415,17 +415,17 @@ auto Sorcery::Controller::handle_toggle(const std::string &component,
 		} else if (tab == "Gameplay") {
 
 			// Only need to check if strict and reommended modes are on
-			(*_system->config)[Options::RECOMMENDED_MODE] =
+			(*_system->config)[RECOMMENDED_MODE] =
 				_system->config->is_rec_mode();
-			(*_system->config)[Options::STRICT_MODE] =
+			(*_system->config)[STRICT_MODE] =
 				_system->config->is_strict_mode();
 
 		} else if (tab == "Graphics") {
 
 			// Only need to check if strict and reommended modes are on
-			(*_system->config)[Options::RECOMMENDED_MODE] =
+			(*_system->config)[RECOMMENDED_MODE] =
 				_system->config->is_rec_mode();
-			(*_system->config)[Options::STRICT_MODE] =
+			(*_system->config)[STRICT_MODE] =
 				_system->config->is_strict_mode();
 		}
 	}

@@ -291,23 +291,17 @@ auto Sorcery::Application::_start_new_game(const bool quickstart) -> void {
 
 auto Sorcery::Application::_add_quickstart_party() -> void {
 
-	using Enums::Character::Align;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::Items::TypeID;
-	using Enums::System::Random;
-
 	_game->state->clear_party();
 
 	// Create a new random party of a random alignment
-	auto first{Align::NO_ALIGN}, second{Align::NO_ALIGN},
-		align{Align::NO_ALIGN};
-	if ((*_system->random)[Random::D2] == 1) {
-		first = Align::GOOD;
-		second = Align::EVIL;
+	using enum Enums::Character::Align;
+	auto first{NO_ALIGN}, second{NO_ALIGN}, align{NO_ALIGN};
+	if ((*_system->random)[Enums::System::Random::D2] == 1) {
+		first = GOOD;
+		second = EVIL;
 	} else {
-		first = Align::EVIL;
-		second = Align::GOOD;
+		first = EVIL;
+		second = GOOD;
 	}
 
 	for (int i = 0; i < 12; i++) {
@@ -315,23 +309,25 @@ auto Sorcery::Application::_add_quickstart_party() -> void {
 		align = i > 5 ? first : second;
 
 		switch (i % 6) {
+			using enum Enums::Character::Align;
+			using enum Enums::Character::Class;
 		case 0:
-			pc.create_class_alignment(Class::FIGHTER, align);
+			pc.create_class_alignment(FIGHTER, align);
 			break;
 		case 1:
-			pc.create_class_alignment(Class::FIGHTER, Align::NEUTRAL);
+			pc.create_class_alignment(FIGHTER, NEUTRAL);
 			break;
 		case 2:
-			pc.create_class_alignment(Class::THIEF, Align::NEUTRAL);
+			pc.create_class_alignment(THIEF, NEUTRAL);
 			break;
 		case 3:
-			pc.create_class_alignment(Class::PRIEST, align);
+			pc.create_class_alignment(PRIEST, align);
 			break;
 		case 4:
-			pc.create_class_alignment(Class::BISHOP, align);
+			pc.create_class_alignment(BISHOP, align);
 			break;
 		case 5:
-			pc.create_class_alignment(Class::MAGE, Align::NEUTRAL);
+			pc.create_class_alignment(MAGE, NEUTRAL);
 			break;
 		default:
 			break;
@@ -342,31 +338,28 @@ auto Sorcery::Application::_add_quickstart_party() -> void {
 		pc.inventory.clear();
 
 		switch (pc.get_class()) { // NOLINT(clang-diagnostic-switch)
-		case Class::FIGHTER:
-		case Class::LORD:
-		case Class::SAMURAI:
-			pc.inventory.add_type((*_resources->items)[TypeID::LEATHER_ARMOR],
-								  true);
-			pc.inventory.add_type((*_resources->items)[TypeID::LONG_SWORD],
-								  true);
+			using enum Enums::Character::Class;
+			using enum Enums::Items::TypeID;
+		case FIGHTER:
+		case LORD:
+		case SAMURAI:
+			pc.inventory.add_type((*_resources->items)[LEATHER_ARMOR], true);
+			pc.inventory.add_type((*_resources->items)[LONG_SWORD], true);
 			break;
-		case Class::MAGE:
-			pc.inventory.add_type((*_resources->items)[TypeID::ROBES], true);
-			pc.inventory.add_type((*_resources->items)[TypeID::DAGGER], true);
+		case MAGE:
+			pc.inventory.add_type((*_resources->items)[ROBES], true);
+			pc.inventory.add_type((*_resources->items)[DAGGER], true);
 			break;
-		case Class::PRIEST:
-		case Class::BISHOP:
-			pc.inventory.add_type((*_resources->items)[TypeID::ROBES], true);
-			pc.inventory.add_type((*_resources->items)[TypeID::STAFF], true);
-			pc.inventory.add_type(
-				(*_resources->items)[TypeID::AMULET_OF_WERDNA], true);
+		case PRIEST:
+		case BISHOP:
+			pc.inventory.add_type((*_resources->items)[ROBES], true);
+			pc.inventory.add_type((*_resources->items)[STAFF], true);
+			pc.inventory.add_type((*_resources->items)[AMULET_OF_WERDNA], true);
 			break;
-		case Class::THIEF:
-		case Class::NINJA:
-			pc.inventory.add_type((*_resources->items)[TypeID::LEATHER_ARMOR],
-								  true);
-			pc.inventory.add_type((*_resources->items)[TypeID::SHORT_SWORD],
-								  true);
+		case THIEF:
+		case NINJA:
+			pc.inventory.add_type((*_resources->items)[LEATHER_ARMOR], true);
+			pc.inventory.add_type((*_resources->items)[SHORT_SWORD], true);
 		default:
 			break;
 		}

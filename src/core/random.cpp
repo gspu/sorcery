@@ -24,46 +24,45 @@
 
 Sorcery::Random::Random() {
 
-	using Enums::System::Random;
-
 	// Random Seeding Device
 	_random = std::mt19937_64(_device());
 
 	// Populate Ranges
+	using enum Enums::System::Random;
 	_range.clear();
-	_range[Random::D2] = std::make_tuple(1, 2);
-	_range[Random::D3] = std::make_tuple(1, 3);
-	_range[Random::D4] = std::make_tuple(1, 4);
-	_range[Random::D5] = std::make_tuple(1, 5);
-	_range[Random::D6] = std::make_tuple(1, 6);
-	_range[Random::D7] = std::make_tuple(1, 7);
-	_range[Random::D8] = std::make_tuple(1, 8);
-	_range[Random::D10] = std::make_tuple(1, 10);
-	_range[Random::D15] = std::make_tuple(1, 15);
-	_range[Random::D16] = std::make_tuple(1, 16);
-	_range[Random::D52] = std::make_tuple(1, 52);
-	_range[Random::D100] = std::make_tuple(1, 100);
-	_range[Random::D165] = std::make_tuple(1, 165);
-	_range[Random::D300] = std::make_tuple(1, 300);
-	_range[Random::D1000] = std::make_tuple(1, 1000);
-	_range[Random::D2000] = std::make_tuple(1, 2000);
-	_range[Random::ZERO_TO_2] = std::make_tuple(0, 2);
-	_range[Random::ZERO_TO_3] = std::make_tuple(0, 3);
-	_range[Random::ZERO_TO_4] = std::make_tuple(0, 4);
-	_range[Random::ZERO_TO_7] = std::make_tuple(0, 7);
-	_range[Random::ZERO_TO_8] = std::make_tuple(0, 8);
-	_range[Random::ZERO_TO_14] = std::make_tuple(0, 14);
-	_range[Random::ZERO_TO_19] = std::make_tuple(0, 19);
-	_range[Random::ZERO_TO_29] = std::make_tuple(0, 29);
-	_range[Random::ZERO_TO_34] = std::make_tuple(0, 34);
-	_range[Random::ZERO_TO_69] = std::make_tuple(0, 69);
-	_range[Random::ZERO_TO_99] = std::make_tuple(0, 99);
-	_range[Random::ZERO_TO_100] = std::make_tuple(0, 100);
-	_range[Random::ZERO_TO_101] = std::make_tuple(0, 101);
-	_range[Random::ZERO_TO_129] = std::make_tuple(0, 129);
-	_range[Random::ZERO_TO_299] = std::make_tuple(0, 299);
-	_range[Random::ZERO_TO_399] = std::make_tuple(0, 399);
-	_range[Random::ZERO_TO_437] = std::make_tuple(0, 437);
+	_range[D2] = std::make_tuple(1, 2);
+	_range[D3] = std::make_tuple(1, 3);
+	_range[D4] = std::make_tuple(1, 4);
+	_range[D5] = std::make_tuple(1, 5);
+	_range[D6] = std::make_tuple(1, 6);
+	_range[D7] = std::make_tuple(1, 7);
+	_range[D8] = std::make_tuple(1, 8);
+	_range[D10] = std::make_tuple(1, 10);
+	_range[D15] = std::make_tuple(1, 15);
+	_range[D16] = std::make_tuple(1, 16);
+	_range[D52] = std::make_tuple(1, 52);
+	_range[D100] = std::make_tuple(1, 100);
+	_range[D165] = std::make_tuple(1, 165);
+	_range[D300] = std::make_tuple(1, 300);
+	_range[D1000] = std::make_tuple(1, 1000);
+	_range[D2000] = std::make_tuple(1, 2000);
+	_range[ZERO_TO_2] = std::make_tuple(0, 2);
+	_range[ZERO_TO_3] = std::make_tuple(0, 3);
+	_range[ZERO_TO_4] = std::make_tuple(0, 4);
+	_range[ZERO_TO_7] = std::make_tuple(0, 7);
+	_range[ZERO_TO_8] = std::make_tuple(0, 8);
+	_range[ZERO_TO_14] = std::make_tuple(0, 14);
+	_range[ZERO_TO_19] = std::make_tuple(0, 19);
+	_range[ZERO_TO_29] = std::make_tuple(0, 29);
+	_range[ZERO_TO_34] = std::make_tuple(0, 34);
+	_range[ZERO_TO_69] = std::make_tuple(0, 69);
+	_range[ZERO_TO_99] = std::make_tuple(0, 99);
+	_range[ZERO_TO_100] = std::make_tuple(0, 100);
+	_range[ZERO_TO_101] = std::make_tuple(0, 101);
+	_range[ZERO_TO_129] = std::make_tuple(0, 129);
+	_range[ZERO_TO_299] = std::make_tuple(0, 299);
+	_range[ZERO_TO_399] = std::make_tuple(0, 399);
+	_range[ZERO_TO_437] = std::make_tuple(0, 437);
 
 	// Set up the Random Syllables
 	_sy1 = {"Ab",  "Ac", "Ad",	"Af",  "Agr", "Ast",  "As",	 "Al",	"Adw",

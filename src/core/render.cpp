@@ -531,20 +531,19 @@ auto Sorcery::Render::_load_tile_views() -> void {
 auto Sorcery::Render::_get_left_side(const Enums::Map::Direction facing) const
 	-> Enums::Map::Direction {
 
-	using Enums::Map::Direction;
-
 	switch (facing) {
-	case Direction::NORTH:
-		return Direction::WEST;
+		using enum Enums::Map::Direction;
+	case NORTH:
+		return WEST;
 		break;
-	case Direction::SOUTH:
-		return Direction::EAST;
+	case SOUTH:
+		return EAST;
 		break;
-	case Direction::EAST:
-		return Direction::NORTH;
+	case EAST:
+		return NORTH;
 		break;
-	case Direction::WEST:
-		return Direction::SOUTH;
+	case WEST:
+		return SOUTH;
 		break;
 	default:
 		return facing;
@@ -555,20 +554,19 @@ auto Sorcery::Render::_get_left_side(const Enums::Map::Direction facing) const
 auto Sorcery::Render::_get_right_side(const Enums::Map::Direction facing) const
 	-> Enums::Map::Direction {
 
-	using Enums::Map::Direction;
-
 	switch (facing) {
-	case Direction::NORTH:
-		return Direction::EAST;
+		using enum Enums::Map::Direction;
+	case NORTH:
+		return EAST;
 		break;
-	case Direction::SOUTH:
-		return Direction::WEST;
+	case SOUTH:
+		return WEST;
 		break;
-	case Direction::EAST:
-		return Direction::SOUTH;
+	case EAST:
+		return SOUTH;
 		break;
-	case Direction::WEST:
-		return Direction::NORTH;
+	case WEST:
+		return NORTH;
 		break;
 	default:
 		return facing;

@@ -127,11 +127,10 @@ auto Sorcery::Character::mage_max_sp()
 auto Sorcery::Character::set_stage(const Enums::Character::Stage stage)
 	-> void {
 
-	using Enums::Character::Stage;
-
 	_current_stage = stage;
 	switch (stage) {
-	case Stage::CHOOSE_METHOD:
+		using enum Enums::Character::Stage;
+	case CHOOSE_METHOD:
 		_name.clear();
 		_race = Enums::Character::Race::NO_RACE;
 		_alignment = Enums::Character::Align::NO_ALIGN;
@@ -156,7 +155,7 @@ auto Sorcery::Character::set_stage(const Enums::Character::Stage stage)
 		create_spells();
 		reset_spells();
 		break;
-	case Stage::REVIEW_AND_CONFIRM:
+	case REVIEW_AND_CONFIRM:
 
 		// Handle the generation of the Character Display Here
 		//_view = SUMMARY;
@@ -286,37 +285,30 @@ auto Sorcery::Character::set_portrait_index(const unsigned int value) -> void {
 
 auto Sorcery::Character::set_start_attr() -> void {
 
-	using Enums::Character::Attribute;
-	using Enums::Character::Race;
-	using Enums::System::Random;
-
 	_start_attr.clear();
 	_cur_attr.clear();
 	switch (_race) {
-	case Race::HUMAN:
-		_start_attr = {{Attribute::STRENGTH, 8}, {Attribute::IQ, 5},
-					   {Attribute::PIETY, 5},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 8},	 {Attribute::LUCK, 9}};
+		using enum Enums::Character::Attribute;
+		using enum Enums::Character::Race;
+	case HUMAN:
+		_start_attr = {{STRENGTH, 8}, {IQ, 5},		{PIETY, 5},
+					   {VITALITY, 8}, {AGILITY, 8}, {LUCK, 9}};
 		break;
-	case Race::ELF:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 10},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 9},	 {Attribute::LUCK, 6}};
+	case ELF:
+		_start_attr = {{STRENGTH, 7}, {IQ, 10},		{PIETY, 10},
+					   {VITALITY, 6}, {AGILITY, 9}, {LUCK, 6}};
 		break;
-	case Race::DWARF:
-		_start_attr = {{Attribute::STRENGTH, 10}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	  {Attribute::VITALITY, 10},
-					   {Attribute::AGILITY, 5},	  {Attribute::LUCK, 6}};
+	case DWARF:
+		_start_attr = {{STRENGTH, 10}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 10}, {AGILITY, 5}, {LUCK, 6}};
 		break;
-	case Race::GNOME:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 7}};
+	case GNOME:
+		_start_attr = {{STRENGTH, 7}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 8}, {AGILITY, 10}, {LUCK, 7}};
 		break;
-	case Race::HOBBIT:
-		_start_attr = {{Attribute::STRENGTH, 5}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 7},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 12}};
+	case HOBBIT:
+		_start_attr = {{STRENGTH, 5}, {IQ, 7},		 {PIETY, 7},
+					   {VITALITY, 6}, {AGILITY, 10}, {LUCK, 12}};
 		break;
 	default:
 		break;
@@ -325,9 +317,10 @@ auto Sorcery::Character::set_start_attr() -> void {
 	_cur_attr = _start_attr;
 
 	// Formula sourced from http://www.zimlab.com/wizardry/walk/w123calc.htm
-	_points_left = (*_system->random)[Random::ZERO_TO_3];
-	const bool chance_of_more{(*_system->random)[Random::D10] == 1};
-	const bool chance_of_more_again{(*_system->random)[Random::D10] == 1};
+	using enum Enums::System::Random;
+	_points_left = (*_system->random)[ZERO_TO_3];
+	const bool chance_of_more{(*_system->random)[D10] == 1};
+	const bool chance_of_more_again{(*_system->random)[D10] == 1};
 	_points_left += 7;
 	if (_points_left < 20)
 		if (chance_of_more)

@@ -2145,14 +2145,14 @@ auto Sorcery::UI::_draw_license(Component *component, const std::string &string)
 
 auto Sorcery::UI::load_message(const Enums::Map::Event event)
 	-> std::vector<std::string> {
-	using Enums::Map::Event;
 
 	switch (event) {
-	case Event::AREA_OF_OUT_BOUNDS:
+		using enum Enums::Map::Event;
+	case AREA_OF_OUT_BOUNDS:
 		return {"GAME_MESSAGE_AREA_OUT_OF_BOUNDS_1",
 				"GAME_MESSAGE_AREA_OUT_OF_BOUNDS_2"};
 		break;
-	case Event::MAN_TELEPORT_CASTLE:
+	case MAN_TELEPORT_CASTLE:
 		return {"GAME_MESSAGE_MAN_TELEPORT_CASTLE_1",
 				"GAME_MESSAGE_MAN_TELEPORT_CASTLE_2",
 				"GAME_MESSAGE_MAN_TELEPORT_CASTLE_3",
@@ -2160,124 +2160,124 @@ auto Sorcery::UI::load_message(const Enums::Map::Event event)
 				"GAME_MESSAGE_MAN_TELEPORT_CASTLE_5",
 				"GAME_MESSAGE_MAN_TELEPORT_CASTLE_6"};
 		break;
-	case Event::SILVER_KEY:
+	case SILVER_KEY:
 		return {"GAME_MESSAGE_SILVER_KEY_1", "GAME_MESSAGE_SILVER_KEY_2",
 				"GAME_MESSAGE_SILVER_KEY_3", "GAME_MESSAGE_SILVER_KEY_4",
 				"GAME_MESSAGE_SILVER_KEY_5", "GAME_MESSAGE_SILVER_KEY_6",
 				"GAME_MESSAGE_SILVER_KEY_7", "GAME_MESSAGE_SILVER_KEY_8"};
 		break;
-	case Event::BRONZE_KEY:
+	case BRONZE_KEY:
 		return {"GAME_MESSAGE_BRONZE_KEY_1", "GAME_MESSAGE_BRONZE_KEY_2",
 				"GAME_MESSAGE_BRONZE_KEY_3", "GAME_MESSAGE_BRONZE_KEY_4",
 				"GAME_MESSAGE_BRONZE_KEY_5", "GAME_MESSAGE_BRONZE_KEY_6"};
 		break;
-	case Event::MURPHYS_GHOSTS:
+	case MURPHYS_GHOSTS:
 		return {
 			"GAME_MESSAGE_MURPHYS_GHOSTS_1", "GAME_MESSAGE_MURPHYS_GHOSTS_2",
 			"GAME_MESSAGE_MURPHYS_GHOSTS_3", "GAME_MESSAGE_MURPHYS_GHOSTS_4",
 			"GAME_MESSAGE_MURPHYS_GHOSTS_5"};
 		break;
-	case Event::BEAR_STATUE:
+	case BEAR_STATUE:
 		return {"GAME_MESSAGE_BEAR_STATUE_1", "GAME_MESSAGE_BEAR_STATUE_2",
 				"GAME_MESSAGE_BEAR_STATUE_3"};
 		break;
-	case Event::FROG_STATUE:
+	case FROG_STATUE:
 		return {"GAME_MESSAGE_FROG_STATUE_1", "GAME_MESSAGE_FROG_STATUE_2",
 				"GAME_MESSAGE_FROG_STATUE_3", "GAME_MESSAGE_FROG_STATUE_4"};
 		break;
-	case Event::GOLD_KEY:
+	case GOLD_KEY:
 		return {"GAME_MESSAGE_GOLD_KEY_1", "GAME_MESSAGE_GOLD_KEY_2",
 				"GAME_MESSAGE_GOLD_KEY_3", "GAME_MESSAGE_GOLD_KEY_4",
 				"GAME_MESSAGE_GOLD_KEY_5", "GAME_MESSAGE_GOLD_KEY_6"};
 		break;
-	case Event::NEED_SILVER_KEY:
+	case NEED_SILVER_KEY:
 		return {};
 		break;
-	case Event::NEED_BRONZE_KEY:
+	case NEED_BRONZE_KEY:
 		return {};
 		break;
-	case Event::NEED_BEAR_STATUE:
+	case NEED_BEAR_STATUE:
 		return {};
 		break;
-	case Event::NEED_FROG_STATUE:
+	case NEED_FROG_STATUE:
 		return {};
 		break;
-	case Event::PLACARD_PIT_1:
+	case PLACARD_PIT_1:
 		return {};
 		break;
-	case Event::PLACARD_PIT_2:
+	case PLACARD_PIT_2:
 		return {};
 		break;
-	case Event::PLACARD_PIT_3:
+	case PLACARD_PIT_3:
 		return {};
 		break;
-	case Event::TURN_AROUND:
+	case TURN_AROUND:
 		return {};
 		break;
-	case Event::TURN_LEFT:
+	case TURN_LEFT:
 		return {};
 		break;
-	case Event::TURN_RIGHT:
+	case TURN_RIGHT:
 		return {};
 		break;
-	case Event::NEED_BEAR_STATUE_2:
+	case NEED_BEAR_STATUE_2:
 		return {};
 		break;
-	case Event::TESTING_GROUNDS:
+	case TESTING_GROUNDS:
 		return {};
 		break;
-	case Event::ALARM_BELLS:
+	case ALARM_BELLS:
 		return {};
 		break;
-	case Event::TREASURE_REPOSITORY:
+	case TREASURE_REPOSITORY:
 		return {};
 		break;
-	case Event::MONSTER_ALLOCATION_CENTRE:
+	case MONSTER_ALLOCATION_CENTRE:
 		return {};
 		break;
-	case Event::LARGE_DESK:
+	case LARGE_DESK:
 		return {};
 		break;
-	case Event::TREBOR_VOICE:
+	case TREBOR_VOICE:
 		return {};
 		break;
-	case Event::SERVICE_ELEVATOR:
+	case SERVICE_ELEVATOR:
 		return {};
 		break;
-	case Event::WERDNA_BOAST:
+	case WERDNA_BOAST:
 		return {};
 		break;
-	case Event::TURN_BACK:
+	case TURN_BACK:
 		return {};
 		break;
-	case Event::WERDNA_SIGN:
+	case WERDNA_SIGN:
 		return {};
 		break;
-	case Event::THREE_HUMANOIDS:
+	case THREE_HUMANOIDS:
 		return {};
 		break;
-	case Event::GETTING_WARM_1:
+	case GETTING_WARM_1:
 		return {};
 		break;
-	case Event::GETTING_WARM_2:
+	case GETTING_WARM_2:
 		return {};
 		break;
-	case Event::GETTING_WARM_3:
+	case GETTING_WARM_3:
 		return {};
 		break;
-	case Event::FIRE_DRAGONS_COMBAT:
+	case FIRE_DRAGONS_COMBAT:
 		return {};
 		break;
-	case Event::DEADLY_RING_COMBAT:
+	case DEADLY_RING_COMBAT:
 		return {};
 		break;
-	case Event::WERDNA_COMBAT:
+	case WERDNA_COMBAT:
 		return {};
 		break;
-	case Event::GUARANTEED_COMBAT:
+	case GUARANTEED_COMBAT:
 		return {};
 		break;
-	case Event::NEED_BLUE_RIBBON:
+	case NEED_BLUE_RIBBON:
 		return {};
 		break;
 	default:
@@ -2518,7 +2518,6 @@ auto Sorcery::UI::_draw_save([[maybe_unused]] Game *game) -> void {
 }
 
 auto Sorcery::UI::_draw_compass(Game *game) -> void {
-	using Enums::Map::Direction;
 
 	auto cmp{(*components)["engine_base_ui:compass"]};
 	auto frame_cmp{(*components)["engine_base_ui:compass_frame"]};
@@ -2539,16 +2538,17 @@ auto Sorcery::UI::_draw_compass(Game *game) -> void {
 		with_Child("compass_child", ImVec2(width, height)) {
 			auto icon_idx{ICON_COMPASS_NORTH};
 			switch (game->state->get_player_facing()) {
-			case Direction::NORTH:
+				using enum Enums::Map::Direction;
+			case NORTH:
 				icon_idx = ICON_COMPASS_NORTH;
 				break;
-			case Direction::SOUTH:
+			case SOUTH:
 				icon_idx = ICON_COMPASS_SOUTH;
 				break;
-			case Direction::EAST:
+			case EAST:
 				icon_idx = ICON_COMPASS_EAST;
 				break;
-			case Direction::WEST:
+			case WEST:
 				icon_idx = ICON_COMPASS_WEST;
 				break;
 			default:
@@ -2563,6 +2563,7 @@ auto Sorcery::UI::_draw_compass(Game *game) -> void {
 }
 
 auto Sorcery::UI::_draw_party_panel(Game *game) -> void {
+
 	auto cmp{(*components)["global:party_panel"]};
 	auto frame_cmp{(*components)["engine_base_ui:party_frame"]};
 
@@ -2606,10 +2607,10 @@ auto Sorcery::UI::_draw_party_panel(Game *game) -> void {
 }
 
 auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
-	using Enums::Character::Status;
 
 	switch (character->get_status()) {
-	case Status::OK:
+		using enum Enums::Character::Status;
+	case OK:
 		if (character->get_poisoned_rate() > 0)
 			return ImVec4{0.0f, 1.0f, 0.0f, _system->animation->fade};
 		else if (character->get_max_hp() / character->get_current_hp() > 10)
@@ -2619,11 +2620,11 @@ auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
 		else
 			return ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade};
 		break;
-	case Status::AFRAID:
+	case AFRAID:
 		[[fallthrough]];
-	case Status::SILENCED:
+	case SILENCED:
 		[[fallthrough]];
-	case Status::ASLEEP:
+	case ASLEEP:
 		if (character->get_max_hp() / character->get_current_hp() > 10)
 			return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		else if (character->get_max_hp() / character->get_current_hp() > 5)
@@ -2631,19 +2632,19 @@ auto Sorcery::UI::_get_status_color(Character *character) const -> ImVec4 {
 		else
 			return ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade};
 		break;
-	case Status::ASHES:
+	case ASHES:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case Status::DEAD:
+	case DEAD:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case Status::HELD:
+	case HELD:
 		return ImVec4{0.5f, 0.0f, 0.5f, _system->animation->fade};
 		break;
-	case Status::LOST:
+	case LOST:
 		return ImVec4{1.0f, 0.0f, 0.0f, _system->animation->fade};
 		break;
-	case Status::STONED:
+	case STONED:
 		return ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade};
 		break;
 	default:
