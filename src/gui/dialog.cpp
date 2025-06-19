@@ -48,8 +48,6 @@ auto Sorcery::Dialog::name() const -> std::string {
 
 auto Sorcery::Dialog::display(bool &is_yes) -> void {
 
-	using Enums::Layout::DialogType;
-
 	_id = _component.name + "##outer";
 	const auto yes_lbl{(*_system->strings)["DIALOG_YES"]};
 	const auto no_lbl{(*_system->strings)["DIALOG_NO"]};
@@ -100,7 +98,8 @@ auto Sorcery::Dialog::display(bool &is_yes) -> void {
 		ImVec2 btn_size{ImGui::GetFontSize() * 7.0f, 0.0f};
 		const auto centre{(width / 2)};
 
-		if (_type == DialogType::CONFIRM) {
+		using enum Enums::Layout::DialogType;
+		if (_type == CONFIRM) {
 
 			ImGui::SetCursorPos(
 				ImVec2{centre - (btn_size.x + grid_sz), grid_sz * 4});
@@ -114,7 +113,7 @@ auto Sorcery::Dialog::display(bool &is_yes) -> void {
 				show = false;
 				ImGui::CloseCurrentPopup();
 			}
-		} else if (_type == DialogType::OK) {
+		} else if (_type == OK) {
 
 			ImGui::SetCursorPos(ImVec2{centre - (btn_size.x / 2), grid_sz * 4});
 			if (ImGui::Button(ok_lbl.c_str(), btn_size)) {

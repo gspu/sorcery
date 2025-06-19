@@ -59,8 +59,6 @@ auto Sorcery::Config::load() -> bool {
 
 auto Sorcery::Config::_load() -> bool {
 
-	using Enums::Config::Options;
-
 	// Attempt to read the settings from the Settings file if possible
 	_options.fill(false);
 
@@ -69,44 +67,45 @@ auto Sorcery::Config::_load() -> bool {
 	const char *on{"on"};
 	const char *off{"on"};
 
+	using enum Enums::Config::Options;
 	option = _settings->GetValue("Options", CSTR(OPT_RECOMMENDED_MODE), off);
-	_options[Options::RECOMMENDED_MODE] = option.compare(on) == 0;
+	_options[RECOMMENDED_MODE] = option.compare(on) == 0;
 	option = _settings->GetValue("Options", CSTR(OPT_STRICT_MODE), off);
-	_options[Options::STRICT_MODE] = option.compare(on) == 0;
+	_options[STRICT_MODE] = option.compare(on) == 0;
 	option = _settings->GetValue("Options", CSTR(OPT_CHEAT_MODE), off);
-	_options[Options::CHEAT_MODE] = option.compare(on) == 0;
+	_options[CHEAT_MODE] = option.compare(on) == 0;
 	option = _settings->GetValue("Options", CSTR(OPT_AUTO_SAVE), off);
-	_options[Options::AUTO_SAVE] = option.compare(on) == 0;
+	_options[AUTO_SAVE] = option.compare(on) == 0;
 	option = _settings->GetValue("Options", CSTR(OPT_DICE_ROLLS), off);
-	_options[Options::COLOURED_WIREFRAME] = option.compare(on) == 0;
+	_options[COLOURED_WIREFRAME] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_MIXED_ALIGNMENT), off);
-	_options[Options::MIXED_ALIGNMENT] = option.compare(on) == 0;
+	_options[MIXED_ALIGNMENT] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_LEVEL_STAT_LOSS), off);
-	_options[Options::LEVEL_STAT_LOSS] = option.compare(on) == 0;
+	_options[LEVEL_STAT_LOSS] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_LEVEL_REROLL_HP), off);
-	_options[Options::LEVEL_REROLL_HP] = option.compare(on) == 0;
+	_options[LEVEL_REROLL_HP] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_CLASS_CHANGE_RESET), off);
-	_options[Options::CLASS_CHANGE_RESET] = option.compare(on) == 0;
+	_options[CLASS_CHANGE_RESET] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_CLASS_CHANGE_AGING), off);
-	_options[Options::CLASS_CHANGE_AGING] = option.compare(on) == 0;
+	_options[CLASS_CHANGE_AGING] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_AMBUSH_HIDE), off);
-	_options[Options::AMBUSH_HIDE] = option.compare(on) == 0;
+	_options[AMBUSH_HIDE] = option.compare(on) == 0;
 	option =
 		_settings->GetValue("Gameplay", CSTR(OPT_SURPRISE_SPELLCASTING), off);
-	_options[Options::SURPRISE_SPELLCASTING] = option.compare(on) == 0;
+	_options[SURPRISE_SPELLCASTING] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_INN_HEALING), off);
-	_options[Options::INN_HEALING] = option.compare(on) == 0;
+	_options[INN_HEALING] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_REROLL_ONES), off);
-	_options[Options::REROLL_ONES] = option.compare(on) == 0;
+	_options[REROLL_ONES] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_LOST_LEGATION), off);
-	_options[Options::LOST_LEGATION] = option.compare(on) == 0;
+	_options[LOST_LEGATION] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_CURABLE_DRAINING), off);
-	_options[Options::CURABLE_DRAIN] = option.compare(on) == 0;
+	_options[CURABLE_DRAIN] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_SHARED_INVENTORY), off);
-	_options[Options::SHARED_INVENTORY] = option.compare(on) == 0;
+	_options[SHARED_INVENTORY] = option.compare(on) == 0;
 	option = _settings->GetValue("Gameplay", CSTR(OPT_PROTECT_TELEPORT), off);
-	_options[Options::PROTECT_TELEPORT] = option.compare(on) == 0;
-	_options[Options::DICE_ROLLS] = option.compare(on) == 0;
+	_options[PROTECT_TELEPORT] = option.compare(on) == 0;
+	_options[DICE_ROLLS] = option.compare(on) == 0;
 	option = _settings->GetValue("Graphics", CSTR(OPT_COLOURED_WIREFRAME), off);
 
 	return true;
@@ -114,47 +113,45 @@ auto Sorcery::Config::_load() -> bool {
 
 bool Sorcery::Config::save() {
 
-	using Enums::Config::Options;
-
+	using enum Enums::Config::Options;
 	_settings->SetValue("Options", CSTR(OPT_RECOMMENDED_MODE),
-						BOOL2OPTIONCSTR(_options[Options::RECOMMENDED_MODE]));
+						BOOL2OPTIONCSTR(_options[RECOMMENDED_MODE]));
 	_settings->SetValue("Options", CSTR(OPT_STRICT_MODE),
-						BOOL2OPTIONCSTR(_options[Options::STRICT_MODE]));
+						BOOL2OPTIONCSTR(_options[STRICT_MODE]));
 	_settings->SetValue("Options", CSTR(OPT_CHEAT_MODE),
-						BOOL2OPTIONCSTR(_options[Options::CHEAT_MODE]));
+						BOOL2OPTIONCSTR(_options[CHEAT_MODE]));
 	_settings->SetValue("Options", CSTR(OPT_AUTO_SAVE),
-						BOOL2OPTIONCSTR(_options[Options::AUTO_SAVE]));
+						BOOL2OPTIONCSTR(_options[AUTO_SAVE]));
 	_settings->SetValue("Options", CSTR(OPT_DICE_ROLLS),
-						BOOL2OPTIONCSTR(_options[Options::DICE_ROLLS]));
+						BOOL2OPTIONCSTR(_options[DICE_ROLLS]));
 	_settings->SetValue("Gameplay", CSTR(OPT_MIXED_ALIGNMENT),
-						BOOL2OPTIONCSTR(_options[Options::MIXED_ALIGNMENT]));
+						BOOL2OPTIONCSTR(_options[MIXED_ALIGNMENT]));
 	_settings->SetValue("Gameplay", CSTR(OPT_LEVEL_STAT_LOSS),
-						BOOL2OPTIONCSTR(_options[Options::LEVEL_STAT_LOSS]));
+						BOOL2OPTIONCSTR(_options[LEVEL_STAT_LOSS]));
 	_settings->SetValue("Gameplay", CSTR(OPT_LEVEL_REROLL_HP),
-						BOOL2OPTIONCSTR(_options[Options::LEVEL_REROLL_HP]));
+						BOOL2OPTIONCSTR(_options[LEVEL_REROLL_HP]));
 	_settings->SetValue("Gameplay", CSTR(OPT_CLASS_CHANGE_RESET),
-						BOOL2OPTIONCSTR(_options[Options::CLASS_CHANGE_RESET]));
+						BOOL2OPTIONCSTR(_options[CLASS_CHANGE_RESET]));
 	_settings->SetValue("Gameplay", CSTR(OPT_CLASS_CHANGE_AGING),
-						BOOL2OPTIONCSTR(_options[Options::CLASS_CHANGE_AGING]));
+						BOOL2OPTIONCSTR(_options[CLASS_CHANGE_AGING]));
 	_settings->SetValue("Gameplay", CSTR(OPT_AMBUSH_HIDE),
-						BOOL2OPTIONCSTR(_options[Options::AMBUSH_HIDE]));
-	_settings->SetValue(
-		"Gameplay", CSTR(OPT_SURPRISE_SPELLCASTING),
-		BOOL2OPTIONCSTR(_options[Options::SURPRISE_SPELLCASTING]));
+						BOOL2OPTIONCSTR(_options[AMBUSH_HIDE]));
+	_settings->SetValue("Gameplay", CSTR(OPT_SURPRISE_SPELLCASTING),
+						BOOL2OPTIONCSTR(_options[SURPRISE_SPELLCASTING]));
 	_settings->SetValue("Gameplay", CSTR(OPT_INN_HEALING),
-						BOOL2OPTIONCSTR(_options[Options::INN_HEALING]));
+						BOOL2OPTIONCSTR(_options[INN_HEALING]));
 	_settings->SetValue("Gameplay", CSTR(OPT_REROLL_ONES),
-						BOOL2OPTIONCSTR(_options[Options::REROLL_ONES]));
+						BOOL2OPTIONCSTR(_options[REROLL_ONES]));
 	_settings->SetValue("Gameplay", CSTR(OPT_LOST_LEGATION),
-						BOOL2OPTIONCSTR(_options[Options::LOST_LEGATION]));
+						BOOL2OPTIONCSTR(_options[LOST_LEGATION]));
 	_settings->SetValue("Gameplay", CSTR(OPT_CURABLE_DRAINING),
-						BOOL2OPTIONCSTR(_options[Options::CURABLE_DRAIN]));
+						BOOL2OPTIONCSTR(_options[CURABLE_DRAIN]));
 	_settings->SetValue("Gameplay", CSTR(OPT_SHARED_INVENTORY),
-						BOOL2OPTIONCSTR(_options[Options::SHARED_INVENTORY]));
+						BOOL2OPTIONCSTR(_options[SHARED_INVENTORY]));
 	_settings->SetValue("Gameplay", CSTR(OPT_PROTECT_TELEPORT),
-						BOOL2OPTIONCSTR(_options[Options::PROTECT_TELEPORT]));
+						BOOL2OPTIONCSTR(_options[PROTECT_TELEPORT]));
 	_settings->SetValue("Graphics", CSTR(OPT_COLOURED_WIREFRAME),
-						BOOL2OPTIONCSTR(_options[Options::COLOURED_WIREFRAME]));
+						BOOL2OPTIONCSTR(_options[COLOURED_WIREFRAME]));
 
 	// Save current settings to ini file
 	SI_Error result{_settings->SaveFile(CSTR(_cfg_path))};

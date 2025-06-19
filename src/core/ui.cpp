@@ -198,8 +198,6 @@ auto Sorcery::UI::create_dynamic_modal(Game *game, const std::string name)
 // Load/reload the Fonts but scale them as needed
 auto Sorcery::UI::load_fonts() -> void {
 
-	using Enums::Layout::Font;
-
 	fonts.clear();
 	auto font_size{std::stof((*_system->config).get("Font", "size"))};
 	if (adj_grid_w > font_size)
@@ -216,13 +214,14 @@ auto Sorcery::UI::load_fonts() -> void {
 	else
 		font_file = MONOSPACE_D_FONT_FILE;
 
-	fonts[Font::MONOSPACE] = _io.Fonts->AddFontFromFileTTF(
+	using enum Enums::Layout::Font;
+	fonts[MONOSPACE] = _io.Fonts->AddFontFromFileTTF(
 		CSTR((*_system->files)[font_file]), font_size);
-	fonts[Font::PROPORTIONAL] = _io.Fonts->AddFontFromFileTTF(
+	fonts[PROPORTIONAL] = _io.Fonts->AddFontFromFileTTF(
 		CSTR((*_system->files)[PROPORTIONAL_FONT_FILE]), font_size);
-	fonts[Font::TEXT] = _io.Fonts->AddFontFromFileTTF(
+	fonts[TEXT] = _io.Fonts->AddFontFromFileTTF(
 		CSTR((*_system->files)[TEXT_FONT_FILE]), font_size);
-	fonts[Font::DEFAULT] = _io.Fonts->AddFontDefault();
+	fonts[DEFAULT] = _io.Fonts->AddFontDefault();
 }
 
 // Not an ideal function, really need to maintain a pointer status map instead
@@ -1044,103 +1043,19 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 										   [[maybe_unused]] Game *game,
 										   Character *character) -> void {
 
-	using Enums::Character::Ability;
-	using Enums::Character::Attribute;
-
 	const auto left_col{component->x + 0};
 	const auto right_col{component->x + 19};
+
+	using enum Enums::Character::Ability;
+	using enum Enums::Character::Attribute;
 
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	ImVec2 pos{};
 	pos = ImVec2{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Strength",
-					character->get_cur_attr(Attribute::STRENGTH))
-			.c_str());
-
-	set_StyleColor(ImGuiCol_Text,
-				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:+>2}", "Atk Mod",
-					character->abilities().at(Ability::ATTACK_MODIFIER))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:+>2}", "Hit Prob",
-					character->abilities().at(Ability::HIT_PROBABILITY))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:+>2}", "Bonus Damg",
-					character->abilities().at(Ability::BONUS_DAMAGE))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Num Attacks",
-					character->abilities().at(Ability::BASE_NUMBER_OF_ATTACKS))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Unarmed Damg",
-					character->abilities().at(Ability::UNARMED_DAMAGE))
-			.c_str());
-
-	set_StyleColor(ImGuiCol_Text,
-				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
-	pos.y += (adj_grid_h * 2);
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Vitality",
-					character->get_cur_attr(Attribute::VITALITY))
-			.c_str());
-
-	set_StyleColor(ImGuiCol_Text,
-				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:+>2}", "Vit Bonus",
-					character->abilities().at(Ability::VITALITY_BONUS))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:+>2}", "Bonus HP",
-					character->abilities().at(Ability::BONUS_HIT_POINTS))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "Ress / Dead",
-					character->abilities().at(Ability::DEAD_RESURRECT))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "Ress / Ashes",
-					character->abilities().at(Ability::ASHES_RESURRECT))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "Ress / Spell",
-					character->abilities().at(Ability::DI_KADORTO_RESURRECT))
-			.c_str());
-
-	pos = ImVec2{right_col * adj_grid_w, component->y * adj_grid_h};
-	ImGui::SetCursorPos(pos);
-	set_StyleColor(ImGuiCol_Text,
-				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
-	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "I.Q.",
-									   character->get_cur_attr(Attribute::IQ))
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "Strength",
+									   character->get_cur_attr(STRENGTH))
 							   .c_str());
 
 	set_StyleColor(ImGuiCol_Text,
@@ -1148,35 +1063,114 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "Spell Learn",
-					character->abilities().at(Ability::MAGE_SPELL_LEARN))
+		std::format("{:>14} {:+>2}", "Atk Mod",
+					character->abilities().at(ATTACK_MODIFIER))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "ID Items",
-					character->abilities().at(Ability::IDENTIFY_ITEMS))
+		std::format("{:>14} {:+>2}", "Hit Prob",
+					character->abilities().at(HIT_PROBABILITY))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(std::format("{:>14} {:+>2}", "Bonus Damg",
+									   character->abilities().at(BONUS_DAMAGE))
+							   .c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}", "Num Attacks",
+					character->abilities().at(BASE_NUMBER_OF_ATTACKS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "ID Curse",
-					character->abilities().at(Ability::IDENTIFY_CURSE))
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "ID Foes",
-					character->abilities().at(Ability::IDENTIFY_FOES))
+		std::format("{:>14} {:>2}", "Unarmed Damg",
+					character->abilities().at(UNARMED_DAMAGE))
 			.c_str());
 
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	pos.y += (adj_grid_h * 2);
 	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "Vitality",
+									   character->get_cur_attr(VITALITY))
+							   .c_str());
+
+	set_StyleColor(ImGuiCol_Text,
+				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Agility",
-					character->get_cur_attr(Attribute::AGILITY))
+		std::format("{:>14} {:+>2}", "Vit Bonus",
+					character->abilities().at(VITALITY_BONUS))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:+>2}", "Bonus HP",
+					character->abilities().at(BONUS_HIT_POINTS))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "Ress / Dead",
+					character->abilities().at(DEAD_RESURRECT))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "Ress / Ashes",
+					character->abilities().at(ASHES_RESURRECT))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "Ress / Spell",
+					character->abilities().at(DI_KADORTO_RESURRECT))
+			.c_str());
+
+	pos = ImVec2{right_col * adj_grid_w, component->y * adj_grid_h};
+	ImGui::SetCursorPos(pos);
+	set_StyleColor(ImGuiCol_Text,
+				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}", "I.Q.", character->get_cur_attr(IQ))
+			.c_str());
+
+	set_StyleColor(ImGuiCol_Text,
+				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "Spell Learn",
+					character->abilities().at(MAGE_SPELL_LEARN))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "ID Items",
+					character->abilities().at(IDENTIFY_ITEMS))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "ID Curse",
+					character->abilities().at(IDENTIFY_CURSE))
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}%", "ID Foes",
+									   character->abilities().at(IDENTIFY_FOES))
+							   .c_str());
+
+	set_StyleColor(ImGuiCol_Text,
+				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
+	pos.y += (adj_grid_h * 2);
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}", "Agility", character->get_cur_attr(AGILITY))
 			.c_str());
 
 	set_StyleColor(ImGuiCol_Text,
@@ -1185,46 +1179,42 @@ auto Sorcery::UI::_draw_character_detailed(Component *component,
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:+>2}", "Int Mod",
-					character->abilities().at(Ability::INITIATIVE_MODIFIER))
+					character->abilities().at(INITIATIVE_MODIFIER))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Crit Hit",
-					character->abilities().at(Ability::BASE_CRITICAL_HIT))
+					character->abilities().at(BASE_CRITICAL_HIT))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "ID Trap",
-					character->abilities().at(Ability::IDENTIFY_TRAP))
-			.c_str());
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}%", "ID Trap",
+									   character->abilities().at(IDENTIFY_TRAP))
+							   .c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Disarm Trap",
-					character->abilities().at(Ability::BASE_DISARM_TRAP))
+					character->abilities().at(BASE_DISARM_TRAP))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Avoid Trap",
-					100 - character->abilities().at(Ability::ACTIVATE_TRAP))
+					100 - character->abilities().at(ACTIVATE_TRAP))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Avoid Pit",
-					character->abilities().at(Ability::BASE_AVOID_PIT))
+					character->abilities().at(BASE_AVOID_PIT))
 			.c_str());
 }
 
 auto Sorcery::UI::_draw_character_mage_spells(Component *component,
 											  [[maybe_unused]] Game *game,
 											  Character *character) -> void {
-
-	using Enums::Magic::SpellID;
-	using Enums::Magic::SpellType;
 
 	ImVec2 pos{component->x * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
@@ -1246,6 +1236,7 @@ auto Sorcery::UI::_draw_character_mage_spells(Component *component,
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
+				using Enums::Magic::SpellID;
 				auto spell_id{magic_enum::enum_cast<SpellID>(index).value()};
 				auto spells{character->spells() |
 							std::views::filter([&](Spell spell) {
@@ -1278,9 +1269,6 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 												[[maybe_unused]] Game *game,
 												Character *character) -> void {
 
-	using Enums::Magic::SpellID;
-	using Enums::Magic::SpellType;
-
 	ImVec2 pos{component->x * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	with_Table("priest_spells_1", 3, ImGuiTableFlags_NoSavedSettings) {
@@ -1302,6 +1290,7 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
+				using Enums::Magic::SpellID;
 				auto spell_id{magic_enum::enum_cast<SpellID>(index).value()};
 				auto spells{character->spells() |
 							std::views::filter([&](Spell spell) {
@@ -1935,26 +1924,26 @@ auto Sorcery::UI::_draw_text(Component *component) -> void {
 
 auto Sorcery::UI::_draw_components(std::string_view screen, Game *game,
 								   [[maybe_unused]] const int mode) -> void {
-	using Enums::Layout::ComponentType;
 
 	_frames.clear();
 	_menus.clear();
 
 	// Draw every component specified in order
 	for (auto cmps{(*components)(screen)}; auto c : cmps.value()) {
-		if (c.type == ComponentType::IMAGE_BG)
+		using enum Enums::Layout::ComponentType;
+		if (c.type == IMAGE_BG)
 			_draw_bg_image(&c);
-		else if (c.type == ComponentType::FRAME)
+		else if (c.type == FRAME)
 			_draw_frame(&c);
-		else if (c.type == ComponentType::IMAGE_FG)
+		else if (c.type == IMAGE_FG)
 			_draw_fg_image(&c);
-		else if (c.type == ComponentType::TEXT)
+		else if (c.type == TEXT)
 			_draw_text(&c);
-		else if (c.type == ComponentType::BUTTON)
+		else if (c.type == BUTTON)
 			_draw_button(&c);
-		else if (c.type == ComponentType::PARAGRAPH)
+		else if (c.type == PARAGRAPH)
 			_draw_paragraph(&c);
-		else if (c.type == ComponentType::MENU)
+		else if (c.type == MENU)
 			_draw_menu(&c, game);
 	}
 }
@@ -2671,7 +2660,7 @@ auto Sorcery::UI::_draw_spell_info() -> void {
 
 			const auto spell_name{
 				std::format("{} \"{}\"", spell.name, spell.translated_name)};
-			const auto spell_type{spell.type == Enums::Magic::SpellType::MAGE
+			const auto spell_type{spell.type == Enums::Magic::SpellType::ARCANE
 									  ? "Mage"
 									  : "Priest"};
 
@@ -3268,13 +3257,12 @@ auto Sorcery::UI::load_dynamic_menu_items(
 		   [[maybe_unused]] const int flags,
 		   [[maybe_unused]] const bool reorder) -> void {
 		if (!game->characters.empty()) {
-
-			using Enums::Character::Status;
 			for (auto &[id, character] : game->characters) {
-				if (character.get_status() == Status::ASHES ||
-					character.get_status() == Status::DEAD ||
-					character.get_status() == Status::HELD ||
-					character.get_status() == Status::STONED) {
+				using enum Enums::Character::Status;
+				if (character.get_status() == ASHES ||
+					character.get_status() == DEAD ||
+					character.get_status() == HELD ||
+					character.get_status() == STONED) {
 					items.emplace_back(
 						std::format("{:<16} {:>8}", character.get_name(),
 									character.get_status_string()));

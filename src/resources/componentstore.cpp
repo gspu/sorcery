@@ -174,45 +174,44 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 				// For every component on that screen read in their properties
 				for (auto j = 0u; j < components.size(); j++) {
 
-					using Enums::Layout::ComponentType;
-
 					// Always Present
 					std::string name{components[j]["name"].asString()};
-					ComponentType component_type{[&] {
+					Enums::Layout::ComponentType component_type{[&] {
+						using enum Enums::Layout::ComponentType;
 						if (components[j].isMember("type")) {
 							if (components[j]["type"].asString().length() > 0) {
 								if (components[j]["type"].asString() == "text")
-									return ComponentType::TEXT;
+									return TEXT;
 								else if (components[j]["type"].asString() ==
 										 "frame")
-									return ComponentType::FRAME;
+									return FRAME;
 								else if (components[j]["type"].asString() ==
 										 "button")
-									return ComponentType::BUTTON;
+									return BUTTON;
 								else if (components[j]["type"].asString() ==
 										 "image_fg")
-									return ComponentType::IMAGE_FG;
+									return IMAGE_FG;
 								else if (components[j]["type"].asString() ==
 										 "image_bg")
-									return ComponentType::IMAGE_BG;
+									return IMAGE_BG;
 								else if (components[j]["type"].asString() ==
 										 "menu")
-									return ComponentType::MENU;
+									return MENU;
 								else if (components[j]["type"].asString() ==
 										 "text")
-									return ComponentType::TEXT;
+									return TEXT;
 								else if (components[j]["type"].asString() ==
 										 "paragraph")
-									return ComponentType::PARAGRAPH;
+									return PARAGRAPH;
 								else if (components[j]["type"].asString() ==
 										 "other")
-									return ComponentType::OTHER;
+									return OTHER;
 								else
-									return ComponentType::NO_CT;
+									return NO_CT;
 							} else
-								return ComponentType::NO_CT;
+								return NO_CT;
 						} else
-							return ComponentType::NO_CT;
+							return NO_CT;
 					}()};
 
 					// Not always present
@@ -261,28 +260,27 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 							return 0u;
 					}()};
 					auto font{[&] {
-						using Enums::Layout::Font;
-
+						using enum Enums::Layout::Font;
 						if (components[j].isMember("font")) {
 							if (components[j]["font"].asString().length() > 0) {
 								if (components[j]["font"].asString() ==
 									"monospace")
-									return Font::MONOSPACE;
+									return MONOSPACE;
 								else if (components[j]["font"].asString() ==
 										 "proportional")
-									return Font::PROPORTIONAL;
+									return PROPORTIONAL;
 								else if (components[j]["font"].asString() ==
 										 "text")
-									return Font::TEXT;
+									return TEXT;
 								else if (components[j]["font"].asString() ==
 										 "default")
-									return Font::DEFAULT;
+									return DEFAULT;
 								else
-									return Font::NO_FONT;
+									return NO_FONT;
 							} else
-								return Font::NO_FONT;
+								return NO_FONT;
 						} else
-							return Font::NO_FONT;
+							return NO_FONT;
 					}()};
 					auto colour{[&] {
 						if (components[j].isMember("colour")) {
@@ -334,29 +332,28 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 							return COL2NUM("0");
 					}()};
 					Enums::Layout::Justification justification{[&] {
-						using Enums::Layout::Justification;
-
+						using enum Enums::Layout::Justification;
 						if (components[j].isMember("justification")) {
 							if (components[j]["justification"]
 									.asString()
 									.length() > 0) {
 								if (components[j]["justification"].asString() ==
 									"left")
-									return Justification::LEFT;
+									return LEFT;
 								else if (components[j]["justificati"
 													   "on"]
 											 .asString() == "centre")
-									return Justification::CENTRE;
+									return CENTRE;
 								else if (components[j]["justificati"
 													   "on"]
 											 .asString() == "right")
-									return Justification::RIGHT;
+									return RIGHT;
 								else
-									return Justification::LEFT;
+									return LEFT;
 							} else
-								return Justification::LEFT;
+								return LEFT;
 						} else
-							return Justification::LEFT;
+							return LEFT;
 					}()};
 					auto priority{[&] {
 						if (components[j].isMember("priority")) {
@@ -370,23 +367,22 @@ auto Sorcery::ComponentStore::load(const std::filesystem::path filename)
 							return 999u;
 					}()};
 					Enums::Layout::DrawMode drawmode{[&] {
-						using Enums::Layout::DrawMode;
-
+						using enum Enums::Layout::DrawMode;
 						if (components[j].isMember("drawmode")) {
 							if (components[j]["drawmode"].asString().length() >
 								0) {
 								if (components[j]["drawmode"].asString() ==
 									"manual")
-									return DrawMode::MANUAL;
+									return MANUAL;
 								else if (components[j]["drawmode"].asString() ==
 										 "automatic")
-									return DrawMode::AUTOMATIC;
+									return AUTOMATIC;
 								else
-									return DrawMode::AUTOMATIC;
+									return AUTOMATIC;
 							} else
-								return DrawMode::AUTOMATIC;
+								return AUTOMATIC;
 						} else
-							return DrawMode::AUTOMATIC;
+							return AUTOMATIC;
 					}()};
 
 					// Add the Component

@@ -228,8 +228,8 @@ namespace Enums::Magic {
 
 	enum class SpellType {
 		NO_SPELL_TYPE,
-		MAGE,
-		PRIEST
+		ARCANE,
+		DIVINE
 	};
 
 	enum class SpellPointType {

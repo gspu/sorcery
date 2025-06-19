@@ -366,13 +366,12 @@ auto Sorcery::Menu::draw() -> void {
 // NOT USED HERE - see methods in ui.cpp
 auto Sorcery::Menu::_load_sick_characters() -> void {
 
-	using Enums::Character::Status;
-
 	if (!_game->characters.empty()) {
 		for (auto &[id, character] : _game->characters) {
-			if (character.get_status() == Status::ASHES ||
-				character.get_status() == Status::DEAD ||
-				character.get_status() == Status::HELD) {
+			using enum Enums::Character::Status;
+			if (character.get_status() == ASHES ||
+				character.get_status() == DEAD ||
+				character.get_status() == HELD) {
 				_items.emplace_back(std::format("{:^16} ({:^<8})",
 												character.get_name(),
 												character.get_status_string()));

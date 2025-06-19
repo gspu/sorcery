@@ -174,13 +174,12 @@ auto Sorcery::Inventory::identify_item(const unsigned int slot,
 									   const unsigned int curse_chance)
 	-> Enums::Items::IdentifyOutcome {
 
-	using Enums::Items::IdentifyOutcome;
-
 	auto cursed{false};
 	auto success{false};
 
+	using enum Enums::Items::IdentifyOutcome;
 	if (_items.size() < (slot - 1))
-		return IdentifyOutcome::NONE;
+		return NONE;
 
 	auto &candidate{_items.at(slot - 1)};
 	if (roll < id_chance) {
@@ -195,13 +194,13 @@ auto Sorcery::Inventory::identify_item(const unsigned int slot,
 	}
 
 	if (success && !cursed)
-		return IdentifyOutcome::SUCCESS;
+		return SUCCESS;
 	else if (success && cursed)
-		return IdentifyOutcome::CURSED_SUCCESS;
+		return CURSED_SUCCESS;
 	else if (!success && cursed)
-		return IdentifyOutcome::CURSED_FAIL;
+		return CURSED_FAIL;
 	else
-		return IdentifyOutcome::FAIL;
+		return FAIL;
 }
 
 auto Sorcery::Inventory::equip_item(const unsigned int slot) -> bool {
