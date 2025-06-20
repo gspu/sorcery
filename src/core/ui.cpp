@@ -1236,8 +1236,9 @@ auto Sorcery::UI::_draw_character_mage_spells(Component *component,
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
-				using Enums::Magic::SpellID;
-				auto spell_id{magic_enum::enum_cast<SpellID>(index).value()};
+				auto spell_id{
+					magic_enum::enum_cast<Enums::Magic::SpellID>(index)
+						.value()};
 				auto spells{character->spells() |
 							std::views::filter([&](Spell spell) {
 								return (spell.id == spell_id);
@@ -1290,8 +1291,9 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 			if (index != -1) {
 				ImGui::TableNextColumn();
 
-				using Enums::Magic::SpellID;
-				auto spell_id{magic_enum::enum_cast<SpellID>(index).value()};
+				auto spell_id{
+					magic_enum::enum_cast<Enums::Magic::SpellID>(index)
+						.value()};
 				auto spells{character->spells() |
 							std::views::filter([&](Spell spell) {
 								return (spell.id == spell_id);
@@ -3851,7 +3853,6 @@ auto Sorcery::UI::_draw_map_tile(const Tile &tile, const ImVec2 pos,
 								 const ImVec2 sz) -> void {
 	using Enums::DrawMap::Feature;
 	using Enums::Map::Direction;
-	using Enums::Tile::Edge;
 	using Enums::Tile::Features;
 	using Enums::Tile::Properties;
 
@@ -3864,60 +3865,61 @@ auto Sorcery::UI::_draw_map_tile(const Tile &tile, const ImVec2 pos,
 								sz);
 
 	// Walls for all 4 directions
-	if (tile.has(Direction::NORTH, Edge::SECRET_DOOR) ||
-		tile.has(Direction::NORTH, Edge::ONE_WAY_HIDDEN_DOOR))
+	using enum Enums::Tile::Edge;
+	if (tile.has(Direction::NORTH, SECRET_DOOR) ||
+		tile.has(Direction::NORTH, ONE_WAY_HIDDEN_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_SECRET),
 								pos, sz);
-	else if (tile.has(Direction::NORTH, Edge::UNLOCKED_DOOR) ||
-			 tile.has(Direction::NORTH, Edge::ONE_WAY_DOOR))
+	else if (tile.has(Direction::NORTH, UNLOCKED_DOOR) ||
+			 tile.has(Direction::NORTH, ONE_WAY_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_DOOR), pos,
 								sz);
-	else if (tile.has(Direction::NORTH, Edge::ONE_WAY_WALL))
+	else if (tile.has(Direction::NORTH, ONE_WAY_WALL))
 		_draw_fg_image_with_idx(MAPS_TEXTURE,
 								unenum(Feature::NORTH_ONE_WAY_WALL), pos, sz);
 	else if (tile.has(Direction::NORTH))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_WALL), pos,
 								sz);
 
-	if (tile.has(Direction::SOUTH, Edge::SECRET_DOOR) ||
-		tile.has(Direction::SOUTH, Edge::ONE_WAY_HIDDEN_DOOR))
+	if (tile.has(Direction::SOUTH, SECRET_DOOR) ||
+		tile.has(Direction::SOUTH, ONE_WAY_HIDDEN_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_SECRET),
 								pos, sz);
-	else if (tile.has(Direction::SOUTH, Edge::UNLOCKED_DOOR) ||
-			 tile.has(Direction::SOUTH, Edge::ONE_WAY_DOOR))
+	else if (tile.has(Direction::SOUTH, UNLOCKED_DOOR) ||
+			 tile.has(Direction::SOUTH, ONE_WAY_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_DOOR), pos,
 								sz);
-	else if (tile.has(Direction::SOUTH, Edge::ONE_WAY_WALL))
+	else if (tile.has(Direction::SOUTH, ONE_WAY_WALL))
 		_draw_fg_image_with_idx(MAPS_TEXTURE,
 								unenum(Feature::SOUTH_ONE_WAY_WALL), pos, sz);
 	else if (tile.has(Direction::SOUTH))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_WALL), pos,
 								sz);
 
-	if (tile.has(Direction::EAST, Edge::SECRET_DOOR) ||
-		tile.has(Direction::EAST, Edge::ONE_WAY_HIDDEN_DOOR))
+	if (tile.has(Direction::EAST, SECRET_DOOR) ||
+		tile.has(Direction::EAST, ONE_WAY_HIDDEN_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_SECRET), pos,
 								sz);
-	else if (tile.has(Direction::EAST, Edge::UNLOCKED_DOOR) ||
-			 tile.has(Direction::EAST, Edge::ONE_WAY_DOOR))
+	else if (tile.has(Direction::EAST, UNLOCKED_DOOR) ||
+			 tile.has(Direction::EAST, ONE_WAY_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_DOOR), pos,
 								sz);
-	else if (tile.has(Direction::EAST, Edge::ONE_WAY_WALL))
+	else if (tile.has(Direction::EAST, ONE_WAY_WALL))
 		_draw_fg_image_with_idx(MAPS_TEXTURE,
 								unenum(Feature::EAST_ONE_WAY_WALL), pos, sz);
 	else if (tile.has(Direction::EAST))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_WALL), pos,
 								sz);
 
-	if (tile.has(Direction::WEST, Edge::SECRET_DOOR) ||
-		tile.has(Direction::WEST, Edge::ONE_WAY_HIDDEN_DOOR))
+	if (tile.has(Direction::WEST, SECRET_DOOR) ||
+		tile.has(Direction::WEST, ONE_WAY_HIDDEN_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::WEST_SECRET), pos,
 								sz);
-	else if (tile.has(Direction::WEST, Edge::UNLOCKED_DOOR) ||
-			 tile.has(Direction::WEST, Edge::ONE_WAY_DOOR))
+	else if (tile.has(Direction::WEST, UNLOCKED_DOOR) ||
+			 tile.has(Direction::WEST, ONE_WAY_DOOR))
 		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::WEST_DOOR), pos,
 								sz);
-	else if (tile.has(Direction::WEST, Edge::ONE_WAY_WALL))
+	else if (tile.has(Direction::WEST, ONE_WAY_WALL))
 		_draw_fg_image_with_idx(MAPS_TEXTURE,
 								unenum(Feature::WEST_ONE_WAY_WALL), pos, sz);
 	else if (tile.has(Direction::WEST))

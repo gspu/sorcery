@@ -79,29 +79,30 @@ auto Sorcery::MonsterStore::_load(const std::filesystem::path filename)
 				})};
 				const std::string hit_dice{items[i]["hit dice"].asString()};
 				const auto category{std::invoke([&] {
-					using Enums::Monsters::Category;
-
-					if (items[i].isMember("category")) {
+					using enum Enums::Monsters::Category;
+		if (items[i].isMember("category")) {
 						if (items[i]["category"].asString().length() > 0) {
-							auto category{magic_enum::enum_cast<Category>(
+							auto category{magic_enum::enum_cast<
+								Enums::Monsters::Category>(
 								items[i]["category"].asString())};
-							return category.value_or(Category::HUMANOID);
+							return category.value_or(HUMANOID);
 						} else
-							return Category::HUMANOID;
+							return HUMANOID;
 					} else
-						return Category::HUMANOID;
+						return HUMANOID;
 				})};
 				const auto mclass{std::invoke([&] {
-					using Enums::Monsters::Class;
-
+					using enum Enums::Monsters::Class;
 					if (category == Enums::Monsters::Category::HUMANOID) {
-						auto mclass{magic_enum::enum_cast<Class>(
-							items[i]["category"].asString())};
-						return mclass.value_or(Class::NO_CLASS);
+						auto mclass{
+							magic_enum::enum_cast<Enums::Monsters::Class>(
+								items[i]["category"].asString())};
+						return mclass.value_or(NO_CLASS);
 					} else
-						return Class::NO_CLASS;
+						return NO_CLASS;
 				})};
-				const auto ac{std::invoke([&] {
+		
+					const auto ac{std::invoke([&] {
 					if (items[i].isMember("ac"))
 						return items[i]["ac"].asInt();
 					else
@@ -276,20 +277,19 @@ auto Sorcery::MonsterStore::_parse_attacks(const std::string value) const
 auto Sorcery::MonsterStore::_parse_breath_weapons(const std::string value) const
 	-> Enums::Monsters::Breath {
 
-	using Enums::Monsters::Breath;
-
+	using enum Enums::Monsters::Breath;
 	if (value.find("Drain Breath") != std::string::npos)
-		return Breath::DRAIN_BREATH;
+		return DRAIN_BREATH;
 	else if (value.find("Flame Breath") != std::string::npos)
-		return Breath::FLAME_BREATH;
+		return FLAME_BREATH;
 	else if (value.find("Poison Breath") != std::string::npos)
-		return Breath::POISON_BREATH;
+		return POISON_BREATH;
 	else if (value.find("Cold Breath") != std::string::npos)
-		return Breath::COLD_BREATH;
+		return COLD_BREATH;
 	else if (value.find("Stone Breath") != std::string::npos)
-		return Breath::STONE_BREATH;
+		return STONE_BREATH;
 	else
-		return Breath::NO_BREATH_WEAPON;
+		return NO_BREATH_WEAPON;
 }
 
 auto Sorcery::MonsterStore::_parse_level_drain(const std::string value) const
@@ -319,23 +319,22 @@ auto Sorcery::MonsterStore::_parse_regen(const std::string value) const
 auto Sorcery::MonsterStore::_parse_resistances(const std::string value) const
 	-> std::array<bool, 7> {
 
-	using Enums::Monsters::Resistance;
-
+	using enum Enums::Monsters::Resistance;
 	std::array<bool, 7> res;
 	if (value.find("Cold") != std::string::npos)
-		res[unenum(Resistance::RESIST_COLD)] = true;
+		res[unenum(RESIST_COLD)] = true;
 	if (value.find("Drain") != std::string::npos)
-		res[unenum(Resistance::RESIST_LEVEL_DRAIN)] = true;
+		res[unenum(RESIST_LEVEL_DRAIN)] = true;
 	if (value.find("Fire") != std::string::npos)
-		res[unenum(Resistance::RESIST_FIRE)] = true;
+		res[unenum(RESIST_FIRE)] = true;
 	if (value.find("Magic") != std::string::npos)
-		res[unenum(Resistance::RESIST_MAGIC)] = true;
+		res[unenum(RESIST_MAGIC)] = true;
 	if (value.find("Poison") != std::string::npos)
-		res[unenum(Resistance::RESIST_POISON)] = true;
+		res[unenum(RESIST_POISON)] = true;
 	if (value.find("Physical") != std::string::npos)
-		res[unenum(Resistance::RESIST_PHYSICAL)] = true;
+		res[unenum(RESIST_PHYSICAL)] = true;
 	if (value.find("Stone") != std::string::npos)
-		res[unenum(Resistance::RESIST_STONING)] = true;
+		res[unenum(RESIST_STONING)] = true;
 
 	return res;
 }
@@ -343,23 +342,22 @@ auto Sorcery::MonsterStore::_parse_resistances(const std::string value) const
 auto Sorcery::MonsterStore::_parse_properties(const std::string value) const
 	-> std::array<bool, 7> {
 
-	using Enums::Monsters::Property;
-
+	using enum Enums::Monsters::Property;
 	std::array<bool, 7> props;
 	if (value.find("Critical") != std::string::npos)
-		props[unenum(Property::CAN_AUTOKILL)] = true;
+		props[unenum(CAN_AUTOKILL)] = true;
 	if (value.find("Sleep") != std::string::npos)
-		props[unenum(Property::CAN_BE_SLEPT)] = true;
+		props[unenum(CAN_BE_SLEPT)] = true;
 	if (value.find("Call") != std::string::npos)
-		props[unenum(Property::CAN_CALL_FOR_OTHERS)] = true;
+		props[unenum(CAN_CALL_FOR_OTHERS)] = true;
 	if (value.find("Run") != std::string::npos)
-		props[unenum(Property::CAN_FLEE)] = true;
+		props[unenum(CAN_FLEE)] = true;
 	if (value.find("Paralyse") != std::string::npos)
-		props[unenum(Property::CAN_PARALYSE)] = true;
+		props[unenum(CAN_PARALYSE)] = true;
 	if (value.find("Stone") != std::string::npos)
-		props[unenum(Property::CAN_PETRIFY)] = true;
+		props[unenum(CAN_PETRIFY)] = true;
 	if (value.find("Poison") != std::string::npos)
-		props[unenum(Property::CAN_POISON)] = true;
+		props[unenum(CAN_POISON)] = true;
 
 	return props;
 }

@@ -578,31 +578,30 @@ auto Sorcery::Render::_has_secret_door(
 	const Tile &tile, const Sorcery::Enums::Map::Direction direction) const
 	-> bool {
 
-	using Enums::Tile::Edge;
+	using enum Enums::Tile::Edge;
 
-	return ((tile.has(direction, Edge::ONE_WAY_HIDDEN_DOOR)) ||
-			(tile.has(direction, Edge::SECRET_DOOR)));
+	return ((tile.has(direction, ONE_WAY_HIDDEN_DOOR)) ||
+			(tile.has(direction, SECRET_DOOR)));
 }
 
 auto Sorcery::Render::_has_normal_door(
 	const Tile &tile, const Sorcery::Enums::Map::Direction direction) const
 	-> bool {
 
-	using Enums::Tile::Edge;
+	using enum Enums::Tile::Edge;
 
-	return ((tile.has(direction, Edge::ONE_WAY_DOOR)) ||
-			(tile.has(direction, Edge::UNLOCKED_DOOR)) ||
-			(tile.has(direction, Edge::LOCKED_DOOR)));
+	return ((tile.has(direction, ONE_WAY_DOOR)) ||
+			(tile.has(direction, UNLOCKED_DOOR)) ||
+			(tile.has(direction, LOCKED_DOOR)));
 }
 
 auto Sorcery::Render::_has_wall(
 	const Tile &tile, const Sorcery::Enums::Map::Direction direction) const
 	-> bool {
 
-	using Enums::Tile::Edge;
+	using enum Enums::Tile::Edge;
 
-	return ((tile.has(direction, Edge::WALL)) ||
-			(tile.has(direction, Edge::ONE_WAY_WALL)));
+	return ((tile.has(direction, WALL)) || (tile.has(direction, ONE_WAY_WALL)));
 }
 
 auto Sorcery::Render::draw(Game *game, Component *component) -> void {
@@ -612,9 +611,6 @@ auto Sorcery::Render::draw(Game *game, Component *component) -> void {
 
 auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 	-> void {
-
-	using Enums::Tile::Features;
-	using Enums::Tile::Properties;
 
 	const auto player_pos{game->state->get_player_pos()};
 	const auto player_facing{game->state->get_player_facing()};
@@ -675,26 +671,27 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 	auto vr4{_tileviews.at(Coordinate3{1, 0, -4})};
 
 	// If we are in darkness, only draw that!
-	if (tm0.is(Properties::DARKNESS)) {
+	if (tm0.is(Enums::Tile::Properties::DARKNESS)) {
 		_draw_vertex_array(vm0.darkness, scale, pos);
 	} else {
 
+		using enum Enums::Tile::Properties;
 		if (game->state->get_lit()) {
 
 			// Row 4
-			if (tl4.is(Properties::DARKNESS))
+			if (tl4.is(DARKNESS))
 				_draw_vertex_array(vl4.darkness, scale, pos);
-			if (tm4.is(Properties::DARKNESS))
+			if (tm4.is(DARKNESS))
 				_draw_vertex_array(vm4.darkness, scale, pos);
-			if (tr4.is(Properties::DARKNESS))
+			if (tr4.is(DARKNESS))
 				_draw_vertex_array(vr4.darkness, scale, pos);
 
 			// Row 3
-			if (tl3.is(Properties::DARKNESS)) {
+			if (tl3.is(DARKNESS)) {
 				_draw_vertex_array(vl2.darkness, scale, pos);
 				_draw_vertex_array(vl3.side_darkness, scale, pos);
 			} else {
-				if (!tm3.is(Properties::DARKNESS)) {
+				if (!tm3.is(DARKNESS)) {
 					if (_has_wall(tl3, player_facing))
 						_draw_vertex_array(vl3.back_wall, scale, pos);
 					if (_has_normal_door(tl3, player_facing)) {
@@ -708,11 +705,11 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					}
 				}
 			}
-			if (tr3.is(Properties::DARKNESS)) {
+			if (tr3.is(DARKNESS)) {
 				_draw_vertex_array(vr2.darkness, scale, pos);
 				_draw_vertex_array(vr3.side_darkness, scale, pos);
 			} else {
-				if (!tm3.is(Properties::DARKNESS)) {
+				if (!tm3.is(DARKNESS)) {
 					if (_has_wall(tr3, player_facing))
 						_draw_vertex_array(vr3.back_wall, scale, pos);
 					if (_has_normal_door(tr3, player_facing)) {
@@ -726,7 +723,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					}
 				}
 			}
-			if (tm3.is(Properties::DARKNESS))
+			if (tm3.is(DARKNESS))
 				_draw_vertex_array(vm3.darkness, scale, pos);
 			else {
 				if (_has_wall(tm3, player_facing))
@@ -742,7 +739,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 				}
 			}
 
-			if (!tm3.is(Properties::DARKNESS)) {
+			if (!tm3.is(DARKNESS)) {
 				if (_has_wall(tm3, _get_left_side(player_facing)))
 					_draw_vertex_array(vm3.left_side_wall, scale, pos);
 				if (_has_normal_door(tm3, _get_left_side(player_facing))) {
@@ -770,7 +767,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 			}
 
 			// Row 2
-			if (tl2.is(Properties::DARKNESS)) {
+			if (tl2.is(DARKNESS)) {
 				_draw_vertex_array(vl1.darkness, scale, pos);
 				_draw_vertex_array(vl2.side_darkness, scale, pos);
 			} else {
@@ -786,7 +783,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 						_draw_vertex_array(vl2.back_door, scale, pos);
 				}
 			}
-			if (tr2.is(Properties::DARKNESS)) {
+			if (tr2.is(DARKNESS)) {
 				_draw_vertex_array(vr1.darkness, scale, pos);
 				_draw_vertex_array(vr2.side_darkness, scale, pos);
 			} else {
@@ -802,7 +799,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 						_draw_vertex_array(vr2.back_door, scale, pos);
 				}
 			}
-			if (tm2.is(Properties::DARKNESS))
+			if (tm2.is(DARKNESS))
 				_draw_vertex_array(vm2.darkness, scale, pos);
 			else {
 				if (_has_wall(tm2, player_facing))
@@ -818,7 +815,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 				}
 			}
 
-			if (!tm2.is(Properties::DARKNESS)) {
+			if (!tm2.is(DARKNESS)) {
 				if (_has_wall(tm2, _get_left_side(player_facing)))
 					_draw_vertex_array(vm2.left_side_wall, scale, pos);
 				if (_has_normal_door(tm2, _get_left_side(player_facing))) {
@@ -845,16 +842,17 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 			}
 		} else {
 
-			if (tl2.is(Properties::DARKNESS))
+			if (tl2.is(DARKNESS))
 				_draw_vertex_array(vl1.darkness, scale, pos);
-			if (tm2.is(Properties::DARKNESS))
+			if (tm2.is(DARKNESS))
 				_draw_vertex_array(vm2.darkness, scale, pos);
-			if (tr2.is(Properties::DARKNESS))
+			if (tr2.is(DARKNESS))
 				_draw_vertex_array(vr1.darkness, scale, pos);
 		}
 
 		// Row 1
-		if (tl1.is(Properties::DARKNESS)) {
+		using enum Enums::Tile::Features;
+		if (tl1.is(DARKNESS)) {
 			_draw_vertex_array(vl0.darkness, scale, pos);
 			_draw_vertex_array(vl1.side_darkness, scale, pos);
 		} else {
@@ -870,18 +868,17 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					_draw_vertex_array(vl1.back_door, scale, pos);
 			}
 
-			if (tl1.has(Features::MESSAGE) || tl1.has(Features::NOTICE))
+			if (tl1.has(MESSAGE) || tl1.has(NOTICE))
 				_draw_vertex_array(vl1.floor, scale, pos);
-			if (tl1.has(Features::STAIRS_DOWN) ||
-				tl1.has(Features::LADDER_DOWN) ||
-				tl1.has(Features::ELEVATOR_DOWN))
+			if (tl1.has(STAIRS_DOWN) || tl1.has(LADDER_DOWN) ||
+				tl1.has(ELEVATOR_DOWN))
 				_draw_vertex_array(vl1.down, scale, pos);
-			if (tl1.has(Features::STAIRS_UP) || tl1.has(Features::LADDER_UP) ||
-				tl1.has(Features::ELEVATOR_UP))
+			if (tl1.has(STAIRS_UP) || tl1.has(LADDER_UP) ||
+				tl1.has(ELEVATOR_UP))
 				_draw_vertex_array(vl1.up, scale, pos);
 		}
 
-		if (tr1.is(Properties::DARKNESS)) {
+		if (tr1.is(DARKNESS)) {
 			_draw_vertex_array(vr0.darkness, scale, pos);
 			_draw_vertex_array(vr1.side_darkness, scale, pos);
 		} else {
@@ -896,17 +893,16 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 				if (game->state->get_lit())
 					_draw_vertex_array(vr1.back_door, scale, pos);
 			}
-			if (tr1.has(Features::MESSAGE) || tr1.has(Features::NOTICE))
+			if (tr1.has(MESSAGE) || tr1.has(NOTICE))
 				_draw_vertex_array(vr1.floor, scale, pos);
-			if (tr1.has(Features::STAIRS_DOWN) ||
-				tr1.has(Features::LADDER_DOWN) ||
-				tr1.has(Features::ELEVATOR_DOWN))
+			if (tr1.has(STAIRS_DOWN) || tr1.has(LADDER_DOWN) ||
+				tr1.has(ELEVATOR_DOWN))
 				_draw_vertex_array(vr1.down, scale, pos);
-			if (tr1.has(Features::STAIRS_UP) || tr1.has(Features::LADDER_UP) ||
-				tr1.has(Features::ELEVATOR_UP))
+			if (tr1.has(STAIRS_UP) || tr1.has(LADDER_UP) ||
+				tr1.has(ELEVATOR_UP))
 				_draw_vertex_array(vr1.up, scale, pos);
 		}
-		if (tm1.is(Properties::DARKNESS))
+		if (tm1.is(DARKNESS))
 			_draw_vertex_array(vm1.darkness, scale, pos);
 		else {
 			if (_has_wall(tm1, player_facing))
@@ -921,18 +917,17 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					_draw_vertex_array(vm1.back_door, scale, pos);
 			}
 
-			if (tm1.has(Features::MESSAGE) || tm1.has(Features::NOTICE))
+			if (tm1.has(MESSAGE) || tm1.has(NOTICE))
 				_draw_vertex_array(vm1.floor, scale, pos);
-			if (tm1.has(Features::STAIRS_DOWN) ||
-				tm1.has(Features::LADDER_DOWN) ||
-				tm1.has(Features::ELEVATOR_DOWN))
+			if (tm1.has(STAIRS_DOWN) || tm1.has(LADDER_DOWN) ||
+				tm1.has(ELEVATOR_DOWN))
 				_draw_vertex_array(vm1.down, scale, pos);
-			if (tm1.has(Features::STAIRS_UP) || tm1.has(Features::LADDER_UP) ||
-				tm1.has(Features::ELEVATOR_UP))
+			if (tm1.has(STAIRS_UP) || tm1.has(LADDER_UP) ||
+				tm1.has(ELEVATOR_UP))
 				_draw_vertex_array(vm1.up, scale, pos);
 		}
 
-		if (!tm1.is(Properties::DARKNESS)) {
+		if (!tm1.is(DARKNESS)) {
 			if (_has_wall(tm1, _get_left_side(player_facing)))
 				_draw_vertex_array(vm1.left_side_wall, scale, pos);
 			if (_has_normal_door(tm1, _get_left_side(player_facing))) {
@@ -961,7 +956,7 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 		// Row 0
 		if (_has_wall(tl0, player_facing))
 			_draw_vertex_array(vl0.back_wall, scale, pos);
-		if (tl0.is(Properties::DARKNESS)) {
+		if (tl0.is(DARKNESS)) {
 			_draw_vertex_array(vl0.darkness, scale, pos);
 			_draw_vertex_array(vl0.side_darkness, scale, pos);
 		} else {
@@ -975,14 +970,13 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					_draw_vertex_array(vl0.back_door, scale, pos);
 			}
 
-			if (tl0.has(Features::MESSAGE) || tl0.has(Features::NOTICE))
+			if (tl0.has(MESSAGE) || tl0.has(NOTICE))
 				_draw_vertex_array(vl0.floor, scale, pos);
-			if (tl0.has(Features::STAIRS_DOWN) ||
-				tl0.has(Features::LADDER_DOWN) ||
-				tl0.has(Features::ELEVATOR_DOWN))
+			if (tl0.has(STAIRS_DOWN) || tl0.has(LADDER_DOWN) ||
+				tl0.has(ELEVATOR_DOWN))
 				_draw_vertex_array(vl0.down, scale, pos);
-			if (tl0.has(Features::STAIRS_UP) || tl0.has(Features::LADDER_UP) ||
-				tl0.has(Features::ELEVATOR_UP))
+			if (tl0.has(STAIRS_UP) || tl0.has(LADDER_UP) ||
+				tl0.has(ELEVATOR_UP))
 				_draw_vertex_array(vl0.up, scale, pos);
 		}
 
@@ -999,18 +993,17 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 				_draw_vertex_array(vm0.back_door, scale, pos);
 		}
 
-		if (tm0.has(Features::MESSAGE) || tm0.has(Features::NOTICE))
+		if (tm0.has(MESSAGE) || tm0.has(NOTICE))
 			_draw_vertex_array(vm0.floor, scale, pos);
-		if (tm0.has(Features::STAIRS_DOWN) || tm0.has(Features::LADDER_DOWN) ||
-			tm0.has(Features::ELEVATOR_DOWN))
+		if (tm0.has(STAIRS_DOWN) || tm0.has(LADDER_DOWN) ||
+			tm0.has(ELEVATOR_DOWN))
 			_draw_vertex_array(vm0.down, scale, pos);
-		if (tm0.has(Features::STAIRS_UP) || tm0.has(Features::LADDER_UP) ||
-			tm0.has(Features::ELEVATOR_UP))
+		if (tm0.has(STAIRS_UP) || tm0.has(LADDER_UP) || tm0.has(ELEVATOR_UP))
 			_draw_vertex_array(vm0.up, scale, pos);
 
 		if (_has_wall(tr0, player_facing))
 			_draw_vertex_array(vr0.back_wall, scale, pos);
-		if (tr0.is(Properties::DARKNESS)) {
+		if (tr0.is(DARKNESS)) {
 			_draw_vertex_array(vr0.darkness, scale, pos);
 			_draw_vertex_array(vr0.side_darkness, scale, pos);
 		} else {
@@ -1024,18 +1017,17 @@ auto Sorcery::Render::_render_wireframe(Game *game, Component *component)
 					_draw_vertex_array(vr0.back_door, scale, pos);
 			}
 
-			if (tr0.has(Features::MESSAGE) || tr0.has(Features::NOTICE))
+			if (tr0.has(MESSAGE) || tr0.has(NOTICE))
 				_draw_vertex_array(vr0.floor, scale, pos);
-			if (tr0.has(Features::STAIRS_DOWN) ||
-				tr0.has(Features::LADDER_DOWN) ||
-				tr0.has(Features::ELEVATOR_DOWN))
+			if (tr0.has(STAIRS_DOWN) || tr0.has(LADDER_DOWN) ||
+				tr0.has(ELEVATOR_DOWN))
 				_draw_vertex_array(vr0.down, scale, pos);
-			if (tr0.has(Features::STAIRS_UP) || tr0.has(Features::LADDER_UP) ||
-				tr0.has(Features::ELEVATOR_UP))
+			if (tr0.has(STAIRS_UP) || tr0.has(LADDER_UP) ||
+				tr0.has(ELEVATOR_UP))
 				_draw_vertex_array(vr0.up, scale, pos);
 		}
 
-		if (!tm0.is(Properties::DARKNESS)) {
+		if (!tm0.is(DARKNESS)) {
 			if (_has_wall(tm0, _get_left_side(player_facing)))
 				_draw_vertex_array(vm0.left_side_wall, scale, pos);
 			if (_has_normal_door(tm0, _get_left_side(player_facing))) {

@@ -71,12 +71,10 @@ auto Sorcery::Character::get_location() const -> Enums::Character::Location {
 auto Sorcery::Character::set_location(const Enums::Character::Location value)
 	-> void {
 
-	using Enums::Character::Location;
-
 	_location = value;
 
-	if (value == Location::TAVERN || value == Location::TEMPLE ||
-		value == Location::TRAINING) {
+	using enum Enums::Character::Location;
+	if (value == TAVERN || value == TEMPLE || value == TRAINING) {
 		coordinate = std::nullopt;
 		depth = std::nullopt;
 	}
@@ -518,7 +516,6 @@ auto Sorcery::Character::_legate_start_info() -> void {
 	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 	using Enums::Character::Class;
-	using Enums::Character::Location;
 	using Enums::Character::Race;
 	using Enums::Character::Status;
 	using Enums::System::Random;
@@ -578,7 +575,7 @@ auto Sorcery::Character::_legate_start_info() -> void {
 	}
 
 	set_status(Status::OK);
-	_location = Location::TAVERN;
+	_location = Enums::Character::Location::TAVERN;
 	_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP];
 
 	// Clamp Values
@@ -614,7 +611,6 @@ auto Sorcery::Character::_regenerate_start_info() -> void {
 	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 	using Enums::Character::Class;
-	using Enums::Character::Location;
 	using Enums::Character::Race;
 	using Enums::Character::Status;
 	using Enums::System::Random;
@@ -2184,22 +2180,21 @@ auto Sorcery::Character::_get_condition() const -> std::string {
 
 auto Sorcery::Character::get_loc_str() const -> std::string {
 
-	using Enums::Character::Location;
-
 	switch (_location) {
-	case Location::PARTY:
+		using enum Enums::Character::Location;
+	case PARTY:
 		return (*_system->strings)["LOCATION_PARTY"];
 		break;
-	case Location::TAVERN:
+	case TAVERN:
 		return (*_system->strings)["LOCATION_TAVERN"];
 		break;
-	case Location::TRAINING:
+	case TRAINING:
 		return (*_system->strings)["LOCATION_TRAINING"];
 		break;
-	case Location::TEMPLE:
+	case TEMPLE:
 		return (*_system->strings)["LOCATION_TEMPLE"];
 		break;
-	case Location::MAZE:
+	case MAZE:
 		return (*_system->strings)["LOCATION_MAZE"];
 		break;
 	default:

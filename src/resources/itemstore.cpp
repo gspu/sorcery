@@ -124,16 +124,17 @@ auto Sorcery::ItemStore::_load(const std::filesystem::path filename) -> bool {
 						return 0;
 				})};
 				const auto use_spell{std::invoke([&] {
-					using Enums::Magic::SpellID;
+					using enum Enums::Magic::SpellID;
 					if (items[i].isMember("use")) {
 						if (items[i]["use"].asString().length() > 0) {
-							auto use{magic_enum::enum_cast<SpellID>(
-								items[i]["use"].asString())};
-							return use.value_or(SpellID::NO_SPELL);
+							auto use{
+								magic_enum::enum_cast<Enums::Magic::SpellID>(
+									items[i]["use"].asString())};
+							return use.value_or(NO_SPELL);
 						} else
-							return SpellID::NO_SPELL;
+							return NO_SPELL;
 					} else
-						return SpellID::NO_SPELL;
+						return NO_SPELL;
 				})};
 				const auto use_decay{std::invoke([&] {
 					if (items[i].isMember("use decay"))
@@ -316,11 +317,11 @@ auto Sorcery::ItemStore::operator[](unsigned int item_type_id) const
 		magic_enum::enum_cast<Enums::Items::TypeID>(item_type_id).value());
 }
 
-auto  Sorcery::ItemStore::get_item_type(const Enums::Items::TypeID item_type_id) const -> ItemType {
+auto Sorcery::ItemStore::get_item_type(
+	const Enums::Items::TypeID item_type_id) const -> ItemType {
 
 	return _items.at(item_type_id);
 }
-
 
 auto Sorcery::ItemStore::operator[](std::string name) const -> ItemType {
 

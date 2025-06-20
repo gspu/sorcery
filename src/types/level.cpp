@@ -536,11 +536,12 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 	-> void {
 
 	using Enums::Map::Direction;
-	using Enums::Tile::Edge;
 
 	auto &tile{_tiles.at(location)};
 	auto north_edge{tile.wall(Direction::NORTH)};
-	if (north_edge == Edge::NO_EDGE) {
+
+	using enum Enums::Tile::Edge;
+	if (north_edge == NO_EDGE) {
 
 		// Check north adjacent wall (i.e. south wall of above tile)
 		auto adj_north{
@@ -548,13 +549,13 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 		auto adj_north_edge{adj_north.wall(Direction::SOUTH)};
 
 		switch (adj_north_edge) {
-		case Edge::UNLOCKED_DOOR:
+		case UNLOCKED_DOOR:
 			[[fallthrough]];
-		case Edge::WALL:
+		case WALL:
 			[[fallthrough]];
-		case Edge::SECRET_DOOR: // TODO:: secret walls
+		case SECRET_DOOR: // TODO:: secret walls
 			[[fallthrough]];
-		case Edge::LOCKED_DOOR:
+		case LOCKED_DOOR:
 			tile.set(Direction::NORTH, adj_north_edge);
 			break;
 		default:
@@ -563,7 +564,7 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 	}
 
 	auto south_edge{tile.wall(Direction::SOUTH)};
-	if (south_edge == Edge::NO_EDGE) {
+	if (south_edge == NO_EDGE) {
 
 		// Check south adjacent wall (i.e. borth wall of below tile)
 		auto adj_south{
@@ -571,13 +572,13 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 		auto adj_south_edge{adj_south.wall(Direction::NORTH)};
 
 		switch (adj_south_edge) {
-		case Edge::UNLOCKED_DOOR:
+		case UNLOCKED_DOOR:
 			[[fallthrough]];
-		case Edge::WALL:
+		case WALL:
 			[[fallthrough]];
-		case Edge::SECRET_DOOR:
+		case SECRET_DOOR:
 			[[fallthrough]];
-		case Edge::LOCKED_DOOR:
+		case LOCKED_DOOR:
 			tile.set(Direction::SOUTH, adj_south_edge);
 			break;
 		default:
@@ -586,7 +587,7 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 	}
 
 	auto west_edge{tile.wall(Direction::WEST)};
-	if (west_edge == Edge::NO_EDGE) {
+	if (west_edge == NO_EDGE) {
 
 		// Check west adjacent wall (i.e. east wall of left tile)
 		auto adj_west{
@@ -594,13 +595,13 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 		auto adj_west_edge{adj_west.wall(Direction::EAST)};
 
 		switch (adj_west_edge) {
-		case Edge::UNLOCKED_DOOR:
+		case UNLOCKED_DOOR:
 			[[fallthrough]];
-		case Edge::WALL:
+		case WALL:
 			[[fallthrough]];
-		case Edge::SECRET_DOOR:
+		case SECRET_DOOR:
 			[[fallthrough]];
-		case Edge::LOCKED_DOOR:
+		case LOCKED_DOOR:
 			tile.set(Direction::WEST, adj_west_edge);
 			break;
 		default:
@@ -609,7 +610,7 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 	}
 
 	auto east_edge{tile.wall(Direction::EAST)};
-	if (east_edge == Edge::NO_EDGE) {
+	if (east_edge == NO_EDGE) {
 
 		// Check west adjacent wall (i.e. east wall of left tile)
 		auto adj_east{
@@ -617,13 +618,13 @@ auto Sorcery::Level::_set_other_simple_edges(const Coordinate location)
 		auto adj_east_edge{adj_east.wall(Direction::WEST)};
 
 		switch (adj_east_edge) {
-		case Edge::UNLOCKED_DOOR:
+		case UNLOCKED_DOOR:
 			[[fallthrough]];
-		case Edge::WALL:
+		case WALL:
 			[[fallthrough]];
-		case Edge::SECRET_DOOR:
+		case SECRET_DOOR:
 			[[fallthrough]];
-		case Edge::LOCKED_DOOR:
+		case LOCKED_DOOR:
 			tile.set(Direction::EAST, adj_east_edge);
 			break;
 		default:
@@ -736,7 +737,6 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 	-> void {
 
 	using Enums::Map::Direction;
-	using Enums::Tile::Edge;
 
 	// OK, so this is a bit complicated due to GC only storing one set of walls
 	// per tile - we have to back fill in complicated walls (walls that differ
@@ -757,29 +757,30 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 		_tiles.at(Coordinate{location.x, get_delta_y(location.y, -1)})};
 
 	switch (south_wall) {
+		using enum Enums::Tile::Edge;
 	case 5:
 		// One-way door (exiting left or up)
 
 		// Set south wall of current tile to wall
 		// Set north wall of adjacent tile to One-way door
-		tile.set(Direction::SOUTH, Edge::WALL);
-		adj_south.set(Direction::NORTH, Edge::ONE_WAY_DOOR);
+		tile.set(Direction::SOUTH, WALL);
+		adj_south.set(Direction::NORTH, ONE_WAY_DOOR);
 		break;
 	case 6:
 		// One-way hidden door (exiting left or up)
 
 		// Set south wall of current tile to wall
 		// Set north wall of adjacent tile to One-way hidden door
-		tile.set(Direction::SOUTH, Edge::WALL);
-		adj_south.set(Direction::NORTH, Edge::ONE_WAY_HIDDEN_DOOR);
+		tile.set(Direction::SOUTH, WALL);
+		adj_south.set(Direction::NORTH, ONE_WAY_HIDDEN_DOOR);
 		break;
 	case 7:
 		// One-way wall (exiting left or up)
 
 		// Set south wall of current tile to wall
 		// Set north wall of adjacent tile to One-way wall
-		tile.set(Direction::SOUTH, Edge::WALL);
-		adj_south.set(Direction::NORTH, Edge::ONE_WAY_WALL);
+		tile.set(Direction::SOUTH, WALL);
+		adj_south.set(Direction::NORTH, ONE_WAY_WALL);
 		break;
 
 	case 8:
@@ -787,24 +788,24 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 
 		// Set south wall of current tile to One-way door
 		// Set north wall of adjacent tile to wall
-		tile.set(Direction::SOUTH, Edge::ONE_WAY_DOOR);
-		adj_south.set(Direction::NORTH, Edge::WALL);
+		tile.set(Direction::SOUTH, ONE_WAY_DOOR);
+		adj_south.set(Direction::NORTH, WALL);
 		break;
 	case 9:
 		// One-way hidden door (exiting right or down)
 
 		// Set south wall of current tile to One-way hidden door
 		// Set north wall of adjacent tile to wall
-		tile.set(Direction::SOUTH, Edge::ONE_WAY_HIDDEN_DOOR);
-		adj_south.set(Direction::NORTH, Edge::WALL);
+		tile.set(Direction::SOUTH, ONE_WAY_HIDDEN_DOOR);
+		adj_south.set(Direction::NORTH, WALL);
 		break;
 	case 10:
 		// One-way wall (exiting right or down)
 
 		// Set south wall of current tile to One-way wall
 		// Set north wall of adjacent tile to wall
-		tile.set(Direction::SOUTH, Edge::ONE_WAY_WALL);
-		adj_south.set(Direction::NORTH, Edge::WALL);
+		tile.set(Direction::SOUTH, ONE_WAY_WALL);
+		adj_south.set(Direction::NORTH, WALL);
 		break;
 	default:
 		break;
@@ -815,29 +816,30 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 		_tiles.at(Coordinate{get_delta_x(location.x, 1), location.y})};
 
 	switch (east_wall) {
+		using enum Enums::Tile::Edge;
 	case 5:
 		// One-way door (exiting left or up)
 
 		// Set east wall of current tile to wall
 		// Set west wall of adjacent tile to One-way door
-		tile.set(Direction::EAST, Edge::WALL);
-		adj_east.set(Direction::WEST, Edge::ONE_WAY_DOOR);
+		tile.set(Direction::EAST, WALL);
+		adj_east.set(Direction::WEST, ONE_WAY_DOOR);
 		break;
 	case 6:
 		// One-way hidden door (exiting left or up)
 
 		// Set east wall of current tile to wall
 		// Set west wall of adjacent tile to One-way hidden door
-		tile.set(Direction::EAST, Edge::WALL);
-		adj_east.set(Direction::WEST, Edge::ONE_WAY_HIDDEN_DOOR);
+		tile.set(Direction::EAST, WALL);
+		adj_east.set(Direction::WEST, ONE_WAY_HIDDEN_DOOR);
 		break;
 	case 7:
 		// One-way wall (exiting left or up)
 
 		// Set east wall of current tile to wall
 		// Set west wall of adjacent tile to One-way wall
-		tile.set(Direction::EAST, Edge::WALL);
-		adj_east.set(Direction::WEST, Edge::ONE_WAY_WALL);
+		tile.set(Direction::EAST, WALL);
+		adj_east.set(Direction::WEST, ONE_WAY_WALL);
 		break;
 
 	case 8:
@@ -845,24 +847,24 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 
 		// Set east wall of current tile to One-way door
 		// Set west wall of adjacent tile to wall
-		tile.set(Direction::EAST, Edge::ONE_WAY_DOOR);
-		adj_east.set(Direction::WEST, Edge::WALL);
+		tile.set(Direction::EAST, ONE_WAY_DOOR);
+		adj_east.set(Direction::WEST, WALL);
 		break;
 	case 9:
 		// One-way hidden door (exiting right or down)
 
 		// Set east wall of current tile to One-way hidden door
 		// Set west wall of adjacent tile to wall
-		tile.set(Direction::EAST, Edge::ONE_WAY_HIDDEN_DOOR);
-		adj_east.set(Direction::WEST, Edge::WALL);
+		tile.set(Direction::EAST, ONE_WAY_HIDDEN_DOOR);
+		adj_east.set(Direction::WEST, WALL);
 		break;
 	case 10:
 		// One-way wall (exiting right or down)
 
 		// Set east wall of current tile to One-way wall
 		// Set west wall of adjacent tile to wall
-		tile.set(Direction::EAST, Edge::ONE_WAY_WALL);
-		adj_east.set(Direction::WEST, Edge::WALL);
+		tile.set(Direction::EAST, ONE_WAY_WALL);
+		adj_east.set(Direction::WEST, WALL);
 		break;
 	default:
 		break;
@@ -875,34 +877,33 @@ auto Sorcery::Level::_fill_in_complicated_walls(const Coordinate location,
 auto Sorcery::Level::_convert_edge_simple(const unsigned int wall) const
 	-> std::optional<Enums::Tile::Edge> {
 
-	using Enums::Tile::Edge;
-
-	std::optional<Edge> edge{std::nullopt};
+	std::optional<Enums::Tile::Edge> edge{std::nullopt};
 	switch (wall) { // NOLINT(clang-diagnostic-switch)
+		using enum Enums::Tile::Edge;
 	case 0:
-		edge = Edge::NO_EDGE;
+		edge = NO_EDGE;
 		break;
 	case 1:
-		edge = Edge::WALL;
+		edge = WALL;
 		break;
 	case 2:
 		[[fallthrough]];
 	case 12:
 		[[fallthrough]];
 	case 33:
-		edge = Edge::UNLOCKED_DOOR;
+		edge = UNLOCKED_DOOR;
 		break;
 	case 3:
-		edge = Edge::LOCKED_DOOR;
+		edge = LOCKED_DOOR;
 		break;
 	case 4:
-		edge = Edge::HIDDEN_DOOR;
+		edge = HIDDEN_DOOR;
 		break;
 	case 13:
-		edge = Edge::SECRET_WALL;
+		edge = SECRET_WALL;
 		break;
 	case 29:
-		edge = Edge::SECRET_DOOR;
+		edge = SECRET_DOOR;
 		break;
 	default:
 		break;
@@ -923,18 +924,17 @@ auto Sorcery::Level::_convert_edge_se(const unsigned int wall) const
 auto Sorcery::Level::_convert_edge_nw(const unsigned int wall) const
 	-> std::optional<Enums::Tile::Edge> {
 
-	using Enums::Tile::Edge;
-
-	std::optional<Edge> edge{std::nullopt};
+	std::optional<Enums::Tile::Edge> edge{std::nullopt};
 	switch (wall) { // NOLINT(clang-diagnostic-switch)
+		using enum Enums::Tile::Edge;
 	case 5:
-		edge = Edge::ONE_WAY_DOOR;
+		edge = ONE_WAY_DOOR;
 		break;
 	case 6:
-		edge = Edge::HIDDEN_DOOR;
+		edge = HIDDEN_DOOR;
 		break;
 	case 7:
-		edge = Edge::ONE_WAY_WALL;
+		edge = ONE_WAY_WALL;
 		break;
 	default:
 		break;
