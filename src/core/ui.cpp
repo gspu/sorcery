@@ -1324,12 +1324,12 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 												 [[maybe_unused]] Game *game,
 												 Character *character) -> void {
-	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 
 	const auto left_col{component->x + 0};
 	const auto right_col{component->x + 19};
 
+	using enum Enums::Character::Ability;
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	ImVec2 pos{left_col * adj_grid_w, component->y * adj_grid_h};
@@ -1345,20 +1345,19 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Spell Learn",
-					character->abilities().at(Ability::PRIEST_SPELL_LEARN))
+					character->abilities().at(PRIEST_SPELL_LEARN))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Rec Chance",
-					character->abilities().at(Ability::LOKTOFELT_SUCCESS))
+					character->abilities().at(LOKTOFELT_SUCCESS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}%", "Base Dispell",
-					character->abilities().at(Ability::BASE_DISPELL))
-			.c_str());
+	ImGui::TextUnformatted(std::format("{:>14} {:>2}%", "Base Dispell",
+									   character->abilities().at(BASE_DISPELL))
+							   .c_str());
 
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
@@ -1373,14 +1372,14 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Res Bonus",
-					character->abilities().at(Ability::BASE_RESIST_BONUS))
+					character->abilities().at(BASE_RESIST_BONUS))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(std::format("{:>14} {:>2}%", "Wipe Rec",
-									   character->abilities().at(
-										   Ability::EQUIPMENT_INTACT_ON_WIPE))
-							   .c_str());
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "Wipe Rec",
+					character->abilities().at(EQUIPMENT_INTACT_ON_WIPE))
+			.c_str());
 
 	pos = ImVec2{right_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
@@ -1393,86 +1392,78 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format(
-			"{:>14} {:>2}%", "vs Crit Hit",
-			character->abilities().at(Ability::RESISTANCE_VS_CRITICAL_HIT) * 5)
+		std::format("{:>14} {:>2}%", "vs Crit Hit",
+					character->abilities().at(RESISTANCE_VS_CRITICAL_HIT) * 5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format(
-			"{:>14} {:>2}%", "vs Pois / Para",
-			character->abilities().at(Ability::RESISTANCE_VS_POISON_PARALYSIS) *
-				5)
+		std::format("{:>14} {:>2}%", "vs Pois / Para",
+					character->abilities().at(RESISTANCE_VS_POISON_PARALYSIS) *
+						5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "vs Stoning",
-					character->abilities().at(Ability::RESISTANCE_VS_STONING) *
+					character->abilities().at(RESISTANCE_VS_STONING) * 5)
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "vs Breath",
+					character->abilities().at(RESISTANCE_VS_BREATH_ATTACKS) * 5)
+			.c_str());
+	pos.y += adj_grid_h;
+	ImGui::SetCursorPos(pos);
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}%", "vs Gas Trap",
+					character->abilities().at(RESISTANCE_VS_POISON_GAS_TRAP) *
 						5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format(
-			"{:>14} {:>2}%", "vs Breath",
-			character->abilities().at(Ability::RESISTANCE_VS_BREATH_ATTACKS) *
-				5)
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format(
-			"{:>14} {:>2}%", "vs Gas Trap",
-			character->abilities().at(Ability::RESISTANCE_VS_POISON_GAS_TRAP) *
-				5)
-			.c_str());
-	pos.y += adj_grid_h;
-	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format(
-			"{:>14} {:>2}%", "vs Spell Trap",
-			character->abilities().at(Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP) *
-				5)
+		std::format("{:>14} {:>2}%", "vs Spell Trap",
+					character->abilities().at(RESISTANCE_VS_MAGE_PRIEST_TRAP) *
+						5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "vs Silence",
-					character->abilities().at(Ability::RESISTANCE_VS_SILENCE) *
-						5)
+					character->abilities().at(RESISTANCE_VS_SILENCE) * 5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "vs Sleep",
-					character->abilities().at(Ability::RESISTANCE_VS_KATINO))
+					character->abilities().at(RESISTANCE_VS_KATINO))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "vs Death",
-					character->abilities().at(Ability::RESISTANCE_VS_BADI))
+					character->abilities().at(RESISTANCE_VS_BADI))
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "vs Statue",
-					character->abilities().at(Ability::RESISTANCE_VS_MANIFO))
+					character->abilities().at(RESISTANCE_VS_MANIFO))
 			.c_str());
 
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Rec / Sleep",
-					character->abilities().at(Ability::RECOVER_FROM_SLEEP) * 5)
+					character->abilities().at(RECOVER_FROM_SLEEP) * 5)
 			.c_str());
 	pos.y += adj_grid_h;
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
 		std::format("{:>14} {:>2}%", "Rec / Fear",
-					character->abilities().at(Ability::RECOVER_FROM_FEAR) * 5)
+					character->abilities().at(RECOVER_FROM_FEAR) * 5)
 			.c_str());
 }
 
@@ -1480,13 +1471,13 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 										  [[maybe_unused]] Game *game,
 										  Character *character) -> void {
 
-	using Enums::Character::Ability;
 	using Enums::Character::Attribute;
 
 	const auto left_col{component->x};
 	const auto middle_col{component->x + 13};
 	const auto right_col{component->x + 31};
 
+	using enum Enums::Character::Ability;
 	ImVec2 pos{};
 	pos = ImVec2{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
@@ -1547,16 +1538,14 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 3) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:<6} {:>10}", "Marks",
-					character->abilities().at(Ability::MARKS))
+		std::format("{:<6} {:>10}", "Marks", character->abilities().at(MARKS))
 			.c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 4) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(
-		std::format("{:<4} {}/{}", "H.P.",
-					character->abilities().at(Ability::CURRENT_HP),
-					character->abilities().at(Ability::MAX_HP))
-			.c_str());
+	ImGui::TextUnformatted(std::format("{:<4} {}/{}", "H.P.",
+									   character->abilities().at(CURRENT_HP),
+									   character->abilities().at(MAX_HP))
+							   .c_str());
 	pos = ImVec2{middle_col * adj_grid_w, (component->y + 5) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
@@ -1576,18 +1565,15 @@ auto Sorcery::UI::_draw_character_summary(Component *component,
 	pos = ImVec2{right_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("Swim{:>3}", character->abilities().at(Ability::SWIM))
-			.c_str());
+		std::format("Swim{:>3}", character->abilities().at(SWIM)).c_str());
 	pos = ImVec2{right_col * adj_grid_w, (component->y + 1) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format(" Age{:>3}", character->abilities().at(Ability::AGE) / 52)
-			.c_str());
+		std::format(" Age{:>3}", character->abilities().at(AGE) / 52).c_str());
 	pos = ImVec2{right_col * adj_grid_w, (component->y + 2) * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format(" RIP{:>3}", character->abilities().at(Ability::DEATHS))
-			.c_str());
+		std::format(" RIP{:>3}", character->abilities().at(DEATHS)).c_str());
 
 	auto slot{1u};
 	pos = ImVec2{left_col * adj_grid_w, (component->y + 9) * adj_grid_h};

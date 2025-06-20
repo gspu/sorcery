@@ -351,84 +351,80 @@ auto Sorcery::Character::get_pos_class() const
 // available
 auto Sorcery::Character::set_pos_class() -> void {
 
-	using Enums::Character::Align;
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-
 	_pos_classes.clear();
 
 	// Do the basic classes first (this also sets
 	// _num_possible_character_classes); data is from
 	// https://strategywiki.org/wiki/Wizardry:_Proving_Grounds_of_the_Mad_Overlord/Trebor%27s_castle#Classes
-	if (_cur_attr[Attribute::STRENGTH] >= 11)
-		_pos_classes[Class::FIGHTER] = true;
+	using enum Enums::Character::Align;
+	using enum Enums::Character::Class;
+	using enum Enums::Character::Attribute;
+	if (_cur_attr[STRENGTH] >= 11)
+		_pos_classes[FIGHTER] = true;
 	else
-		_pos_classes[Class::FIGHTER] = false;
+		_pos_classes[FIGHTER] = false;
 
-	if (_cur_attr[Attribute::IQ] >= 11)
-		_pos_classes[Class::MAGE] = true;
+	if (_cur_attr[IQ] >= 11)
+		_pos_classes[MAGE] = true;
 	else
-		_pos_classes[Class::MAGE] = false;
+		_pos_classes[MAGE] = false;
 
-	if (_cur_attr[Attribute::PIETY] >= 11)
-		if (_alignment == Align::GOOD || _alignment == Align::EVIL)
-			_pos_classes[Class::PRIEST] = true;
+	if (_cur_attr[PIETY] >= 11)
+		if (_alignment == GOOD || _alignment == EVIL)
+			_pos_classes[PRIEST] = true;
 		else
-			_pos_classes[Class::PRIEST] = false;
+			_pos_classes[PRIEST] = false;
 	else
-		_pos_classes[Class::PRIEST] = false;
+		_pos_classes[PRIEST] = false;
 
-	if (_cur_attr[Attribute::AGILITY] >= 11)
-		if (_alignment == Align::NEUTRAL || _alignment == Align::EVIL)
-			_pos_classes[Class::THIEF] = true;
+	if (_cur_attr[AGILITY] >= 11)
+		if (_alignment == NEUTRAL || _alignment == EVIL)
+			_pos_classes[THIEF] = true;
 		else
-			_pos_classes[Class::THIEF] = false;
+			_pos_classes[THIEF] = false;
 	else
-		_pos_classes[Class::THIEF] = false;
+		_pos_classes[THIEF] = false;
 
 	// Now the elite classes
-	if (_cur_attr[Attribute::IQ] >= 12 && _cur_attr[Attribute::PIETY] >= 12)
-		if (_alignment == Align::GOOD || _alignment == Align::EVIL)
-			_pos_classes[Class::BISHOP] = true;
+	if (_cur_attr[IQ] >= 12 && _cur_attr[PIETY] >= 12)
+		if (_alignment == GOOD || _alignment == EVIL)
+			_pos_classes[BISHOP] = true;
 		else
-			_pos_classes[Class::BISHOP] = false;
+			_pos_classes[BISHOP] = false;
 	else
-		_pos_classes[Class::BISHOP] = false;
+		_pos_classes[BISHOP] = false;
 
-	if (_cur_attr[Attribute::STRENGTH] >= 15 &&
-		_cur_attr[Attribute::IQ] >= 11 && _cur_attr[Attribute::PIETY] >= 10 &&
-		_cur_attr[Attribute::VITALITY] >= 10 &&
-		_cur_attr[Attribute::AGILITY] >= 10)
-		if (_alignment == Align::GOOD || _alignment == Align::NEUTRAL)
-			_pos_classes[Class::SAMURAI] = true;
+	if (_cur_attr[STRENGTH] >= 15 && _cur_attr[IQ] >= 11 &&
+		_cur_attr[PIETY] >= 10 && _cur_attr[VITALITY] >= 10 &&
+		_cur_attr[AGILITY] >= 10)
+		if (_alignment == GOOD || _alignment == NEUTRAL)
+			_pos_classes[SAMURAI] = true;
 		else
-			_pos_classes[Class::SAMURAI] = false;
+			_pos_classes[SAMURAI] = false;
 	else
-		_pos_classes[Class::SAMURAI] = false;
+		_pos_classes[SAMURAI] = false;
 
-	if (_cur_attr[Attribute::STRENGTH] >= 15 &&
-		_cur_attr[Attribute::IQ] >= 12 && _cur_attr[Attribute::PIETY] >= 12 &&
-		_cur_attr[Attribute::VITALITY] >= 15 &&
-		_cur_attr[Attribute::AGILITY] >= 14 && _cur_attr[Attribute::LUCK] >= 15)
-		if (_alignment == Align::GOOD)
-			_pos_classes[Class::LORD] = true;
+	if (_cur_attr[STRENGTH] >= 15 && _cur_attr[IQ] >= 12 &&
+		_cur_attr[PIETY] >= 12 && _cur_attr[VITALITY] >= 15 &&
+		_cur_attr[AGILITY] >= 14 && _cur_attr[LUCK] >= 15)
+		if (_alignment == GOOD)
+			_pos_classes[LORD] = true;
 		else
-			_pos_classes[Class::LORD] = false;
+			_pos_classes[LORD] = false;
 	else
-		_pos_classes[Class::LORD] = false;
+		_pos_classes[LORD] = false;
 
 	// Using looser Wizardry 5 requirements for Ninja (see
 	// https://wizardry.fandom.com/wiki/Ninja)
-	if (_cur_attr[Attribute::STRENGTH] >= 15 &&
-		_cur_attr[Attribute::IQ] >= 17 && _cur_attr[Attribute::PIETY] >= 15 &&
-		_cur_attr[Attribute::VITALITY] >= 16 &&
-		_cur_attr[Attribute::AGILITY] >= 15 && _cur_attr[Attribute::LUCK] >= 16)
-		if (_alignment != Align::GOOD)
-			_pos_classes[Class::NINJA] = true;
+	if (_cur_attr[STRENGTH] >= 15 && _cur_attr[IQ] >= 17 &&
+		_cur_attr[PIETY] >= 15 && _cur_attr[VITALITY] >= 16 &&
+		_cur_attr[AGILITY] >= 15 && _cur_attr[LUCK] >= 16)
+		if (_alignment != GOOD)
+			_pos_classes[NINJA] = true;
 		else
-			_pos_classes[Class::NINJA] = false;
+			_pos_classes[NINJA] = false;
 	else
-		_pos_classes[Class::NINJA] = false;
+		_pos_classes[NINJA] = false;
 
 	// And workout the number of classes
 	_num_pos_classes = std::count_if(_pos_classes.begin(), _pos_classes.end(),
@@ -513,145 +509,126 @@ auto Sorcery::Character::set_gold(const unsigned int value) -> void {
 
 auto Sorcery::Character::_legate_start_info() -> void {
 
-	using Enums::Character::Ability;
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::Character::Status;
-	using Enums::System::Random;
-
 	// From here:
 	// https://datadrivengamer.blogspot.com/2021/08/the-new-mechanics-of-wizardry-iii.html
-	_abilities[Ability::CURRENT_LEVEL] = 1;
-	_abilities[Ability::CURRENT_XP] = 0;
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities[Ability::CURRENT_LEVEL]);
-	_abilities[Ability::MAX_LEVEL] = _abilities[Ability::CURRENT_LEVEL];
-	_abilities[Ability::NEGATIVE_LEVEL] = 0;
-	_abilities[Ability::HIT_DICE] = 1;
-	if (_abilities[Ability::GOLD] > 500)
-		_abilities[Ability::GOLD] = 500;
-	_abilities[Ability::AGE] = 20 * 52;
-	_abilities[Ability::SWIM] = 1;
-	_abilities[Ability::MARKS] = 0;
-	_abilities[Ability::DEATHS] = 0;
+	using enum Enums::Character::Ability;
+	_abilities[CURRENT_LEVEL] = 1;
+	_abilities[CURRENT_XP] = 0;
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities[CURRENT_LEVEL]);
+	_abilities[MAX_LEVEL] = _abilities[CURRENT_LEVEL];
+	_abilities[NEGATIVE_LEVEL] = 0;
+	_abilities[HIT_DICE] = 1;
+	if (_abilities[GOLD] > 500)
+		_abilities[GOLD] = 500;
+	_abilities[AGE] = 20 * 52;
+	_abilities[SWIM] = 1;
+	_abilities[MARKS] = 0;
+	_abilities[DEATHS] = 0;
 
 	// (D7 - 4) is -3 to +3
-	_start_attr[Attribute::STRENGTH] += ((*_system->random)[Random::D7] - 4);
-	_start_attr[Attribute::IQ] += ((*_system->random)[Random::D7] - 4);
-	_start_attr[Attribute::PIETY] += ((*_system->random)[Random::D7] - 4);
-	_start_attr[Attribute::VITALITY] += ((*_system->random)[Random::D7] - 4);
-	_start_attr[Attribute::AGILITY] += ((*_system->random)[Random::D7] - 4);
-	_start_attr[Attribute::LUCK] += ((*_system->random)[Random::D7] - 4);
+	using enum Enums::Character::Attribute;
+	using enum Enums::System::Random;
+	_start_attr[STRENGTH] += ((*_system->random)[D7] - 4);
+	_start_attr[IQ] += ((*_system->random)[D7] - 4);
+	_start_attr[PIETY] += ((*_system->random)[D7] - 4);
+	_start_attr[VITALITY] += ((*_system->random)[D7] - 4);
+	_start_attr[AGILITY] += ((*_system->random)[D7] - 4);
+	_start_attr[LUCK] += ((*_system->random)[D7] - 4);
 
 	auto mage_sp_total{0};
 	for (auto level = 1; level <= 7; level++)
 		mage_sp_total += _mage_max_sp[level];
-	_start_attr[Attribute::IQ] += (mage_sp_total / 7);
+	_start_attr[IQ] += (mage_sp_total / 7);
 
 	auto priest_sp_total{1};
 	for (auto level = 1; level <= 7; level++)
 		priest_sp_total += _priest_max_sp[level];
-	_start_attr[Attribute::PIETY] += (priest_sp_total / 10);
+	_start_attr[PIETY] += (priest_sp_total / 10);
 
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::FIGHTER:
-	case Class::LORD:
-	case Class::SAMURAI:
-		_start_attr[Attribute::STRENGTH] += 2;
+		using enum Enums::Character::Class;
+	case FIGHTER:
+	case LORD:
+	case SAMURAI:
+		_start_attr[STRENGTH] += 2;
 		break;
-	case Class::MAGE:
-		_start_attr[Attribute::IQ] += 2;
+	case MAGE:
+		_start_attr[IQ] += 2;
 		break;
-	case Class::PRIEST:
-	case Class::BISHOP:
-		_start_attr[Attribute::PIETY] += 2;
+	case PRIEST:
+	case BISHOP:
+		_start_attr[PIETY] += 2;
 		break;
-	case Class::THIEF:
-	case Class::NINJA:
-		_start_attr[Attribute::AGILITY] += 2;
+	case THIEF:
+	case NINJA:
+		_start_attr[AGILITY] += 2;
 	default:
 		break;
 	}
 
-	set_status(Status::OK);
+	set_status(Enums::Character::Status::OK);
 	_location = Enums::Character::Location::TAVERN;
-	_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP];
+	_abilities[CURRENT_HP] = _abilities[MAX_HP];
 
 	// Clamp Values
-	_start_attr[Attribute::STRENGTH] =
-		std::min(_start_attr[Attribute::STRENGTH], 18);
-	_start_attr[Attribute::IQ] = std::min(_start_attr[Attribute::IQ], 18);
-	_start_attr[Attribute::PIETY] = std::min(_start_attr[Attribute::PIETY], 18);
-	_start_attr[Attribute::VITALITY] =
-		std::min(_start_attr[Attribute::VITALITY], 18);
-	_start_attr[Attribute::AGILITY] =
-		std::min(_start_attr[Attribute::AGILITY], 18);
-	_start_attr[Attribute::LUCK] = std::min(_start_attr[Attribute::LUCK], 18);
-	_start_attr[Attribute::STRENGTH] =
-		std::max(_start_attr[Attribute::STRENGTH], 3);
-	_start_attr[Attribute::IQ] = std::max(_start_attr[Attribute::IQ], 3);
-	_start_attr[Attribute::PIETY] = std::max(_start_attr[Attribute::PIETY], 3);
-	_start_attr[Attribute::VITALITY] =
-		std::max(_start_attr[Attribute::VITALITY], 3);
-	_start_attr[Attribute::AGILITY] =
-		std::max(_start_attr[Attribute::AGILITY], 3);
-	_start_attr[Attribute::LUCK] = std::max(_start_attr[Attribute::LUCK], 3);
+	_start_attr[STRENGTH] = std::min(_start_attr[STRENGTH], 18);
+	_start_attr[IQ] = std::min(_start_attr[IQ], 18);
+	_start_attr[PIETY] = std::min(_start_attr[PIETY], 18);
+	_start_attr[VITALITY] = std::min(_start_attr[VITALITY], 18);
+	_start_attr[AGILITY] = std::min(_start_attr[AGILITY], 18);
+	_start_attr[LUCK] = std::min(_start_attr[LUCK], 18);
+	_start_attr[STRENGTH] = std::max(_start_attr[STRENGTH], 3);
+	_start_attr[IQ] = std::max(_start_attr[IQ], 3);
+	_start_attr[PIETY] = std::max(_start_attr[PIETY], 3);
+	_start_attr[VITALITY] = std::max(_start_attr[VITALITY], 3);
+	_start_attr[AGILITY] = std::max(_start_attr[AGILITY], 3);
+	_start_attr[LUCK] = std::max(_start_attr[LUCK], 3);
 
 	_cur_attr = _start_attr;
 	_max_attr = _cur_attr;
 
-	_abilities[Ability::CURRENT_XP] = 0;
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities[Ability::CURRENT_LEVEL]);
+	_abilities[CURRENT_XP] = 0;
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities[CURRENT_LEVEL]);
 }
 
 auto Sorcery::Character::_regenerate_start_info() -> void {
 
-	using Enums::Character::Ability;
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::Character::Status;
-	using Enums::System::Random;
-
-	_abilities[Ability::MAX_LEVEL] = _abilities[Ability::CURRENT_LEVEL];
-	_abilities[Ability::CURRENT_LEVEL] = 1;
-	_abilities[Ability::CURRENT_XP] = 0;
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities[Ability::CURRENT_LEVEL]);
+	using enum Enums::Character::Ability;
+	_abilities[MAX_LEVEL] = _abilities[CURRENT_LEVEL];
+	_abilities[CURRENT_LEVEL] = 1;
+	_abilities[CURRENT_XP] = 0;
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities[CURRENT_LEVEL]);
 
 	// https://datadrivengamer.blogspot.com/2019/08/the-not-so-basic-mechanics-of-wizardry.html
-	auto age_increment{(52 * (3 + (*_system->random)[Random::D3])) + 44};
-	_abilities[Ability::AGE] += age_increment;
+	auto age_increment{
+		(52 * (3 + (*_system->random)[Enums::System::Random::D3])) + 44};
+	_abilities[AGE] += age_increment;
 
 	// Reset attributes to racial minimums
 	std::map<Enums::Character::Attribute, int> minimum_attr;
 	switch (_race) {
-	case Race::HUMAN:
-		minimum_attr = {{Attribute::STRENGTH, 8}, {Attribute::IQ, 5},
-						{Attribute::PIETY, 5},	  {Attribute::VITALITY, 8},
-						{Attribute::AGILITY, 8},  {Attribute::LUCK, 9}};
+		using enum Enums::Character::Race;
+		using enum Enums::Character::Attribute;
+	case HUMAN:
+
+		minimum_attr = {{STRENGTH, 8}, {IQ, 5},		 {PIETY, 5},
+						{VITALITY, 8}, {AGILITY, 8}, {LUCK, 9}};
 		break;
-	case Race::ELF:
-		minimum_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 10},
-						{Attribute::PIETY, 10},	  {Attribute::VITALITY, 6},
-						{Attribute::AGILITY, 9},  {Attribute::LUCK, 6}};
+	case ELF:
+		minimum_attr = {{STRENGTH, 7}, {IQ, 10},	 {PIETY, 10},
+						{VITALITY, 6}, {AGILITY, 9}, {LUCK, 6}};
 		break;
-	case Race::DWARF:
-		minimum_attr = {{Attribute::STRENGTH, 10}, {Attribute::IQ, 7},
-						{Attribute::PIETY, 10},	   {Attribute::VITALITY, 10},
-						{Attribute::AGILITY, 5},   {Attribute::LUCK, 6}};
+	case DWARF:
+		minimum_attr = {{STRENGTH, 10}, {IQ, 7},	  {PIETY, 10},
+						{VITALITY, 10}, {AGILITY, 5}, {LUCK, 6}};
 		break;
-	case Race::GNOME:
-		minimum_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 7},
-						{Attribute::PIETY, 10},	  {Attribute::VITALITY, 8},
-						{Attribute::AGILITY, 10}, {Attribute::LUCK, 7}};
+	case GNOME:
+		minimum_attr = {{STRENGTH, 7}, {IQ, 7},		  {PIETY, 10},
+						{VITALITY, 8}, {AGILITY, 10}, {LUCK, 7}};
 		break;
-	case Race::HOBBIT:
-		minimum_attr = {{Attribute::STRENGTH, 5}, {Attribute::IQ, 7},
-						{Attribute::PIETY, 7},	  {Attribute::VITALITY, 6},
-						{Attribute::AGILITY, 10}, {Attribute::LUCK, 12}};
+	case HOBBIT:
+		minimum_attr = {{STRENGTH, 5}, {IQ, 7},		  {PIETY, 7},
+						{VITALITY, 6}, {AGILITY, 10}, {LUCK, 12}};
 		break;
 	default:
 		break;
@@ -705,26 +682,23 @@ auto Sorcery::Character::get_version() const -> int {
 // Work out all the stuff to do with starting a new character
 auto Sorcery::Character::_generate_start_info() -> void {
 
-	using Enums::Character::Ability;
-	using Enums::System::Random;
-
 	// _abilities[CURRENT_LEVEL] = 1; // why is this commented out?
-	_abilities[Ability::MAX_LEVEL] = 1;
-	_abilities[Ability::NEGATIVE_LEVEL] = 0;
-	_abilities[Ability::HIT_DICE] = 1;
-	_abilities[Ability::GOLD] = (*_system->random)[Random::ZERO_TO_99] + 90;
-	_abilities[Ability::AGE] =
-		(18 * 52) + (*_system->random)[Random::ZERO_TO_299];
-	_abilities[Ability::SWIM] = 1;
-	_abilities[Ability::MARKS] = 0;
-	_abilities[Ability::DEATHS] = 0;
+	using enum Enums::Character::Ability;
+	using enum Enums::System::Random;
+	_abilities[MAX_LEVEL] = 1;
+	_abilities[NEGATIVE_LEVEL] = 0;
+	_abilities[HIT_DICE] = 1;
+	_abilities[GOLD] = (*_system->random)[ZERO_TO_99] + 90;
+	_abilities[AGE] = (18 * 52) + (*_system->random)[ZERO_TO_299];
+	_abilities[SWIM] = 1;
+	_abilities[MARKS] = 0;
+	_abilities[DEATHS] = 0;
 
 	_start_attr = _cur_attr;
 	_max_attr = _cur_attr;
 
-	_abilities[Ability::CURRENT_XP] = 0;
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities[Ability::CURRENT_LEVEL]);
+	_abilities[CURRENT_XP] = 0;
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities[CURRENT_LEVEL]);
 }
 
 // Given the characters current level, work out all the secondary
@@ -733,166 +707,157 @@ auto Sorcery::Character::_generate_secondary_abil(bool initial,
 												  bool change_class,
 												  bool legate) -> void {
 
-	using Enums::Character::Ability;
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::System::Random;
-
 	// Formulae used are from here
 	// http://www.zimlab.com/wizardry/walk/w123calc.htm and also from
 	// https://mirrors.apple2.org.za/ftp.apple.asimov.net/images/games/rpg/wizardry/wizardry_I/Wizardry_i_SourceCode.zip
-	const auto current_level{_abilities[Ability::CURRENT_LEVEL]};
+	using enum Enums::Character::Ability;
+	const auto current_level{_abilities[CURRENT_LEVEL]};
 
 	// Bonus Melee to Hit per Attack (num)
-	if (_cur_attr[Attribute::STRENGTH] > 15)
-		_abilities[Ability::ATTACK_MODIFIER] =
-			_cur_attr[Attribute::STRENGTH] - 15;
-	else if (_cur_attr[Attribute::STRENGTH] < 6)
-		_abilities[Ability::ATTACK_MODIFIER] =
-			_cur_attr[Attribute::STRENGTH] - 6;
+	using enum Enums::Character::Attribute;
+	if (_cur_attr[STRENGTH] > 15)
+		_abilities[ATTACK_MODIFIER] = _cur_attr[STRENGTH] - 15;
+	else if (_cur_attr[STRENGTH] < 6)
+		_abilities[ATTACK_MODIFIER] = _cur_attr[STRENGTH] - 6;
 	else
-		_abilities[Ability::ATTACK_MODIFIER] = 0;
+		_abilities[ATTACK_MODIFIER] = 0;
 
 	// Bonus Melee to Hit per Attack (num)
+	using enum Enums::Character::Class;
 	switch (_class) {
-	case Class::FIGHTER:
-	case Class::SAMURAI:
-	case Class::LORD:
-	case Class::NINJA:
-	case Class::PRIEST:
-		_abilities[Ability::HIT_PROBABILITY] = 2 + (current_level / 5);
+	case FIGHTER:
+	case SAMURAI:
+	case LORD:
+	case NINJA:
+	case PRIEST:
+		_abilities[HIT_PROBABILITY] = 2 + (current_level / 5);
 		break;
 	default:
-		_abilities[Ability::HIT_PROBABILITY] = current_level / 5;
+		_abilities[HIT_PROBABILITY] = current_level / 5;
 		break;
 	}
 
 	// Bonus Melee Damage per Attack (num)
-	if (_cur_attr[Attribute::STRENGTH] > 15)
-		_abilities[Ability::BONUS_DAMAGE] = _cur_attr[Attribute::STRENGTH] - 15;
-	else if (_cur_attr[Attribute::STRENGTH] < 6)
-		_abilities[Ability::BONUS_DAMAGE] = _cur_attr[Attribute::STRENGTH] - 6;
+	if (_cur_attr[STRENGTH] > 15)
+		_abilities[BONUS_DAMAGE] = _cur_attr[STRENGTH] - 15;
+	else if (_cur_attr[STRENGTH] < 6)
+		_abilities[BONUS_DAMAGE] = _cur_attr[STRENGTH] - 6;
 	else
-		_abilities[Ability::BONUS_DAMAGE] = 0;
+		_abilities[BONUS_DAMAGE] = 0;
 
 	// Unarmed Attack Damage (num)
-	_abilities[Ability::UNARMED_DAMAGE] =
-		_class == Class::NINJA ? 8 + _abilities[Ability::BONUS_DAMAGE]
-							   : 4 + _abilities[Ability::BONUS_DAMAGE];
+	_abilities[UNARMED_DAMAGE] = _class == NINJA ? 8 + _abilities[BONUS_DAMAGE]
+												 : 4 + _abilities[BONUS_DAMAGE];
 
 	// Number of Melee Attacks (num)
 	switch (_class) {
-	case Class::FIGHTER:
-	case Class::SAMURAI:
-	case Class::LORD:
-		_abilities[Ability::BASE_NUMBER_OF_ATTACKS] = current_level / 5;
+	case FIGHTER:
+	case SAMURAI:
+	case LORD:
+		_abilities[BASE_NUMBER_OF_ATTACKS] = current_level / 5;
 		break;
-	case Class::NINJA:
-		_abilities[Ability::BASE_NUMBER_OF_ATTACKS] = (current_level / 5) + 1;
+	case NINJA:
+		_abilities[BASE_NUMBER_OF_ATTACKS] = (current_level / 5) + 1;
 		break;
 	default:
-		_abilities[Ability::BASE_NUMBER_OF_ATTACKS] = 1;
+		_abilities[BASE_NUMBER_OF_ATTACKS] = 1;
 		break;
 	}
-	if (_abilities[Ability::BASE_NUMBER_OF_ATTACKS] == 0)
-		_abilities[Ability::BASE_NUMBER_OF_ATTACKS] = 1;
+	if (_abilities[BASE_NUMBER_OF_ATTACKS] == 0)
+		_abilities[BASE_NUMBER_OF_ATTACKS] = 1;
 
 	// Chance of learning new Mage Spells (%)
 	switch (_class) {
-	case Class::SAMURAI:
-	case Class::BISHOP:
-	case Class::MAGE:
-		_abilities[Ability::MAGE_SPELL_LEARN] =
-			(_cur_attr[Attribute::IQ] / 29.0) * 100;
+	case SAMURAI:
+	case BISHOP:
+	case MAGE:
+		_abilities[MAGE_SPELL_LEARN] = (_cur_attr[IQ] / 29.0) * 100;
 		break;
 	default:
-		_abilities[Ability::MAGE_SPELL_LEARN] = 0;
+		_abilities[MAGE_SPELL_LEARN] = 0;
 		break;
 	}
 
 	// Chance of Identifying Items (%)
-	_abilities[Ability::IDENTIFY_ITEMS] =
-		_class == Class::BISHOP ? 10 + (5 * current_level) : 0;
-	if (_abilities[Ability::IDENTIFY_ITEMS] > 100)
-		_abilities[Ability::IDENTIFY_ITEMS] = 100;
+	_abilities[IDENTIFY_ITEMS] =
+		_class == BISHOP ? 10 + (5 * current_level) : 0;
+	if (_abilities[IDENTIFY_ITEMS] > 100)
+		_abilities[IDENTIFY_ITEMS] = 100;
 
 	// Chance of getting cursed when Identifying Items (%)
-	_abilities[Ability::IDENTIFY_CURSE] =
-		_class == Class::BISHOP ? 35 - (5 * current_level) : 0;
-	if (_abilities[Ability::IDENTIFY_CURSE] < 0)
-		_abilities[Ability::IDENTIFY_CURSE] = 0;
+	_abilities[IDENTIFY_CURSE] =
+		_class == BISHOP ? 35 - (5 * current_level) : 0;
+	if (_abilities[IDENTIFY_CURSE] < 0)
+		_abilities[IDENTIFY_CURSE] = 0;
 
 	// Chance of identifying unknown Foes per round (%)
-	_abilities[Ability::IDENTIFY_FOES] =
-		current_level + _cur_attr[Attribute::IQ] + _cur_attr[Attribute::PIETY];
-	if (_abilities[Ability::IDENTIFY_FOES] > 100)
-		_abilities[Ability::IDENTIFY_FOES] = 100;
+	_abilities[IDENTIFY_FOES] =
+		current_level + _cur_attr[IQ] + _cur_attr[PIETY];
+	if (_abilities[IDENTIFY_FOES] > 100)
+		_abilities[IDENTIFY_FOES] = 100;
 
 	// Chance of learning new Priest Spells (%)
 	switch (_class) {
-	case Class::PRIEST:
-	case Class::LORD:
-	case Class::BISHOP:
-		_abilities[Ability::PRIEST_SPELL_LEARN] =
-			(_cur_attr[Attribute::PIETY] / 30.0) * 100;
+	case PRIEST:
+	case LORD:
+	case BISHOP:
+		_abilities[PRIEST_SPELL_LEARN] = (_cur_attr[PIETY] / 30.0) * 100;
 		break;
 	default:
-		_abilities[Ability::PRIEST_SPELL_LEARN] = 0;
+		_abilities[PRIEST_SPELL_LEARN] = 0;
 		break;
 	}
 
 	// LOKTOFELT success chance (%)
-	_abilities[Ability::LOKTOFELT_SUCCESS] =
-		_class == Class::PRIEST ? 2 * current_level : 0;
+	_abilities[LOKTOFELT_SUCCESS] = _class == PRIEST ? 2 * current_level : 0;
 
 	// Base Dispell chance (affected by monster level) (%)
 	switch (_class) {
-	case Class::PRIEST:
-		_abilities[Ability::BASE_DISPELL] = 50 + (5 * current_level);
+	case PRIEST:
+		_abilities[BASE_DISPELL] = 50 + (5 * current_level);
 		break;
-	case Class::BISHOP:
-		_abilities[Ability::BASE_DISPELL] =
+	case BISHOP:
+		_abilities[BASE_DISPELL] =
 			current_level >= 4 ? 50 + (5 * current_level) - 20 : 0;
 		break;
-	case Class::LORD:
-		_abilities[Ability::BASE_DISPELL] =
+	case LORD:
+		_abilities[BASE_DISPELL] =
 			current_level >= 9 ? 50 + (5 * current_level) - 40 : 0;
 		break;
 	default:
-		_abilities[Ability::BASE_DISPELL] = 0;
+		_abilities[BASE_DISPELL] = 0;
 		break;
 	}
-	if (_abilities[Ability::BASE_DISPELL] > 100)
-		_abilities[Ability::BASE_DISPELL] = 100;
+	if (_abilities[BASE_DISPELL] > 100)
+		_abilities[BASE_DISPELL] = 100;
 
 	// Vitality Bonus (num)
-	switch (_cur_attr[Attribute::VITALITY]) {
+	switch (_cur_attr[VITALITY]) {
 	case 3:
-		_abilities[Ability::VITALITY_BONUS] = -2;
+		_abilities[VITALITY_BONUS] = -2;
 		break;
 	case 4:
 	case 5:
-		_abilities[Ability::VITALITY_BONUS] = -1;
+		_abilities[VITALITY_BONUS] = -1;
 		break;
 	case 16:
-		_abilities[Ability::VITALITY_BONUS] = 1;
+		_abilities[VITALITY_BONUS] = 1;
 		break;
 	case 17:
-		_abilities[Ability::VITALITY_BONUS] = 2;
+		_abilities[VITALITY_BONUS] = 2;
 		break;
 	case 18:
 	case 19:
 	case 20:
-		_abilities[Ability::VITALITY_BONUS] = 3;
+		_abilities[VITALITY_BONUS] = 3;
 		break;
 	default:
-		_abilities[Ability::VITALITY_BONUS] = 0;
+		_abilities[VITALITY_BONUS] = 0;
 		break;
 	}
 
 	// Bonus Hit Points per level (num)
-	_abilities[Ability::BONUS_HIT_POINTS] = _abilities[Ability::VITALITY_BONUS];
+	_abilities[BONUS_HIT_POINTS] = _abilities[VITALITY_BONUS];
 
 	// Class Change doesn't reset these
 	if (!change_class) {
@@ -900,317 +865,309 @@ auto Sorcery::Character::_generate_secondary_abil(bool initial,
 		// Base Hit Points (num) - note initially all non-legated characters get
 		// 8 HP as per the PSX versions
 		if (initial) {
-			const auto bonus{_abilities[Ability::BONUS_HIT_POINTS]};
-			switch (auto chance{(*_system->random)[Random::D100]};
+			const auto bonus{_abilities[BONUS_HIT_POINTS]};
+			using enum Enums::System::Random;
+			switch (auto chance{(*_system->random)[D100]};
 					_class) { // NOLINT(clang-diagnostic-switch)
-			case Class::FIGHTER:
-			case Class::LORD:
-				_abilities[Ability::MAX_HP] =
+			case FIGHTER:
+			case LORD:
+				_abilities[MAX_HP] =
 					chance <= 50 ? 10 + bonus : 9 * (10 + bonus) / 10;
 				break;
-			case Class::PRIEST:
-				_abilities[Ability::MAX_HP] =
+			case PRIEST:
+				_abilities[MAX_HP] =
 					chance <= 50 ? 8 + bonus : 8 * (10 + bonus) / 10;
 				break;
-			case Class::THIEF:
-			case Class::BISHOP:
-			case Class::NINJA:
-				_abilities[Ability::MAX_HP] =
+			case THIEF:
+			case BISHOP:
+			case NINJA:
+				_abilities[MAX_HP] =
 					chance <= 50 ? 6 + bonus : 6 * (10 + bonus) / 10;
 				break;
-			case Class::MAGE:
-				_abilities[Ability::MAX_HP] =
+			case MAGE:
+				_abilities[MAX_HP] =
 					chance <= 50 ? 4 + bonus : 4 * (10 + bonus) / 10;
 				break;
-			case Class::SAMURAI:
-				_abilities[Ability::MAX_HP] =
+			case SAMURAI:
+				_abilities[MAX_HP] =
 					chance <= 50 ? 16 + bonus : 16 * (10 + bonus) / 10;
 				break;
 			default:
 				break;
 			}
-			if (_abilities[Ability::MAX_HP] < 1)
-				_abilities[Ability::MAX_HP] = 1;
+			if (_abilities[MAX_HP] < 1)
+				_abilities[MAX_HP] = 1;
 
-			_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP];
+			_abilities[CURRENT_HP] = _abilities[MAX_HP];
 		}
 
 		if (legate) {
 			switch (_class) {
-			case Class::FIGHTER:
-				_abilities[Ability::MAX_HP] = 10;
+			case FIGHTER:
+				_abilities[MAX_HP] = 10;
 				break;
-			case Class::SAMURAI:
-			case Class::LORD:
-				_abilities[Ability::MAX_HP] = 12;
+			case SAMURAI:
+			case LORD:
+				_abilities[MAX_HP] = 12;
 				break;
-			case Class::PRIEST:
-				_abilities[Ability::MAX_HP] = 8;
+			case PRIEST:
+				_abilities[MAX_HP] = 8;
 				break;
-			case Class::NINJA:
-				_abilities[Ability::MAX_HP] = 7;
+			case NINJA:
+				_abilities[MAX_HP] = 7;
 				break;
-			case Class::THIEF:
-				_abilities[Ability::MAX_HP] = 6;
+			case THIEF:
+				_abilities[MAX_HP] = 6;
 				break;
-			case Class::MAGE:
-				_abilities[Ability::MAX_HP] = 4;
+			case MAGE:
+				_abilities[MAX_HP] = 4;
 				break;
 			default:
 				break;
 			}
 
-			_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP];
+			_abilities[CURRENT_HP] = _abilities[MAX_HP];
 		}
 	}
 
 	// Chance of resurrecting a Dead Character at the Temple (%)
-	_abilities[Ability::DEAD_RESURRECT] =
-		50 + (3 * _cur_attr[Attribute::VITALITY]);
-	if (_abilities[Ability::DEAD_RESURRECT] > 100)
-		_abilities[Ability::DEAD_RESURRECT] = 100;
+	_abilities[DEAD_RESURRECT] = 50 + (3 * _cur_attr[VITALITY]);
+	if (_abilities[DEAD_RESURRECT] > 100)
+		_abilities[DEAD_RESURRECT] = 100;
 
 	// Chance of resurrecting an Ashed Character at the Temple (%)
-	_abilities[Ability::ASHES_RESURRECT] =
-		40 + (3 * _cur_attr[Attribute::VITALITY]);
-	if (_abilities[Ability::ASHES_RESURRECT] > 100)
-		_abilities[Ability::ASHES_RESURRECT] = 100;
+	_abilities[ASHES_RESURRECT] = 40 + (3 * _cur_attr[VITALITY]);
+	if (_abilities[ASHES_RESURRECT] > 100)
+		_abilities[ASHES_RESURRECT] = 100;
 
 	// Chance of resurrecting by a DI or KADORTO spell cast by another Character
 	// (%)
-	_abilities[Ability::DI_KADORTO_RESURRECT] =
-		4 * _cur_attr[Attribute::VITALITY];
+	_abilities[DI_KADORTO_RESURRECT] = 4 * _cur_attr[VITALITY];
 
 	// Initiative Modifier (num)
-	switch (_cur_attr[Attribute::AGILITY]) {
+	switch (_cur_attr[AGILITY]) {
 	case 3:
-		_abilities[Ability::INITIATIVE_MODIFIER] = 3;
+		_abilities[INITIATIVE_MODIFIER] = 3;
 		break;
 	case 4:
 	case 5:
-		_abilities[Ability::INITIATIVE_MODIFIER] = 2;
+		_abilities[INITIATIVE_MODIFIER] = 2;
 		break;
 	case 6:
 	case 7:
-		_abilities[Ability::INITIATIVE_MODIFIER] = 1;
+		_abilities[INITIATIVE_MODIFIER] = 1;
 		break;
 	case 15:
-		_abilities[Ability::INITIATIVE_MODIFIER] = -1;
+		_abilities[INITIATIVE_MODIFIER] = -1;
 		break;
 	case 16:
-		_abilities[Ability::INITIATIVE_MODIFIER] = -2;
+		_abilities[INITIATIVE_MODIFIER] = -2;
 		break;
 	case 17:
-		_abilities[Ability::INITIATIVE_MODIFIER] = -3;
+		_abilities[INITIATIVE_MODIFIER] = -3;
 		break;
 	case 18:
 	case 19:
 	case 20:
-		_abilities[Ability::INITIATIVE_MODIFIER] = -4;
+		_abilities[INITIATIVE_MODIFIER] = -4;
 		break;
 	default:
-		_abilities[Ability::INITIATIVE_MODIFIER] = 0;
+		_abilities[INITIATIVE_MODIFIER] = 0;
 		break;
 	}
 
 	// Armour Class (num) (before equipment)
-	_abilities[Ability::BASE_ARMOUR_CLASS] =
-		_class == Class::NINJA ? 10 - (current_level / 3) - 2 : 10;
+	_abilities[BASE_ARMOUR_CLASS] =
+		_class == NINJA ? 10 - (current_level / 3) - 2 : 10;
 
 	// Don't use this!
-	_abilities[Ability::CURRENT_ARMOUR_CLASS] =
-		_abilities[Ability::BASE_ARMOUR_CLASS];
+	_abilities[CURRENT_ARMOUR_CLASS] = _abilities[BASE_ARMOUR_CLASS];
 
 	// Critical Hit Chance (%)
-	_abilities[Ability::BASE_CRITICAL_HIT] =
-		_class == Class::NINJA ? 2 * current_level : 0;
-	if (_abilities[Ability::BASE_CRITICAL_HIT] > 50)
-		_abilities[Ability::BASE_CRITICAL_HIT] = 50;
+	_abilities[BASE_CRITICAL_HIT] = _class == NINJA ? 2 * current_level : 0;
+	if (_abilities[BASE_CRITICAL_HIT] > 50)
+		_abilities[BASE_CRITICAL_HIT] = 50;
 
 	// Chance to identify a Trap (%)
-	if (_class == Class::THIEF)
-		_abilities[Ability::IDENTIFY_TRAP] = 6 * _cur_attr[Attribute::AGILITY];
-	else if (_class == Class::NINJA)
-		_abilities[Ability::IDENTIFY_TRAP] = 4 * _cur_attr[Attribute::AGILITY];
+	if (_class == THIEF)
+		_abilities[IDENTIFY_TRAP] = 6 * _cur_attr[AGILITY];
+	else if (_class == NINJA)
+		_abilities[IDENTIFY_TRAP] = 4 * _cur_attr[AGILITY];
 	else
-		_abilities[Ability::IDENTIFY_TRAP] = _cur_attr[Attribute::AGILITY];
-	if (_abilities[Ability::IDENTIFY_TRAP] > 95)
-		_abilities[Ability::IDENTIFY_TRAP] = 95;
+		_abilities[IDENTIFY_TRAP] = _cur_attr[AGILITY];
+	if (_abilities[IDENTIFY_TRAP] > 95)
+		_abilities[IDENTIFY_TRAP] = 95;
 
 	// Base Chance to Disarm a Trap (modified by Maze Level) (%)
-	_abilities[Ability::BASE_DISARM_TRAP] =
-		(_class == Class::NINJA) || (_class == Class::THIEF)
-			? ((current_level + 50) / 69.0) * 100
-			: 0;
+	_abilities[BASE_DISARM_TRAP] = (_class == NINJA) || (_class == THIEF)
+									   ? ((current_level + 50) / 69.0) * 100
+									   : 0;
 
 	// Chance to activate a Trap if identify fails (%)
-	_abilities[Ability::ACTIVATE_TRAP] =
-		(_class == Class::NINJA) || (_class == Class::THIEF)
-			? 100 - ((_cur_attr[Attribute::AGILITY] / 20.0) * 100)
-			: 100;
+	_abilities[ACTIVATE_TRAP] = (_class == NINJA) || (_class == THIEF)
+									? 100 - ((_cur_attr[AGILITY] / 20.0) * 100)
+									: 100;
 
 	// Base Chance to avoid following into a Pit (modified by Maze Level) (%)
-	_abilities[Ability::BASE_AVOID_PIT] =
-		(_cur_attr[Attribute::AGILITY] / 25.0) * 100;
+	_abilities[BASE_AVOID_PIT] = (_cur_attr[AGILITY] / 25.0) * 100;
 
 	// Base Resist Bonus (d20)
-	_abilities[Ability::BASE_RESIST_BONUS] = 1 * (current_level / 5);
-	if (_cur_attr[Attribute::LUCK] >= 18)
-		_abilities[Ability::BASE_RESIST_BONUS] += 3;
-	else if (_cur_attr[Attribute::LUCK] >= 12)
-		_abilities[Ability::BASE_RESIST_BONUS] += 2;
-	else if (_cur_attr[Attribute::LUCK] >= 6)
-		_abilities[Ability::BASE_RESIST_BONUS] += 1;
+	_abilities[BASE_RESIST_BONUS] = 1 * (current_level / 5);
+	if (_cur_attr[LUCK] >= 18)
+		_abilities[BASE_RESIST_BONUS] += 3;
+	else if (_cur_attr[LUCK] >= 12)
+		_abilities[BASE_RESIST_BONUS] += 2;
+	else if (_cur_attr[LUCK] >= 6)
+		_abilities[BASE_RESIST_BONUS] += 1;
 
 	// Chance equipment is intact on a corpse TODO: check this is accurate
-	_abilities[Ability::EQUIPMENT_INTACT_ON_WIPE] =
-		(_cur_attr[Attribute::LUCK] / 21.0f) * 100;
+	_abilities[EQUIPMENT_INTACT_ON_WIPE] = (_cur_attr[LUCK] / 21.0f) * 100;
 
 	// Other Resists (d20)
-	const auto brb{_abilities[Ability::BASE_RESIST_BONUS]};
+	const auto brb{_abilities[BASE_RESIST_BONUS]};
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::SAMURAI:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_STONING] = 0;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = brb + 2;
+	case SAMURAI:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = brb + 2;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = brb + 2;
+		_abilities[RESISTANCE_VS_STONING] = 0;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
+		_abilities[RESISTANCE_VS_SILENCE] = brb + 2;
 		break;
-	case Class::FIGHTER:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_STONING] = 0;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = 0;
+	case FIGHTER:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = brb + 3;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = brb + 3;
+		_abilities[RESISTANCE_VS_STONING] = 0;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
+		_abilities[RESISTANCE_VS_SILENCE] = 0;
 		break;
-	case Class::PRIEST:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = 0;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = 0;
-		_abilities[Ability::RESISTANCE_VS_STONING] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = 0;
+	case PRIEST:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = 0;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = 0;
+		_abilities[RESISTANCE_VS_STONING] = brb + 3;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
+		_abilities[RESISTANCE_VS_SILENCE] = 0;
 		break;
-	case Class::LORD:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_STONING] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = 0;
+	case LORD:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = brb + 2;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = brb + 2;
+		_abilities[RESISTANCE_VS_STONING] = brb + 2;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
+		_abilities[RESISTANCE_VS_SILENCE] = 0;
 		break;
-	case Class::BISHOP:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = 0;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = 0;
-		_abilities[Ability::RESISTANCE_VS_STONING] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = brb + 2;
+	case BISHOP:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = 0;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = 0;
+		_abilities[RESISTANCE_VS_STONING] = brb + 2;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = brb + 2;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
+		_abilities[RESISTANCE_VS_SILENCE] = brb + 2;
 		break;
-	case Class::THIEF:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = 0;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = 0;
-		_abilities[Ability::RESISTANCE_VS_STONING] = 0;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = 0;
+	case THIEF:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = 0;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = 0;
+		_abilities[RESISTANCE_VS_STONING] = 0;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = brb + 3;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = 0;
+		_abilities[RESISTANCE_VS_SILENCE] = 0;
 		break;
-	case Class::NINJA:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_STONING] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = brb + 4;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = brb + 2;
+	case NINJA:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = brb + 3;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = brb + 3;
+		_abilities[RESISTANCE_VS_STONING] = brb + 2;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = brb + 4;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = brb + 3;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 2;
+		_abilities[RESISTANCE_VS_SILENCE] = brb + 2;
 		break;
-	case Class::MAGE:
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = 0;
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = 0;
-		_abilities[Ability::RESISTANCE_VS_STONING] = 0;
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 0;
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 0;
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 3;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = brb + 3;
+	case MAGE:
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = 0;
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = 0;
+		_abilities[RESISTANCE_VS_STONING] = 0;
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 0;
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 0;
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = brb + 3;
+		_abilities[RESISTANCE_VS_SILENCE] = brb + 3;
 		break;
 	default:
 		break;
 	}
-	if (_race == Race::HUMAN)
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] += 1;
-	if (_race == Race::HUMAN)
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] += 1;
-	if (_race == Race::GNOME)
-		_abilities[Ability::RESISTANCE_VS_STONING] += 2;
-	if (_race == Race::ELF)
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] += 2;
-	if (_race == Race::DWARF)
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] += 4;
-	if (_race == Race::HOBBIT) {
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] += 2;
-		_abilities[Ability::RESISTANCE_VS_SILENCE] += 3;
+
+	using enum Enums::Character::Race;
+	if (_race == HUMAN)
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] += 1;
+	if (_race == HUMAN)
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] += 1;
+	if (_race == GNOME)
+		_abilities[RESISTANCE_VS_STONING] += 2;
+	if (_race == ELF)
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] += 2;
+	if (_race == DWARF)
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] += 4;
+	if (_race == HOBBIT) {
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] += 2;
+		_abilities[RESISTANCE_VS_SILENCE] += 3;
 	}
-	if (_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] > 19)
-		_abilities[Ability::RESISTANCE_VS_POISON_PARALYSIS] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] > 19)
-		_abilities[Ability::RESISTANCE_VS_CRITICAL_HIT] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_STONING] > 19)
-		_abilities[Ability::RESISTANCE_VS_STONING] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] > 19)
-		_abilities[Ability::RESISTANCE_VS_BREATH_ATTACKS] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] > 19)
-		_abilities[Ability::RESISTANCE_VS_POISON_GAS_TRAP] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] > 19)
-		_abilities[Ability::RESISTANCE_VS_MAGE_PRIEST_TRAP] = 19;
-	if (_abilities[Ability::RESISTANCE_VS_SILENCE] > 19)
-		_abilities[Ability::RESISTANCE_VS_SILENCE] = 19;
+	if (_abilities[RESISTANCE_VS_POISON_PARALYSIS] > 19)
+		_abilities[RESISTANCE_VS_POISON_PARALYSIS] = 19;
+	if (_abilities[RESISTANCE_VS_CRITICAL_HIT] > 19)
+		_abilities[RESISTANCE_VS_CRITICAL_HIT] = 19;
+	if (_abilities[RESISTANCE_VS_STONING] > 19)
+		_abilities[RESISTANCE_VS_STONING] = 19;
+	if (_abilities[RESISTANCE_VS_BREATH_ATTACKS] > 19)
+		_abilities[RESISTANCE_VS_BREATH_ATTACKS] = 19;
+	if (_abilities[RESISTANCE_VS_POISON_GAS_TRAP] > 19)
+		_abilities[RESISTANCE_VS_POISON_GAS_TRAP] = 19;
+	if (_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] > 19)
+		_abilities[RESISTANCE_VS_MAGE_PRIEST_TRAP] = 19;
+	if (_abilities[RESISTANCE_VS_SILENCE] > 19)
+		_abilities[RESISTANCE_VS_SILENCE] = 19;
 
 	// Resistance to harmful spells (%)
-	_abilities[Ability::RESISTANCE_VS_KATINO] = current_level * 10;
-	if (_abilities[Ability::RESISTANCE_VS_KATINO] > 100)
-		_abilities[Ability::RESISTANCE_VS_KATINO] = 100;
-	_abilities[Ability::RESISTANCE_VS_BADI] = current_level * 10;
-	if (_abilities[Ability::RESISTANCE_VS_BADI] > 100)
-		_abilities[Ability::RESISTANCE_VS_BADI] = 100;
-	_abilities[Ability::RESISTANCE_VS_MANIFO] = 50 + (current_level * 10);
-	if (_abilities[Ability::RESISTANCE_VS_MANIFO] > 100)
-		_abilities[Ability::RESISTANCE_VS_MANIFO] = 100;
+	_abilities[RESISTANCE_VS_KATINO] = current_level * 10;
+	if (_abilities[RESISTANCE_VS_KATINO] > 100)
+		_abilities[RESISTANCE_VS_KATINO] = 100;
+	_abilities[RESISTANCE_VS_BADI] = current_level * 10;
+	if (_abilities[RESISTANCE_VS_BADI] > 100)
+		_abilities[RESISTANCE_VS_BADI] = 100;
+	_abilities[RESISTANCE_VS_MANIFO] = 50 + (current_level * 10);
+	if (_abilities[RESISTANCE_VS_MANIFO] > 100)
+		_abilities[RESISTANCE_VS_MANIFO] = 100;
 
-	_abilities[Ability::RECOVER_FROM_SLEEP] = current_level * 10;
-	if (_abilities[Ability::RECOVER_FROM_SLEEP] > 100)
-		_abilities[Ability::RECOVER_FROM_SLEEP] = 100;
+	_abilities[RECOVER_FROM_SLEEP] = current_level * 10;
+	if (_abilities[RECOVER_FROM_SLEEP] > 100)
+		_abilities[RECOVER_FROM_SLEEP] = 100;
 
-	_abilities[Ability::RECOVER_FROM_FEAR] = current_level * 5;
-	if (_abilities[Ability::RECOVER_FROM_FEAR] > 100)
-		_abilities[Ability::RECOVER_FROM_FEAR] = 100;
+	_abilities[RECOVER_FROM_FEAR] = current_level * 5;
+	if (_abilities[RECOVER_FROM_FEAR] > 100)
+		_abilities[RECOVER_FROM_FEAR] = 100;
 
-	_abilities[Ability::BONUS_MAGE_SPELLS] = 0;
-	_abilities[Ability::BONUS_PRIEST_SPELLS] = 0;
+	_abilities[BONUS_MAGE_SPELLS] = 0;
+	_abilities[BONUS_PRIEST_SPELLS] = 0;
 
 	// And set poison/regeneration to default
 	if (!change_class) {
-		_abilities[Ability::HP_LOSS_PER_TURN] = 0;
-		_abilities[Ability::HP_GAIN_PER_TURN] = 0;
-		_abilities[Ability::POISON_STRENGTH] = 0;
+		_abilities[HP_LOSS_PER_TURN] = 0;
+		_abilities[HP_GAIN_PER_TURN] = 0;
+		_abilities[POISON_STRENGTH] = 0;
 	}
 }
 
 auto Sorcery::Character::grant_xp(const int adjustment) -> int {
 
-	using Enums::Character::Ability;
+	using enum Enums::Character::Ability;
+	_abilities[CURRENT_XP] = _abilities[CURRENT_XP] + adjustment;
 
-	_abilities[Ability::CURRENT_XP] =
-		_abilities[Ability::CURRENT_XP] + adjustment;
-
-	return _abilities[Ability::CURRENT_XP];
+	return _abilities[CURRENT_XP];
 }
 
 // Now work out spellpoints!
@@ -1249,7 +1206,6 @@ auto Sorcery::Character::_reset_starting_sp() -> void {
 // Set the starting spellpoints
 auto Sorcery::Character::_set_starting_sp() -> void {
 
-	using Enums::Character::Ability;
 	using Enums::Character::Class;
 	using Enums::Config::Options;
 
@@ -1259,10 +1215,11 @@ auto Sorcery::Character::_set_starting_sp() -> void {
 	// In the original code this is handled in
 	// "SETSPELS"/"SPLPERLV"/"NWMAGE"/"NWPRIEST"
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
+		using enum Enums::Character::Ability;
 	case Class::PRIEST:
 		_priest_max_sp[1] = (*_system->config)[Options::STRICT_MODE]
 								? 2
-								: 2 + _abilities[Ability::BONUS_PRIEST_SPELLS];
+								: 2 + _abilities[BONUS_PRIEST_SPELLS];
 		break;
 	case Class::BISHOP:
 		_mage_max_sp[1] = 2;
@@ -1270,7 +1227,7 @@ auto Sorcery::Character::_set_starting_sp() -> void {
 	case Class::MAGE:
 		_mage_max_sp[1] = (*_system->config)[Options::STRICT_MODE]
 							  ? 2
-							  : 2 + _abilities[Ability::BONUS_MAGE_SPELLS];
+							  : 2 + _abilities[BONUS_MAGE_SPELLS];
 		break;
 	default:
 		break;
@@ -1337,7 +1294,6 @@ auto Sorcery::Character::_set_start_spells() -> void {
 // Get HP gained for all levels apart from the first
 auto Sorcery::Character::_get_hp_per_level() -> int {
 
-	using Enums::Character::Ability;
 	using Enums::Character::Class;
 	using Enums::System::Random;
 
@@ -1367,7 +1323,7 @@ auto Sorcery::Character::_get_hp_per_level() -> int {
 		break;
 	}
 
-	extra_hp += _abilities[Ability::BONUS_HIT_POINTS];
+	extra_hp += _abilities[Enums::Character::Ability::BONUS_HIT_POINTS];
 	if (extra_hp < 0)
 		extra_hp = 1;
 
@@ -1380,26 +1336,25 @@ auto Sorcery::Character::_get_hp_per_level() -> int {
 // below)
 auto Sorcery::Character::_update_hp_for_level() -> int {
 
-	using Enums::Character::Ability;
 	using Enums::Character::Class;
 
 	// Note the rerolling of all HP ("MADELEV") when levelling - and using
 	// MaxLevel achieved when in strict mode
+	using enum Enums::Character::Ability;
 	auto hp_gained{0};
 	if ((*_system->config)[Enums::Config::LEVEL_REROLL_HP]) {
 		auto hp_total{0};
-		for (auto level = 1; level < _abilities[Ability::CURRENT_LEVEL];
-			 level++)
+		for (auto level = 1; level < _abilities[CURRENT_LEVEL]; level++)
 			hp_total += _get_hp_per_level();
-		if (hp_total < _abilities[Ability::MAX_HP])
-			hp_total = _abilities[Ability::MAX_HP] + 1;
-		hp_gained = hp_total - _abilities[Ability::MAX_HP];
-		_abilities[Ability::MAX_HP] += hp_gained;
-		_abilities[Ability::CURRENT_HP] += hp_gained;
+		if (hp_total < _abilities[MAX_HP])
+			hp_total = _abilities[MAX_HP] + 1;
+		hp_gained = hp_total - _abilities[MAX_HP];
+		_abilities[MAX_HP] += hp_gained;
+		_abilities[CURRENT_HP] += hp_gained;
 	} else {
 		hp_gained = _get_hp_per_level();
-		_abilities[Ability::MAX_HP] += hp_gained;
-		_abilities[Ability::CURRENT_HP] += hp_gained;
+		_abilities[MAX_HP] += hp_gained;
+		_abilities[CURRENT_HP] += hp_gained;
 	}
 
 	return hp_gained;
@@ -1418,13 +1373,13 @@ auto Sorcery::Character::get_max_hp() const -> int {
 auto Sorcery::Character::_update_stat_for_level(
 	Enums::Character::Attribute attribute, std::string stat) -> std::string {
 
-	using Enums::Character::Ability;
 	using Enums::System::Random;
 
 	auto message{""s};
 
 	if ((*_system->random)[Random::D100] < 75) {
-		const auto chance{_abilities.at(Ability::AGE) / 130.f};
+		const auto chance{_abilities.at(Enums::Character::Ability::AGE) /
+						  130.f};
 		if ((*_system->random)[Random::D100] < chance) {
 
 			// Decrease
@@ -1460,53 +1415,48 @@ auto Sorcery::Character::_update_stat_for_level(
 // Level a character up
 auto Sorcery::Character::level_up() -> void {
 
-	using Enums::Character::Ability;
-	using Enums::Character::Attribute;
-
 	level_up_results.clear();
 	level_up_results.emplace_back((*_system->strings)["LEVEL_DING"]);
 
 	// Increase level
-	_abilities.at(Ability::CURRENT_LEVEL) =
-		_abilities.at(Ability::CURRENT_LEVEL) + 1;
-	_abilities.at(Ability::HIT_DICE) = _abilities.at(Ability::HIT_DICE) + 1;
-	if (_abilities.at(Ability::CURRENT_LEVEL) >
-		_abilities.at(Ability::MAX_LEVEL))
-		_abilities.at(Ability::MAX_LEVEL) =
-			_abilities.at(Ability::CURRENT_LEVEL);
+	using enum Enums::Character::Ability;
+	_abilities.at(CURRENT_LEVEL) = _abilities.at(CURRENT_LEVEL) + 1;
+	_abilities.at(HIT_DICE) = _abilities.at(HIT_DICE) + 1;
+	if (_abilities.at(CURRENT_LEVEL) > _abilities.at(MAX_LEVEL))
+		_abilities.at(MAX_LEVEL) = _abilities.at(CURRENT_LEVEL);
 
 	// Handle learning spells
 	if (_set_sp())
 		level_up_results.emplace_back((*_system->strings)["LEVEL_SPELLS"]);
 
 	// Work out new xp needed
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities[Ability::CURRENT_LEVEL]);
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities[CURRENT_LEVEL]);
 
 	// Handle stat changing
 	auto stat_message{""s};
+	using enum Enums::Character::Attribute;
 	stat_message = _update_stat_for_level(
-		Attribute::STRENGTH, (*_system->strings)["CHARACTER_STAT_STRENGTH"]);
+		STRENGTH, (*_system->strings)["CHARACTER_STAT_STRENGTH"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 	stat_message = _update_stat_for_level(
-		Attribute::IQ, (*_system->strings)["CHARACTER_STAT_INTELLIGENCE"]);
+		IQ, (*_system->strings)["CHARACTER_STAT_INTELLIGENCE"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 	stat_message = _update_stat_for_level(
-		Attribute::PIETY, (*_system->strings)["CHARACTER_STAT_PIETY"]);
+		PIETY, (*_system->strings)["CHARACTER_STAT_PIETY"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 	stat_message = _update_stat_for_level(
-		Attribute::VITALITY, (*_system->strings)["CHARACTER_STAT_VITALITY"]);
+		VITALITY, (*_system->strings)["CHARACTER_STAT_VITALITY"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 	stat_message = _update_stat_for_level(
-		Attribute::AGILITY, (*_system->strings)["CHARACTER_STAT_AGILITY"]);
+		AGILITY, (*_system->strings)["CHARACTER_STAT_AGILITY"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 	stat_message = _update_stat_for_level(
-		Attribute::LUCK, (*_system->strings)["CHARACTER_STAT_LUCK"]);
+		LUCK, (*_system->strings)["CHARACTER_STAT_LUCK"]);
 	if (!stat_message.empty())
 		level_up_results.emplace_back(stat_message);
 
@@ -1520,7 +1470,7 @@ auto Sorcery::Character::level_up() -> void {
 					hp_gained, (*_system->strings)["LEVEL_HP_SUFFIX"])};
 	level_up_results.emplace_back(hp_message);
 
-	if (_cur_attr.at(Attribute::VITALITY) < 3) {
+	if (_cur_attr.at(VITALITY) < 3) {
 		level_up_results.emplace_back((*_system->strings)["LEVEL_DIE"]);
 		_status = Enums::Character::Status::LOST;
 		_location = Enums::Character::Location::TRAINING;
@@ -1530,44 +1480,37 @@ auto Sorcery::Character::level_up() -> void {
 // Level a character down (e.g. drain levels or give/increase negative levels_
 auto Sorcery::Character::level_down() -> void {
 
-	using Enums::Character::Ability;
-
-	if (_abilities.at(Ability::CURRENT_LEVEL) == 1) {
+	using enum Enums::Character::Ability;
+	if (_abilities.at(CURRENT_LEVEL) == 1) {
 		_status = Enums::Character::Status::LOST;
 		_location = Enums::Character::Location::TRAINING;
 		return;
 	}
 
 	// TODO: What to do about negative level ability?
-	const auto old_level{_abilities.at(Ability::CURRENT_LEVEL)};
-	const auto diff_hp{_abilities.at(Ability::MAX_HP) -
-					   _abilities.at(Ability::CURRENT_HP)};
+	const auto old_level{_abilities.at(CURRENT_LEVEL)};
+	const auto diff_hp{_abilities.at(MAX_HP) - _abilities.at(CURRENT_HP)};
 
-	_abilities.at(Ability::CURRENT_LEVEL) =
-		_abilities.at(Ability::CURRENT_LEVEL) - 1;
-	_abilities.at(Ability::HIT_DICE) = _abilities.at(Ability::HIT_DICE) - 1;
-	if (_abilities.at(Ability::MAX_LEVEL) >
-		_abilities.at(Ability::CURRENT_LEVEL))
-		_abilities.at(Ability::MAX_LEVEL) =
-			_abilities.at(Ability::CURRENT_LEVEL);
+	_abilities.at(CURRENT_LEVEL) = _abilities.at(CURRENT_LEVEL) - 1;
+	_abilities.at(HIT_DICE) = _abilities.at(HIT_DICE) - 1;
+	if (_abilities.at(MAX_LEVEL) > _abilities.at(CURRENT_LEVEL))
+		_abilities.at(MAX_LEVEL) = _abilities.at(CURRENT_LEVEL);
 
 	_set_sp();
 
 	// When drained XP is set to beginning of current level (for example,
 	// draining to level 9 means that youre xp is set to enough for level 9 plus
 	// 1 - which is vety harsh)
-	_abilities[Ability::NEXT_LEVEL_XP] =
-		_get_xp_for_level(_abilities.at(Ability::CURRENT_LEVEL));
-	_abilities[Ability::CURRENT_XP] =
-		_get_xp_for_level(_abilities.at(Ability::CURRENT_LEVEL) - 1) + 1;
+	_abilities[NEXT_LEVEL_XP] = _get_xp_for_level(_abilities.at(CURRENT_LEVEL));
+	_abilities[CURRENT_XP] =
+		_get_xp_for_level(_abilities.at(CURRENT_LEVEL) - 1) + 1;
 
 	_generate_secondary_abil(false, false, false);
-	_abilities[Ability::MAX_HP] =
-		_abilities.at(Ability::MAX_HP) *
-		(_abilities.at(Ability::CURRENT_LEVEL) / (old_level * 1.f));
-	_abilities[Ability::CURRENT_HP] = _abilities[Ability::MAX_HP] - diff_hp;
-	if (_abilities[Ability::CURRENT_HP] < 0)
-		_abilities[Ability::CURRENT_HP] = 0;
+	_abilities[MAX_HP] = _abilities.at(MAX_HP) *
+						 (_abilities.at(CURRENT_LEVEL) / (old_level * 1.f));
+	_abilities[CURRENT_HP] = _abilities[MAX_HP] - diff_hp;
+	if (_abilities[CURRENT_HP] < 0)
+		_abilities[CURRENT_HP] = 0;
 }
 
 // For each spell level, try to learn spells - called before set_spellpoints
