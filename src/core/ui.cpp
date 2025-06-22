@@ -1324,19 +1324,18 @@ auto Sorcery::UI::_draw_character_priest_spells(Component *component,
 auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 												 [[maybe_unused]] Game *game,
 												 Character *character) -> void {
-	using Enums::Character::Attribute;
 
 	const auto left_col{component->x + 0};
 	const auto right_col{component->x + 19};
 
 	using enum Enums::Character::Ability;
+	using enum Enums::Character::Attribute;
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	ImVec2 pos{left_col * adj_grid_w, component->y * adj_grid_h};
 	ImGui::SetCursorPos(pos);
 	ImGui::TextUnformatted(
-		std::format("{:>14} {:>2}", "Piety",
-					character->get_cur_attr(Attribute::PIETY))
+		std::format("{:>14} {:>2}", "Piety", character->get_cur_attr(PIETY))
 			.c_str());
 
 	set_StyleColor(ImGuiCol_Text,
@@ -1363,9 +1362,9 @@ auto Sorcery::UI::_draw_character_detailed_again(Component *component,
 				   ImVec4{1.0f, 1.0f, 1.0f, _system->animation->fade});
 	pos.y += (adj_grid_h * 2);
 	ImGui::SetCursorPos(pos);
-	ImGui::TextUnformatted(std::format("{:>14} {:>2}", "Luck",
-									   character->get_cur_attr(Attribute::LUCK))
-							   .c_str());
+	ImGui::TextUnformatted(
+		std::format("{:>14} {:>2}", "Luck", character->get_cur_attr(LUCK))
+			.c_str());
 	set_StyleColor(ImGuiCol_Text,
 				   ImVec4{0.5f, 0.5f, 0.5f, _system->animation->fade});
 	pos.y += adj_grid_h;
@@ -3837,105 +3836,78 @@ auto Sorcery::UI::draw_menu(const std::string name, const ImColor sel_color,
 
 auto Sorcery::UI::_draw_map_tile(const Tile &tile, const ImVec2 pos,
 								 const ImVec2 sz) -> void {
-	using Enums::DrawMap::Feature;
-	using Enums::Map::Direction;
-	using Enums::Tile::Features;
-	using Enums::Tile::Properties;
+	using enum Enums::DrawMap::Feature;
+	using enum Enums::Tile::Features;
+	using enum Enums::Tile::Properties;
 
 	// Background Graphic
-	_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::FLOOR), pos, sz);
+	_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(FLOOR), pos, sz);
 
 	// Darkness
 	if (tile.is(Enums::Tile::Properties::DARKNESS))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::DARKNESS), pos,
-								sz);
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_DARKNESS), pos, sz);
 
 	// Walls for all 4 directions
 	using enum Enums::Tile::Edge;
-	if (tile.has(Direction::NORTH, SECRET_DOOR) ||
-		tile.has(Direction::NORTH, ONE_WAY_HIDDEN_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_SECRET),
-								pos, sz);
-	else if (tile.has(Direction::NORTH, UNLOCKED_DOOR) ||
-			 tile.has(Direction::NORTH, ONE_WAY_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_DOOR), pos,
+	using enum Enums::Map::Direction;
+	if (tile.has(NORTH, SECRET_DOOR) || tile.has(NORTH, ONE_WAY_HIDDEN_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(NORTH_SECRET), pos, sz);
+	else if (tile.has(NORTH, UNLOCKED_DOOR) || tile.has(NORTH, ONE_WAY_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(NORTH_DOOR), pos, sz);
+	else if (tile.has(NORTH, ONE_WAY_WALL))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(NORTH_ONE_WAY_WALL), pos,
 								sz);
-	else if (tile.has(Direction::NORTH, ONE_WAY_WALL))
-		_draw_fg_image_with_idx(MAPS_TEXTURE,
-								unenum(Feature::NORTH_ONE_WAY_WALL), pos, sz);
-	else if (tile.has(Direction::NORTH))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::NORTH_WALL), pos,
-								sz);
+	else if (tile.has(NORTH))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(NORTH_WALL), pos, sz);
 
-	if (tile.has(Direction::SOUTH, SECRET_DOOR) ||
-		tile.has(Direction::SOUTH, ONE_WAY_HIDDEN_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_SECRET),
-								pos, sz);
-	else if (tile.has(Direction::SOUTH, UNLOCKED_DOOR) ||
-			 tile.has(Direction::SOUTH, ONE_WAY_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_DOOR), pos,
+	if (tile.has(SOUTH, SECRET_DOOR) || tile.has(SOUTH, ONE_WAY_HIDDEN_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(SOUTH_SECRET), pos, sz);
+	else if (tile.has(SOUTH, UNLOCKED_DOOR) || tile.has(SOUTH, ONE_WAY_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(SOUTH_DOOR), pos, sz);
+	else if (tile.has(SOUTH, ONE_WAY_WALL))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(SOUTH_ONE_WAY_WALL), pos,
 								sz);
-	else if (tile.has(Direction::SOUTH, ONE_WAY_WALL))
-		_draw_fg_image_with_idx(MAPS_TEXTURE,
-								unenum(Feature::SOUTH_ONE_WAY_WALL), pos, sz);
-	else if (tile.has(Direction::SOUTH))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SOUTH_WALL), pos,
-								sz);
+	else if (tile.has(SOUTH))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(SOUTH_WALL), pos, sz);
 
-	if (tile.has(Direction::EAST, SECRET_DOOR) ||
-		tile.has(Direction::EAST, ONE_WAY_HIDDEN_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_SECRET), pos,
+	if (tile.has(EAST, SECRET_DOOR) || tile.has(EAST, ONE_WAY_HIDDEN_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(EAST_SECRET), pos, sz);
+	else if (tile.has(EAST, UNLOCKED_DOOR) || tile.has(EAST, ONE_WAY_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(EAST_DOOR), pos, sz);
+	else if (tile.has(EAST, ONE_WAY_WALL))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(EAST_ONE_WAY_WALL), pos,
 								sz);
-	else if (tile.has(Direction::EAST, UNLOCKED_DOOR) ||
-			 tile.has(Direction::EAST, ONE_WAY_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_DOOR), pos,
-								sz);
-	else if (tile.has(Direction::EAST, ONE_WAY_WALL))
-		_draw_fg_image_with_idx(MAPS_TEXTURE,
-								unenum(Feature::EAST_ONE_WAY_WALL), pos, sz);
-	else if (tile.has(Direction::EAST))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EAST_WALL), pos,
-								sz);
+	else if (tile.has(EAST))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(EAST_WALL), pos, sz);
 
-	if (tile.has(Direction::WEST, SECRET_DOOR) ||
-		tile.has(Direction::WEST, ONE_WAY_HIDDEN_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::WEST_SECRET), pos,
+	if (tile.has(WEST, SECRET_DOOR) || tile.has(WEST, ONE_WAY_HIDDEN_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(WEST_SECRET), pos, sz);
+	else if (tile.has(WEST, UNLOCKED_DOOR) || tile.has(WEST, ONE_WAY_DOOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(WEST_DOOR), pos, sz);
+	else if (tile.has(WEST, ONE_WAY_WALL))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(WEST_ONE_WAY_WALL), pos,
 								sz);
-	else if (tile.has(Direction::WEST, UNLOCKED_DOOR) ||
-			 tile.has(Direction::WEST, ONE_WAY_DOOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::WEST_DOOR), pos,
-								sz);
-	else if (tile.has(Direction::WEST, ONE_WAY_WALL))
-		_draw_fg_image_with_idx(MAPS_TEXTURE,
-								unenum(Feature::WEST_ONE_WAY_WALL), pos, sz);
-	else if (tile.has(Direction::WEST))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::WEST_WALL), pos,
-								sz);
+	else if (tile.has(WEST))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(WEST_WALL), pos, sz);
 
 	// And Tile Contents
-	if (tile.has(Features::STAIRS_UP) || tile.has(Features::LADDER_UP))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::STAIRS_UP), pos,
+	if (tile.has(STAIRS_UP) || tile.has(LADDER_UP))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_STAIRS_UP), pos, sz);
+	else if (tile.has(STAIRS_DOWN) || tile.has(LADDER_DOWN))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_STAIRS_DOWN), pos, sz);
+	else if (tile.has(ELEVATOR))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_ELEVATOR), pos, sz);
+	else if (tile.has(SPINNER))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_SPINNER), pos, sz);
+	else if (tile.has(PIT))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_PIT), pos, sz);
+	else if (tile.has(CHUTE))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_CHUTE), pos, sz);
+	else if (tile.has(TELEPORT_TO))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_TELEPORT_TO), pos, sz);
+	else if (tile.has(TELEPORT_FROM))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(MAP_TELEPORT_FROM), pos,
 								sz);
-	else if (tile.has(Features::STAIRS_DOWN) || tile.has(Features::LADDER_DOWN))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::STAIRS_DOWN), pos,
-								sz);
-	else if (tile.has(Features::ELEVATOR))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::ELEVATOR), pos,
-								sz);
-	else if (tile.has(Features::SPINNER))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::SPINNER), pos,
-								sz);
-	else if (tile.has(Features::PIT))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::PIT), pos, sz);
-	else if (tile.has(Features::CHUTE))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::CHUTE), pos, sz);
-	else if (tile.has(Features::TELEPORT_TO))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::TELEPORT_TO), pos,
-								sz);
-	else if (tile.has(Features::TELEPORT_FROM))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::TELEPORT_FROM),
-								pos, sz);
-	else if (tile.has(Features::MESSAGE) || tile.has(Features::NOTICE))
-		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(Feature::EXCLAMATION), pos,
-								sz);
+	else if (tile.has(MESSAGE) || tile.has(NOTICE))
+		_draw_fg_image_with_idx(MAPS_TEXTURE, unenum(EXCLAMATION), pos, sz);
 }

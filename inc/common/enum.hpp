@@ -975,7 +975,7 @@ namespace Enums::Tile {
 namespace Enums::DrawMap {
 
 	enum class Feature {
-		NO_FEATURE = -1,
+		NO_MAP_FEATURE = -1, // MAP_ prefix is sometimes used to avoid conflict
 		FLOOR = 0,
 		NORTH_WALL = 1,
 		SOUTH_WALL = 2,
@@ -989,20 +989,20 @@ namespace Enums::DrawMap {
 		SOUTH_SECRET = 10,
 		EAST_SECRET = 11,
 		WEST_SECRET = 12,
-		DARKNESS = 13,
-		STAIRS_DOWN = 14,
-		STAIRS_UP = 15,
-		CHUTE = 16,
-		ELEVATOR = 17,
-		ROCK = 18,
-		PIT = 19,
-		SPINNER = 20,
-		TELEPORT_FROM = 21,
-		ENCOUNTER = 22,
+		MAP_DARKNESS = 13,
+		MAP_STAIRS_DOWN = 14,
+		MAP_STAIRS_UP = 15,
+		MAP_CHUTE = 16,
+		MAP_ELEVATOR = 17,
+		MAP_ROCK = 18,
+		MAP_PIT = 19,
+		MAP_SPINNER = 20,
+		MAP_TELEPORT_FROM = 21,
+		MAP_ENCOUNTER = 22,
 		ANTI_MAGIC = 23,
 		LAIR = 24,
-		FOUNTAIN = 25,
-		POOL = 26,
+		MAP_FOUNTAIN = 25,
+		MAP_POOL = 26,
 		LETTER_C = 27,
 		LETTER_T = 28,
 		EXCLAMATION = 29,
@@ -1022,7 +1022,7 @@ namespace Enums::DrawMap {
 		SOUTH_ONE_WAY_WALL = 43,
 		EAST_ONE_WAY_WALL = 44,
 		WEST_ONE_WAY_WALL = 45,
-		TELEPORT_TO = 46
+		MAP_TELEPORT_TO = 46
 	};
 }
 

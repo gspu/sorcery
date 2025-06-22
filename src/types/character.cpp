@@ -1206,9 +1206,6 @@ auto Sorcery::Character::_reset_starting_sp() -> void {
 // Set the starting spellpoints
 auto Sorcery::Character::_set_starting_sp() -> void {
 
-	using Enums::Character::Class;
-	using Enums::Config::Options;
-
 	// By default clear all spells
 	_clear_sp();
 
@@ -1216,16 +1213,18 @@ auto Sorcery::Character::_set_starting_sp() -> void {
 	// "SETSPELS"/"SPLPERLV"/"NWMAGE"/"NWPRIEST"
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
 		using enum Enums::Character::Ability;
-	case Class::PRIEST:
-		_priest_max_sp[1] = (*_system->config)[Options::STRICT_MODE]
+		using enum Enums::Character::Class;
+		using enum Enums::Config::Options;
+	case PRIEST:
+		_priest_max_sp[1] = (*_system->config)[STRICT_MODE]
 								? 2
 								: 2 + _abilities[BONUS_PRIEST_SPELLS];
 		break;
-	case Class::BISHOP:
+	case BISHOP:
 		_mage_max_sp[1] = 2;
 		break;
-	case Class::MAGE:
-		_mage_max_sp[1] = (*_system->config)[Options::STRICT_MODE]
+	case MAGE:
+		_mage_max_sp[1] = (*_system->config)[STRICT_MODE]
 							  ? 2
 							  : 2 + _abilities[BONUS_MAGE_SPELLS];
 		break;
@@ -1271,20 +1270,19 @@ auto Sorcery::Character::_learn_spell(Enums::Magic::SpellID spell_id) -> void {
 // Set starting spells
 auto Sorcery::Character::_set_start_spells() -> void {
 
-	using Enums::Character::Class;
-	using Enums::Magic::SpellID;
-
 	// This is taken from "KEEPCHYN" which hard codes the spells known to
 	// beginning characters!
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::BISHOP:
-	case Class::MAGE:
-		_learn_spell(SpellID::KATINO);
-		_learn_spell(SpellID::HALITO);
+		using enum Enums::Character::Class;
+		using enum Enums::Magic::SpellID;
+	case BISHOP:
+	case MAGE:
+		_learn_spell(KATINO);
+		_learn_spell(HALITO);
 		break;
-	case Class::PRIEST:
-		_learn_spell(SpellID::DIOS);
-		_learn_spell(SpellID::BADIOS);
+	case PRIEST:
+		_learn_spell(DIOS);
+		_learn_spell(BADIOS);
 		break;
 	default:
 		break;
@@ -1294,30 +1292,29 @@ auto Sorcery::Character::_set_start_spells() -> void {
 // Get HP gained for all levels apart from the first
 auto Sorcery::Character::_get_hp_per_level() -> int {
 
-	using Enums::Character::Class;
-	using Enums::System::Random;
-
 	// In the original code ("MOREHP"), Samurai get 2d8
 	auto extra_hp{0};
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::FIGHTER:
-	case Class::LORD:
-		extra_hp += (*_system->random)[Random::D10];
+		using enum Enums::Character::Class;
+		using enum Enums::System::Random;
+	case FIGHTER:
+	case LORD:
+		extra_hp += (*_system->random)[D10];
 		break;
-	case Class::PRIEST:
-		extra_hp += (*_system->random)[Random::D8];
+	case PRIEST:
+		extra_hp += (*_system->random)[D8];
 		break;
-	case Class::THIEF:
-	case Class::BISHOP:
-	case Class::NINJA:
-		extra_hp += (*_system->random)[Random::D6];
+	case THIEF:
+	case BISHOP:
+	case NINJA:
+		extra_hp += (*_system->random)[D6];
 		break;
-	case Class::MAGE:
-		extra_hp += (*_system->random)[Random::D4];
+	case MAGE:
+		extra_hp += (*_system->random)[D4];
 		break;
-	case Class::SAMURAI:
-		extra_hp += (*_system->random)[Random::D8];
-		extra_hp += (*_system->random)[Random::D8];
+	case SAMURAI:
+		extra_hp += (*_system->random)[D8];
+		extra_hp += (*_system->random)[D8];
 		break;
 	default:
 		break;
@@ -1335,8 +1332,6 @@ auto Sorcery::Character::_get_hp_per_level() -> int {
 // Add hit points on level gain (but note the strict mode limitation mentioned
 // below)
 auto Sorcery::Character::_update_hp_for_level() -> int {
-
-	using Enums::Character::Class;
 
 	// Note the rerolling of all HP ("MADELEV") when levelling - and using
 	// MaxLevel achieved when in strict mode
@@ -1373,19 +1368,16 @@ auto Sorcery::Character::get_max_hp() const -> int {
 auto Sorcery::Character::_update_stat_for_level(
 	Enums::Character::Attribute attribute, std::string stat) -> std::string {
 
-	using Enums::System::Random;
-
 	auto message{""s};
-
-	if ((*_system->random)[Random::D100] < 75) {
+	using enum Enums::System::Random;
+	if ((*_system->random)[D100] < 75) {
 		const auto chance{_abilities.at(Enums::Character::Ability::AGE) /
 						  130.f};
-		if ((*_system->random)[Random::D100] < chance) {
+		if ((*_system->random)[D100] < chance) {
 
 			// Decrease
 			bool proceed{true};
-			if (_cur_attr.at(attribute) == 18 &&
-				(*_system->random)[Random::D6] > 1)
+			if (_cur_attr.at(attribute) == 18 && (*_system->random)[D6] > 1)
 				proceed = false;
 
 			if (proceed) {
@@ -1517,18 +1509,15 @@ auto Sorcery::Character::level_down() -> void {
 auto Sorcery::Character::_try_learn_spell(Enums::Magic::SpellType spell_type,
 										  unsigned int spell_level) -> bool {
 
-	using Enums::Character::Attribute;
-	using Enums::Magic::SpellType;
-	using Enums::System::Random;
-
 	bool new_spell_learnt{false};
 
 	// Only do spells if a character has available spell points in this spell
 	// level
-	if (spell_type == SpellType::DIVINE)
+	using enum Enums::Magic::SpellType;
+	if (spell_type == DIVINE)
 		if (_priest_max_sp[spell_level] == 0)
 			return false;
-	if (spell_type == SpellType::ARCANE)
+	if (spell_type == ARCANE)
 		if (_mage_max_sp[spell_level] == 0)
 			return false;
 
@@ -1540,20 +1529,20 @@ auto Sorcery::Character::_try_learn_spell(Enums::Magic::SpellType spell_type,
 					 })};
 		 auto &spell : spells) {
 
-		const auto dice{(*_system->random)[Random::ZERO_TO_29]};
+		const auto dice{(*_system->random)[Enums::System::Random::ZERO_TO_29]};
 
 		// Check the Spell Type against the relevant stat (see
 		// SPLPERLV//TRYLEARN)
-		if (spell_type == SpellType::DIVINE) {
-			if (dice <=
-				static_cast<unsigned int>(_cur_attr[Attribute::PIETY])) {
+		using enum Enums::Character::Attribute;
+		if (spell_type == DIVINE) {
+			if (dice <= static_cast<unsigned int>(_cur_attr[PIETY])) {
 				spell.known = true;
 				_spells_known[spell.id] = true;
 				new_spell_learnt = true;
 			}
 		}
-		if (spell_type == SpellType::ARCANE) {
-			if (dice <= static_cast<unsigned int>(_cur_attr[Attribute::IQ])) {
+		if (spell_type == ARCANE) {
+			if (dice <= static_cast<unsigned int>(_cur_attr[IQ])) {
 				spell.known = true;
 				_spells_known[spell.id] = true;
 				new_spell_learnt = true;
@@ -1871,40 +1860,33 @@ auto Sorcery::Character::create_class_alignment(
 	const Enums::Character::Class cclass,
 	const Enums::Character::Align alignment) -> void {
 
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::System::Random;
-
 	_class = cclass;
-	_race = static_cast<Race>((*_system->random)[Random::D5]);
+	_race = static_cast<Enums::Character::Race>(
+		(*_system->random)[Enums::System::Random::D5]);
 	_alignment = alignment;
 
 	switch (_race) { // NOLINT(clang-diagnostic-switch)
-	case Race::HUMAN:
-		_start_attr = {{Attribute::STRENGTH, 8}, {Attribute::IQ, 5},
-					   {Attribute::PIETY, 5},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 8},	 {Attribute::LUCK, 9}};
+		using enum Enums::Character::Attribute;
+		using enum Enums::Character::Race;
+	case HUMAN:
+		_start_attr = {{STRENGTH, 8}, {IQ, 5},		{PIETY, 5},
+					   {VITALITY, 8}, {AGILITY, 8}, {LUCK, 9}};
 		break;
-	case Race::ELF:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 10},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 9},	 {Attribute::LUCK, 6}};
+	case ELF:
+		_start_attr = {{STRENGTH, 7}, {IQ, 10},		{PIETY, 10},
+					   {VITALITY, 6}, {AGILITY, 9}, {LUCK, 6}};
 		break;
-	case Race::DWARF:
-		_start_attr = {{Attribute::STRENGTH, 10}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	  {Attribute::VITALITY, 10},
-					   {Attribute::AGILITY, 5},	  {Attribute::LUCK, 6}};
+	case DWARF:
+		_start_attr = {{STRENGTH, 10}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 10}, {AGILITY, 5}, {LUCK, 6}};
 		break;
-	case Race::GNOME:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 7}};
+	case GNOME:
+		_start_attr = {{STRENGTH, 7}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 8}, {AGILITY, 10}, {LUCK, 7}};
 		break;
-	case Race::HOBBIT:
-		_start_attr = {{Attribute::STRENGTH, 5}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 7},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 12}};
+	case HOBBIT:
+		_start_attr = {{STRENGTH, 5}, {IQ, 7},		 {PIETY, 7},
+					   {VITALITY, 6}, {AGILITY, 10}, {LUCK, 12}};
 		break;
 	default:
 		break;
@@ -1917,29 +1899,31 @@ auto Sorcery::Character::create_class_alignment(
 	_st_points = _points_left;
 
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::FIGHTER:
+		using enum Enums::Character::Attribute;
+		using enum Enums::Character::Class;
+	case FIGHTER:
 		[[fallthrough]];
-	case Class::LORD:
+	case LORD:
 		[[fallthrough]];
-	case Class::SAMURAI:
-		_points_left -= (15 - _start_attr[Attribute::STRENGTH]);
-		_start_attr[Attribute::STRENGTH] = 15;
+	case SAMURAI:
+		_points_left -= (15 - _start_attr[STRENGTH]);
+		_start_attr[STRENGTH] = 15;
 		break;
-	case Class::MAGE:
+	case MAGE:
 		[[fallthrough]];
-	case Class::BISHOP:
-		_points_left -= (15 - _start_attr[Attribute::IQ]);
-		_start_attr[Attribute::IQ] = 15;
+	case BISHOP:
+		_points_left -= (15 - _start_attr[IQ]);
+		_start_attr[IQ] = 15;
 		break;
-	case Class::PRIEST:
-		_points_left -= (15 - _start_attr[Attribute::PIETY]);
-		_start_attr[Attribute::PIETY] = 15;
+	case PRIEST:
+		_points_left -= (15 - _start_attr[PIETY]);
+		_start_attr[PIETY] = 15;
 		break;
-	case Class::THIEF:
+	case THIEF:
 		[[fallthrough]];
-	case Class::NINJA:
-		_points_left -= (15 - _start_attr[Attribute::AGILITY]);
-		_start_attr[Attribute::AGILITY] = 15;
+	case NINJA:
+		_points_left -= (15 - _start_attr[AGILITY]);
+		_start_attr[AGILITY] = 15;
 		break;
 	default:
 		break;
@@ -1947,38 +1931,34 @@ auto Sorcery::Character::create_class_alignment(
 
 	// Pump any points left into the Vitality attribute
 	if (_points_left > 0)
-		_start_attr[Attribute::VITALITY] += _points_left;
+		_start_attr[Enums::Character::Attribute::VITALITY] += _points_left;
 
 	_cur_attr = _start_attr;
 
 	_name = _system->random->get_random_name();
-	_portrait_index = (*_system->random)[Random::ZERO_TO_29];
+	_portrait_index = (*_system->random)[Enums::System::Random::ZERO_TO_29];
 }
 
 // Enter Name and Portrait, rest is random
 auto Sorcery::Character::create_quick() -> void {
 
-	using Enums::Character::Align;
-	using Enums::Character::Attribute;
-	using Enums::Character::Class;
-	using Enums::Character::Race;
-	using Enums::System::Random;
-
 	// Exclude Samurai/Lord/Ninja/Bishop from this method of character creation
-	_class = static_cast<Class>((*_system->random)[Random::D4]);
-	_race = static_cast<Race>((*_system->random)[Random::D5]);
-	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::FIGHTER:
-	case Class::MAGE:
-		_alignment = static_cast<Align>((*_system->random)[Random::D3]);
-		break;
-	case Class::PRIEST:
+	using enum Enums::System::Random;
+	_class = static_cast<Enums::Character::Class>((*_system->random)[D4]);
+	_race = static_cast<Enums::Character::Race>((*_system->random)[D5]);
+	switch (_class) { // NOLINT(clang-diagnostic-switch)#
+		using enum Enums::Character::Align;
+		using enum Enums::Character::Class;
+	case FIGHTER:
+	case MAGE:
 		_alignment =
-			(*_system->random)[Random::D2] == 1 ? Align::GOOD : Align::EVIL;
+			static_cast<Enums::Character::Align>((*_system->random)[D3]);
 		break;
-	case Class::THIEF:
-		_alignment =
-			(*_system->random)[Random::D2] == 1 ? Align::NEUTRAL : Align::EVIL;
+	case PRIEST:
+		_alignment = (*_system->random)[D2] == 1 ? GOOD : EVIL;
+		break;
+	case THIEF:
+		_alignment = (*_system->random)[D2] == 1 ? NEUTRAL : EVIL;
 		break;
 	default:
 		break;
@@ -1991,30 +1971,27 @@ auto Sorcery::Character::create_quick() -> void {
 	// https://gamefaqs.gamespot.com/pc/946844-the-ultimate-wizardry-archives/faqs/45726
 	// for info
 	switch (_race) { // NOLINT(clang-diagnostic-switch)
-	case Race::HUMAN:
-		_start_attr = {{Attribute::STRENGTH, 8}, {Attribute::IQ, 5},
-					   {Attribute::PIETY, 5},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 8},	 {Attribute::LUCK, 9}};
+		using enum Enums::Character::Attribute;
+		using enum Enums::Character::Race;
+	case HUMAN:
+		_start_attr = {{STRENGTH, 8}, {IQ, 5},		{PIETY, 5},
+					   {VITALITY, 8}, {AGILITY, 8}, {LUCK, 9}};
 		break;
-	case Race::ELF:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 10},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 9},	 {Attribute::LUCK, 6}};
+	case ELF:
+		_start_attr = {{STRENGTH, 7}, {IQ, 10},		{PIETY, 10},
+					   {VITALITY, 6}, {AGILITY, 9}, {LUCK, 6}};
 		break;
-	case Race::DWARF:
-		_start_attr = {{Attribute::STRENGTH, 10}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	  {Attribute::VITALITY, 10},
-					   {Attribute::AGILITY, 5},	  {Attribute::LUCK, 6}};
+	case DWARF:
+		_start_attr = {{STRENGTH, 10}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 10}, {AGILITY, 5}, {LUCK, 6}};
 		break;
-	case Race::GNOME:
-		_start_attr = {{Attribute::STRENGTH, 7}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 10},	 {Attribute::VITALITY, 8},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 7}};
+	case GNOME:
+		_start_attr = {{STRENGTH, 7}, {IQ, 7},		 {PIETY, 10},
+					   {VITALITY, 8}, {AGILITY, 10}, {LUCK, 7}};
 		break;
-	case Race::HOBBIT:
-		_start_attr = {{Attribute::STRENGTH, 5}, {Attribute::IQ, 7},
-					   {Attribute::PIETY, 7},	 {Attribute::VITALITY, 6},
-					   {Attribute::AGILITY, 10}, {Attribute::LUCK, 12}};
+	case HOBBIT:
+		_start_attr = {{STRENGTH, 5}, {IQ, 7},		 {PIETY, 7},
+					   {VITALITY, 6}, {AGILITY, 10}, {LUCK, 12}};
 		break;
 	default:
 		break;
@@ -2026,21 +2003,23 @@ auto Sorcery::Character::create_quick() -> void {
 	_points_left = 10;
 	_st_points = _points_left;
 	switch (_class) { // NOLINT(clang-diagnostic-switch)
-	case Class::FIGHTER:
-		_points_left -= (15 - _start_attr[Attribute::STRENGTH]);
-		_start_attr[Attribute::STRENGTH] = 15;
+		using enum Enums::Character::Attribute;
+		using enum Enums::Character::Class;
+	case FIGHTER:
+		_points_left -= (15 - _start_attr[STRENGTH]);
+		_start_attr[STRENGTH] = 15;
 		break;
-	case Class::MAGE:
-		_points_left -= (15 - _start_attr[Attribute::IQ]);
-		_start_attr[Attribute::IQ] = 15;
+	case MAGE:
+		_points_left -= (15 - _start_attr[IQ]);
+		_start_attr[IQ] = 15;
 		break;
-	case Class::PRIEST:
-		_points_left -= (15 - _start_attr[Attribute::PIETY]);
-		_start_attr[Attribute::PIETY] = 15;
+	case PRIEST:
+		_points_left -= (15 - _start_attr[PIETY]);
+		_start_attr[PIETY] = 15;
 		break;
-	case Class::THIEF:
-		_points_left -= (15 - _start_attr[Attribute::AGILITY]);
-		_start_attr[Attribute::AGILITY] = 15;
+	case THIEF:
+		_points_left -= (15 - _start_attr[AGILITY]);
+		_start_attr[AGILITY] = 15;
 		break;
 	default:
 		break;
@@ -2048,7 +2027,7 @@ auto Sorcery::Character::create_quick() -> void {
 
 	// Pump any points left into the Vitality attribute
 	if (_points_left > 0)
-		_start_attr[Attribute::VITALITY] += _points_left;
+		_start_attr[Enums::Character::Attribute::VITALITY] += _points_left;
 
 	_cur_attr = _start_attr;
 }
@@ -2083,36 +2062,35 @@ auto Sorcery::Character::get_short_cond() const -> std::string {
 
 auto Sorcery::Character::_get_condition() const -> std::string {
 
-	using Enums::Character::Status;
-
-	if (is_poisoned() && (_status == Status::OK)) {
+	using enum Enums::Character::Status;
+	if (is_poisoned() && (_status == OK)) {
 		return (*_system->strings)["STATUS_POISONED"];
-	} else if (_status == Status::OK)
+	} else if (_status == OK)
 		return (*_system->strings)["STATUS_OK"];
 	else {
 		switch (_status) {
-		case Status::AFRAID:
+		case AFRAID:
 			return (*_system->strings)["STATUS_AFRAID"];
 			break;
-		case Status::ASHES:
+		case ASHES:
 			return (*_system->strings)["STATUS_ASHES"];
 			break;
-		case Status::ASLEEP:
+		case ASLEEP:
 			return (*_system->strings)["STATUS_ASLEEP"];
 			break;
-		case Status::DEAD:
+		case DEAD:
 			return (*_system->strings)["STATUS_DEAD"];
 			break;
-		case Status::LOST:
+		case LOST:
 			return (*_system->strings)["STATUS_LOST"];
 			break;
-		case Status::HELD:
+		case HELD:
 			return (*_system->strings)["STATUS_PARALYSED"];
 			break;
-		case Status::SILENCED:
+		case SILENCED:
 			return (*_system->strings)["STATUS_SILENCED"];
 			break;
-		case Status::STONED:
+		case STONED:
 			return (*_system->strings)["STATUS_STONED"];
 			break;
 		default:
@@ -2259,16 +2237,15 @@ auto Sorcery::Character::get_spell_points(
 	const Enums::Magic::SpellPointType status) const
 	-> std::optional<std::map<unsigned int, unsigned int>> {
 
-	using Enums::Magic::SpellPointType;
-	using Enums::Magic::SpellType;
-
-	if (type == SpellType::ARCANE && status == SpellPointType::CURRENT)
+	using enum Enums::Magic::SpellPointType;
+	using enum Enums::Magic::SpellType;
+	if (type == ARCANE && status == CURRENT)
 		return _mage_cur_sp;
-	else if (type == SpellType::ARCANE && status == SpellPointType::MAXIMUM)
+	else if (type == ARCANE && status == MAXIMUM)
 		return _mage_max_sp;
-	else if (type == SpellType::DIVINE && status == SpellPointType::CURRENT)
+	else if (type == DIVINE && status == CURRENT)
 		return _priest_cur_sp;
-	else if (type == SpellType::DIVINE && status == SpellPointType::MAXIMUM)
+	else if (type == DIVINE && status == MAXIMUM)
 		return _priest_max_sp;
 	else
 		return std::nullopt;
@@ -2357,20 +2334,19 @@ auto Sorcery::Character::can_level() const -> bool {
 
 auto Sorcery::Character::get_cure_cost() const -> unsigned int {
 
-	using Enums::Character::Status;
-
 	auto cost_per_level{0u};
 	switch (_status) {
-	case Status::ASHES:
+		using enum Enums::Character::Status;
+	case ASHES:
 		cost_per_level = 500;
 		break;
-	case Status::DEAD:
+	case DEAD:
 		cost_per_level = 250;
 		break;
-	case Status::HELD:
+	case HELD:
 		cost_per_level = 100;
 		break;
-	case Status::STONED:
+	case STONED:
 		cost_per_level = 200;
 		break;
 	default:
@@ -2410,8 +2386,6 @@ auto Sorcery::Character::set_age(const int adjustment) -> void {
 
 auto Sorcery::Character::summary_text() -> std::string {
 
-	using Enums::Character::Stage;
-
 	auto name{_name};
 	// if (_display->get_upper())
 	//	std::ranges::transform(name.begin(), name.end(), name.begin(),
@@ -2419,37 +2393,39 @@ auto Sorcery::Character::summary_text() -> std::string {
 	auto legacy{_legated ? " (D)" : ""};
 	const auto level{_abilities.at(Enums::Character::Ability::CURRENT_LEVEL)};
 	switch (_current_stage) {
-	case Stage::CHOOSE_METHOD:
+		using enum Enums::Character::Stage;
+
+	case CHOOSE_METHOD:
 		[[fallthrough]];
-	case Stage::ENTER_NAME:
+	case ENTER_NAME:
 		return std::format("{:<15} L ?? ?-??? ???", "???");
 		break;
-	case Stage::CHOOSE_RACE:
+	case CHOOSE_RACE:
 		return std::format("{:<15} L {:>2} ?-??? ???", name, level);
 		break;
-	case Stage::CHOOSE_ALIGNMENT:
+	case CHOOSE_ALIGNMENT:
 		return std::format("{:<15} L {:>2} ?-??? {}", name, level,
 						   race_to_str(_race));
 		break;
-	case Stage::ALLOCATE_STATS:
+	case ALLOCATE_STATS:
 		return std::format("{:<15} L {:>2} {}-??? {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   race_to_str(_race));
 		break;
-	case Stage::CHOOSE_CLASS:
+	case CHOOSE_CLASS:
 		return std::format("{:<15} L {:>2} {}-??? {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   race_to_str(_race));
 		break;
-	case Stage::CHOOSE_PORTRAIT:
+	case CHOOSE_PORTRAIT:
 		return std::format("{:<15} L {:>2} {}-{} {}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   class_to_str(_class).substr(0, 3),
 						   race_to_str(_race));
 		break;
-	case Stage::REVIEW_AND_CONFIRM:
+	case REVIEW_AND_CONFIRM:
 		[[fallthrough]];
-	case Stage::COMPLETED:
+	case COMPLETED:
 		return std::format("{} L {:>2} {}-{} {}{}", name, level,
 						   alignment_to_str(_alignment).substr(0, 1),
 						   class_to_str(_class).substr(0, 3),
